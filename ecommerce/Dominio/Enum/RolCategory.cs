@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio
+namespace Dominio.Enum
 {
-    public class Promocion
+    public enum Roles
     {
+        Admin,
+        Cliente,
+        ClienteAdministrador
     }
 }
