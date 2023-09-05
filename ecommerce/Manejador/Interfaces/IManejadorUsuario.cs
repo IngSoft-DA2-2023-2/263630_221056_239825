@@ -6,7 +6,8 @@ namespace Manejador.Interfaces
     public interface IManejadorUsuario
     {
         Usuario ObtenerUsuario(int id);
-        void RegistrarUsuario(string correoElectronico, string direccionEntrega);
+        // Crea el usuario y devuelve el id
+        Usuario RegistrarUsuario(Usuario usuario);
         List<Usuario> ObtenerUsuarios();
         void ActualizarUsuario(int id, string direccionEntrega);
         List<Compra> ObtenerComprasDelUsuario(int id);

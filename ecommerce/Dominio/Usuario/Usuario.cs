@@ -2,6 +2,7 @@
 {
     public abstract class Usuario
     {
+        public int Id { get; set; }
         public string CorreoElectronico { get; set; }
         public string DireccionEntrega { get; set; }
         public List<Compra> Compras { get; set; }
