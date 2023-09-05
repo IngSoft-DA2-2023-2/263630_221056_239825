@@ -1,13 +1,13 @@
 using Moq;
-using Manejador.Interfaces;
 using Manejador;
 using Dominio.Usuario;
 using Dominio;
+using Manejador.Interfaces;
 
-namespace Pruebas
+namespace Pruebas.PruebasUsuario
 {
     [TestClass]
-    public class PruebasUsuario
+    public class PruebasManejadorUsuario
     {
         private Mock<IManejadorUsuario>? mock;
         private ManejadorUsuario? manejadorUsuario;
@@ -101,7 +101,7 @@ namespace Pruebas
         [TestMethod]
         public void ObtenerComprasDelUsuarioOk()
         {
-            mock!.Setup(x=> x.ObtenerComprasDelUsuario(cliente!.Id));
+            mock!.Setup(x => x.ObtenerComprasDelUsuario(cliente!.Id));
             manejadorUsuario!.ObtenerComprasDelUsuario(cliente!.Id);
 
             mock.VerifyAll();

@@ -12,6 +12,11 @@ namespace Manejador
             this.manejadorUsuario = manejadorUsuario;
         }
 
+        public Usuario RegistrarUsuario(Usuario usuario)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ActualizarUsuario(int id, string direccionEntrega)
         {
             throw new NotImplementedException();
@@ -33,16 +38,6 @@ namespace Manejador
         }
 
         public List<Usuario> ObtenerUsuarios()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RegistrarUsuario(string correoElectronico, string direccionEntrega)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Usuario RegistrarUsuario(Usuario usuario)
         {
             throw new NotImplementedException();
         }
