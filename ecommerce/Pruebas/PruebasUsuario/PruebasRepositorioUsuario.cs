@@ -41,7 +41,6 @@ namespace Pruebas.PruebasUsuario
             var resultado = repositorioUsuario!.AgregarUsuario(cliente!);
 
             // Assert
-            //mock.Verify(x => x.AgregarUsuario(It.Is<Usuario>(v => v.CorreoElectronico.Equals(cliente!.CorreoElectronico))), Times.AtLeastOnce);
             Assert.AreEqual(cliente, resultado);
         }
 

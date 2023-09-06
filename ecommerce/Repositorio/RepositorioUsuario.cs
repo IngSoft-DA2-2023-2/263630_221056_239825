@@ -22,7 +22,8 @@ namespace Repositorio
                 usuarios.Remove(usuarioEncontrado);
                 usuarioEncontrado.DireccionEntrega = direccionEntrega;
                 usuarios.Add(usuarioEncontrado);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 throw new ArgumentException("El usuario no existe");
             }
@@ -31,22 +32,19 @@ namespace Repositorio
         public void AgregarCompraAlUsuario(int id, Compra compra)
         {
             // Falta validar la compra
-            Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-            if (usuarioEncontrado != null)
+            try
             {
+                Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
                 usuarios.Remove(usuarioEncontrado);
                 usuarioEncontrado.Compras.Add(compra);
                 usuarios.Add(usuarioEncontrado);
             }
-            else
-            {
-                throw new ArgumentException("El usuario no existe");
-            }
+            catch (Exception) { throw new ArgumentException("El usuario no existe"); }
         }
 
         public Usuario AgregarUsuario(Usuario usuario)
         {
-            if(ValidarUsuario(usuario)) usuarios.Add(usuario);
+            if (ValidarUsuario(usuario)) usuarios.Add(usuario);
             return usuario;
         }
 
@@ -69,12 +67,12 @@ namespace Repositorio
 
         public List<Compra> ObtenerComprasDelUsuario(int id)
         {
-            Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-            if (usuarioEncontrado != null)
+            try
             {
+                Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
                 return (usuarioEncontrado.Compras);
             }
-            else
+            catch (Exception)
             {
                 throw new ArgumentException("El usuario no existe");
             }
@@ -86,7 +84,8 @@ namespace Repositorio
             {
                 Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
                 return (usuarioEncontrado);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 throw new ArgumentException("El usuario no existe");
             }
