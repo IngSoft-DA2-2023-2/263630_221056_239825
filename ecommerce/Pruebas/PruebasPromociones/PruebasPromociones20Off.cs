@@ -32,7 +32,7 @@ public class PruebasPromociones20Off
         List<string> marcas2 = new List<string> { "Levis" };
         List<string> categorias2 = new List<string> { "Blusas" };
         List<string> colores2 = new List<string> { "Lila" };
-        producto2 = new Producto("Blusa", 1890, "Manga larga", marcas, categorias, colores);
+        producto2 = new Producto("Blusa", 1890, "Manga larga", marcas2, categorias2, colores2);
         carrito = new List<Producto>();
         carrito.Add(producto);
         carrito.Add(producto2);
