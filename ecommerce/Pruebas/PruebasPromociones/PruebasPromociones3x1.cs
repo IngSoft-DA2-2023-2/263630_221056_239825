@@ -40,10 +40,12 @@ namespace Pruebas.PruebasPromociones
             List<string> colores3 = new List<string> { "Negro" };
             producto3 = new Producto("Campera", 3500, "Impermeable", marcas, categorias3, colores3);
 
-            carrito = new List<Producto>();
-            carrito.Add(producto);
-            carrito.Add(producto2);
-            carrito.Add(producto3);
+            carrito = new List<Producto>
+            {
+                producto,
+                producto2,
+                producto3
+            };
         }
 
         [TestMethod]
