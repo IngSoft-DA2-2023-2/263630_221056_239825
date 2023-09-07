@@ -11,7 +11,7 @@ namespace Pruebas.PruebasUsuario
     [TestClass]
     public class PruebasManejadorUsuario
     {
-        private Mock<IManejadorUsuario>? mock;
+        private Mock<IRepositorioUsuario>? mock;
         private ManejadorUsuario? manejadorUsuario;
         private Administrador? cliente;
         private List<Usuario>? listaClientes;
@@ -23,7 +23,7 @@ namespace Pruebas.PruebasUsuario
         [TestInitialize]
         public void InitTest()
         {
-            mock = new Mock<IManejadorUsuario>(MockBehavior.Strict);
+            mock = new Mock<IRepositorioUsuario>(MockBehavior.Strict);
             manejadorUsuario = new ManejadorUsuario(mock.Object);
             cliente = new Administrador("martin@edelman.com.uy", "Zorrilla 124");
             cliente.Id = 1;
@@ -39,7 +39,7 @@ namespace Pruebas.PruebasUsuario
         public void RegistrarUsuarioOk()
         {
             // Act
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Cliente>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
             var resultado = manejadorUsuario!.RegistrarUsuario(cliente!);
 
             //Assert
@@ -51,7 +51,7 @@ namespace Pruebas.PruebasUsuario
         public void RegistrarUsuarioIncorrecto()
         {
             // Act
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Cliente>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarUsuario(clienteSinMail!)).Returns(cliente!);
             manejadorUsuario!.RegistrarUsuario(clienteSinMail!);
         }
 
@@ -59,7 +59,7 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void RegistrarUsuarioSinDireccion()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Cliente>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarUsuario(clienteSinDireccion!)).Returns(cliente!);
             manejadorUsuario!.RegistrarUsuario(clienteSinDireccion!);
         }
 
@@ -68,7 +68,7 @@ namespace Pruebas.PruebasUsuario
         public void RegistrarUsuarioNulo()
         {
             // Act
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Cliente>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarUsuario(clienteNulo!)).Returns(cliente!);
             manejadorUsuario!.RegistrarUsuario(clienteNulo!);
         }
 
@@ -76,7 +76,7 @@ namespace Pruebas.PruebasUsuario
         public void ObtenerUsuarioOk()
         {
             // Act
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
             var resultado = manejadorUsuario!.ObtenerUsuario(1);
 
             //Assert
@@ -86,15 +86,15 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void ObtenerUsuarioNoExiste()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
             manejadorUsuario!.RegistrarUsuario(cliente!);
             var resultado = manejadorUsuario!.ObtenerUsuario(2);
         }
         [TestMethod]
         public void ObtenerUsuariosOk()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
             mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
             manejadorUsuario!.RegistrarUsuario(cliente!);
             var resultado = manejadorUsuario!.ObtenerUsuarios();
@@ -107,9 +107,9 @@ namespace Pruebas.PruebasUsuario
         public void ActualizarUsuariosOk()
         {
             // Act
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
-            mock!.Setup(x => x.ActualizarUsuario(It.IsAny<int>(), It.IsAny<string>()));
+            mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
+            mock!.Setup(x => x.ActualizarUsuario(1, "Julio Cesar 1247"));
             manejadorUsuario!.RegistrarUsuario(cliente!);
             manejadorUsuario!.ActualizarUsuario(1, "Julio Cesar 1247");
             cliente!.DireccionEntrega = "Julio Cesar 1247";
@@ -123,9 +123,9 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void ActualizarUsuarioNoExiste()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
-            mock!.Setup(x => x.ActualizarUsuario(It.IsAny<int>(), It.IsAny<string>()));
+            mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
+            mock!.Setup(x => x.ActualizarUsuario(2, "Julio Cesar 1247"));
             manejadorUsuario!.RegistrarUsuario(cliente!);
             manejadorUsuario!.ActualizarUsuario(2, "Julio Cesar 1247");
         }
@@ -133,9 +133,8 @@ namespace Pruebas.PruebasUsuario
         [TestMethod]
         public void AgregarCompraAlUsuarioOk()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            manejadorUsuario!.RegistrarUsuario(cliente!);
+            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compra!));
+            mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
             manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
             cliente!.Compras.Add(compra!);
             var resultado = manejadorUsuario!.ObtenerUsuario(1);
@@ -148,7 +147,7 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void AgregarCompraAlUsuarioNoExiste()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
             mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
             manejadorUsuario!.RegistrarUsuario(cliente!);
             manejadorUsuario!.AgregarCompraAlUsuario(2, compra!);
@@ -157,10 +156,8 @@ namespace Pruebas.PruebasUsuario
         [TestMethod]
         public void ObtenerComprasDelUsuarioOk()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            mock!.Setup(x => x.ObtenerComprasDelUsuario(It.IsAny<int>()));
-            manejadorUsuario!.RegistrarUsuario(cliente!);
+            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compra!));
+            mock!.Setup(x => x.ObtenerComprasDelUsuario(1));
             manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
             var resultado = manejadorUsuario!.ObtenerComprasDelUsuario(1);
             cliente!.Compras.Add(compra!);
@@ -173,9 +170,9 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void ObtenerComprasDelUsuarioNoExiste()
         {
-            mock!.Setup(x => x.RegistrarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            mock!.Setup(x => x.ObtenerComprasDelUsuario(It.IsAny<int>()));
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compra!));
+            mock!.Setup(x => x.ObtenerComprasDelUsuario(2));
             manejadorUsuario!.RegistrarUsuario(cliente!);
             manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
             var resultado = manejadorUsuario!.ObtenerComprasDelUsuario(2);
