@@ -13,7 +13,9 @@ namespace Pruebas.PruebasUsuario
         private Mock<IRepositorioUsuario>? mock;
         private RepositorioUsuario? repositorioUsuario;
         private Cliente? cliente;
-        private Cliente? clienteIncorrecto;
+        private List<Usuario>? listaClientes;
+        private Cliente? clienteSinDireccion;
+        private Cliente? clienteSinMail;
         private Cliente? clienteNulo;
         private Compra? compra;
         [TestInitialize]
@@ -23,7 +25,10 @@ namespace Pruebas.PruebasUsuario
             repositorioUsuario = new RepositorioUsuario(mock.Object);
             cliente = new Cliente("martin@edelman.com.uy", "Zorrilla 124");
             cliente.Id = 1;
-            clienteIncorrecto = new Cliente("Martín Edelman","");
+            listaClientes = new List<Usuario>();
+            listaClientes.Add(cliente);
+            clienteSinDireccion = new Cliente("Martín@Edelman","");
+            clienteSinMail = new Cliente("Martin Edelman", "Zorrilla 124");
             clienteNulo = null;
             compra = new Compra();
         }
@@ -32,20 +37,31 @@ namespace Pruebas.PruebasUsuario
         public void RegistrarUsuarioOk()
         {
             // Act
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>()));
-            mock!.Object.AgregarUsuario(new Cliente("martin@edelman.com.uy", "Zorrilla 124"));
-            
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            var resultado = repositorioUsuario!.AgregarUsuario(cliente!);
+
             // Assert
-            mock.Verify(x => x.AgregarUsuario(It.Is<Usuario>(v => v.CorreoElectronico.Equals(cliente!.CorreoElectronico))), Times.AtLeastOnce);
+            Assert.AreEqual(cliente, resultado);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void RegistrarUsuarioIncorrecto()
+        public void RegistrarUsuarioIncorrectoSinDireccion()
         {
             // Act
-            mock!.Setup(x => x.AgregarUsuario(clienteIncorrecto!));
-            repositorioUsuario!.AgregarUsuario(clienteIncorrecto!);
+            mock!.Setup(x => x.AgregarUsuario(clienteSinDireccion!));
+            repositorioUsuario!.AgregarUsuario(clienteSinDireccion!);
+            //Assert
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RegistrarUsuarioIncorrectoSinMail()
+        {
+            // Act
+            mock!.Setup(x => x.AgregarUsuario(clienteSinMail!));
+            repositorioUsuario!.AgregarUsuario(clienteSinMail!);
             //Assert
             mock.VerifyAll();
         }
@@ -65,60 +81,111 @@ namespace Pruebas.PruebasUsuario
         public void ObtenerUsuarioOk()
         {
             // Act
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>()));
-            mock!.Object.AgregarUsuario(cliente!);
-            mock!.Object.ObtenerUsuario(1);
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            var resultado = repositorioUsuario!.ObtenerUsuario(1);
 
             // Assert
-            mock.Verify(x => x.ObtenerUsuario(It.Is<int>(v => v.Equals(cliente!.Id))), Times.AtLeastOnce);
+            Assert.AreEqual(cliente, resultado);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ObtenerUsuarioNoExiste()
+        {
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            var resultado = repositorioUsuario!.ObtenerUsuario(2);
         }
         [TestMethod]
         public void ObtenerUsuariosOk()
         {
-            mock!.Setup(x => x.ObtenerUsuarios());
-            mock!.Object.AgregarUsuario(cliente!);
-            mock!.Object.ObtenerUsuarios();
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            var resultado = repositorioUsuario!.ObtenerUsuarios();
 
             // Assert
-            mock.Verify(x => x.ObtenerUsuarios());
+            Assert.AreEqual(listaClientes!.Count, resultado.Count);
+            Assert.AreEqual(listaClientes[0], resultado[0]);
         }
 
         [TestMethod]
         public void ActualizarUsuariosOk()
         {
             // Act
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
             mock!.Setup(x => x.ActualizarUsuario(It.IsAny<int>(), It.IsAny<string>()));
-            mock!.Object.AgregarUsuario(cliente!);
-            mock!.Object.ActualizarUsuario(1, "Julio Cesar 1247");
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.ActualizarUsuario(1, "Julio Cesar 1247");
             cliente!.DireccionEntrega = "Julio Cesar 1247";
+            var resultado = repositorioUsuario!.ObtenerUsuario(1);
 
             // Assert
-            mock.Verify(x => x.ActualizarUsuario(It.Is<int>(v => v.Equals(cliente!.Id)), It.Is<string>(v => v.Equals(cliente!.DireccionEntrega))), Times.AtLeastOnce);
+            Assert.AreEqual(cliente.DireccionEntrega, resultado.DireccionEntrega);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ActualizarUsuarioNoExiste()
+        {
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
+            mock!.Setup(x => x.ActualizarUsuario(It.IsAny<int>(), It.IsAny<string>()));
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.ActualizarUsuario(2, "Julio Cesar 1247");
         }
 
         [TestMethod]
         public void AgregarCompraAlUsuarioOk()
         {
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
             mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            mock!.Object.AgregarUsuario(cliente!);
-            mock!.Object.AgregarCompraAlUsuario(1, compra!);
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
             cliente!.Compras.Add(compra!);
+            var resultado = repositorioUsuario!.ObtenerUsuario(1);
 
             // Assert
-            mock.Verify(x => x.AgregarCompraAlUsuario(It.Is<int>(v => v.Equals(cliente!.Id)), It.Is<Compra>(v => v.Equals(cliente!.Compras[0]))), Times.AtLeastOnce);
+            Assert.AreEqual(cliente.Compras, resultado.Compras);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AgregarCompraAlUsuarioNoExiste()
+        {
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.AgregarCompraAlUsuario(2, compra!);
         }
 
         [TestMethod]
         public void ObtenerComprasDelUsuarioOk()
         {
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
             mock!.Setup(x => x.ObtenerComprasDelUsuario(It.IsAny<int>()));
-            mock!.Object.AgregarUsuario(cliente!);
-            mock!.Object.AgregarCompraAlUsuario(1, compra!);
-            mock!.Object.ObtenerComprasDelUsuario(1);
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
+            var resultado = repositorioUsuario!.ObtenerComprasDelUsuario(1);
             cliente!.Compras.Add(compra!);
 
             // Assert
-            mock!.VerifyAll();
+            Assert.AreEqual(cliente!.Compras, resultado);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ObtenerComprasDelUsuarioNoExiste()
+        {
+            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
+            mock!.Setup(x => x.ObtenerComprasDelUsuario(It.IsAny<int>()));
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
+            var resultado = repositorioUsuario!.ObtenerComprasDelUsuario(2);
         }
     }
 }
