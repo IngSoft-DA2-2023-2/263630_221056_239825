@@ -8,5 +8,14 @@ namespace Manejador
 {
     public class ManejadorProducto
     {
+        public void AgregarProducto()
+        {
+
+        }
+
+        public void EliminarProducto()
+        {
+
+        }
     }
 }
