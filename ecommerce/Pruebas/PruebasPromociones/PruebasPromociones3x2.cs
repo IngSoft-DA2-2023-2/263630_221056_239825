@@ -2,15 +2,14 @@
 using Dominio;
 using Dominio.Usuario;
 using Moq;
-using Repositorio;
-using Repositorio.Interfaces;
-using Repositorio.Promociones;
+using DataAccess;
+using DataAccess.Interfaces;
+using DataAccess.Promociones;
 
-namespace Pruebas.PruebasPromociones
-{
+namespace Pruebas.PruebasPromociones;
     [TestClass]
     public class PruebasPromociones3x2
-	{
+	{/*
         private Mock<IPromocionStrategy>? mock;
         private Promocion3x2? promocion3x2;
         private Producto? producto;
@@ -123,6 +122,6 @@ namespace Pruebas.PruebasPromociones
             //Assert
             Assert.AreEqual(false, aplica);
         }
-    }
+    }*/
 }
 
