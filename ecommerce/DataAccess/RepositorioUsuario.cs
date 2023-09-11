@@ -1,8 +1,8 @@
-﻿using Dominio;
+﻿using DataAccess.Interfaces;
+using Dominio;
 using Dominio.Usuario;
-using Repositorio.Interfaces;
 
-namespace Repositorio
+namespace DataAccess
 {
     public class RepositorioUsuario : IRepositorioUsuario
     {

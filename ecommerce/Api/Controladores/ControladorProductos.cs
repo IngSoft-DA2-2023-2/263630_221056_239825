@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controladores
 {
     [ApiController]
-    [Route("v1/ECommerce/Producto")]
+    [Route("ECommerceAPI/productos")]
     public class ControladorProductos : ControllerBase
     {
         private readonly ILogger<ControladorProductos> _logger;
@@ -14,8 +14,8 @@ namespace Api.Controladores
             _logger = logger;
         }
 
-        [HttpGet("{producto-id}")]
-        public Producto BuscarPorId()
+        [HttpGet("{id}")]
+        public Producto BuscarPorId(int id)
         {
             //logica de busqueda
             var marca = new Marca();
@@ -25,7 +25,7 @@ namespace Api.Controladores
             return productoBuscado;
         }
         
-        [HttpGet("{producto-todos}")]
+        [HttpGet]
         public List<Producto> BuscarTodos()
         {
             //logica de busqueda

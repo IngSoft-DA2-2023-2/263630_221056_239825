@@ -1,8 +1,8 @@
 ﻿using Dominio;
 using Dominio.Usuario;
-using Manejador.Interfaces;
+using Servicios.Interfaces;
 
-namespace Manejador
+namespace Servicios
 {
     public class ManejadorUsuario : IManejadorUsuario
     {

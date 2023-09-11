@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dominio;
 
-namespace Repositorio.Promociones
+namespace DataAccess.Promociones
 {
     public interface IPromocionStrategy
     {
