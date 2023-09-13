@@ -1,50 +1,46 @@
 ﻿using Dominio;
 using Dominio.Usuario;
 using Manejador.Interfaces;
+using Repositorio.Interfaces;
 
 namespace Manejador
 {
     public class ManejadorUsuario : IManejadorUsuario
     {
-        private readonly IManejadorUsuario manejadorUsuario;
-        public ManejadorUsuario(IManejadorUsuario manejadorUsuario)
+        private readonly IRepositorioUsuario repositorioUsuario;
+        public ManejadorUsuario(IRepositorioUsuario repositorioUsuario)
         {
-            this.manejadorUsuario = manejadorUsuario;
-        }
-
-        public void ActualizarUsuario(int id, string direccionEntrega)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AgregarCompraAlUsuario(int id, Compra compra)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Compra> ObtenerComprasDelUsuario(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Usuario ObtenerUsuario(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Usuario> ObtenerUsuarios()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RegistrarUsuario(string correoElectronico, string direccionEntrega)
-        {
-            throw new NotImplementedException();
+            this.repositorioUsuario = repositorioUsuario;
         }
 
         public Usuario RegistrarUsuario(Usuario usuario)
         {
-            throw new NotImplementedException();
+            return repositorioUsuario.AgregarUsuario(usuario);
+        }
+
+        public void ActualizarUsuario(int id, string direccionEntrega)
+        {
+            repositorioUsuario.ActualizarUsuario(id, direccionEntrega);
+        }
+
+        public void AgregarCompraAlUsuario(int id, Compra compra)
+        {
+            repositorioUsuario.AgregarCompraAlUsuario(id, compra);
+        }
+
+        public List<Compra> ObtenerComprasDelUsuario(int id)
+        {
+            return repositorioUsuario.ObtenerComprasDelUsuario(id);
+        }
+
+        public Usuario ObtenerUsuario(int id)
+        {
+            return repositorioUsuario.ObtenerUsuario(id);
+        }
+
+        public List<Usuario> ObtenerUsuarios()
+        {
+            return repositorioUsuario.ObtenerUsuarios();
         }
     }
 }
