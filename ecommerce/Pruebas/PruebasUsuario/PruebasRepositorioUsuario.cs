@@ -9,7 +9,7 @@ namespace Pruebas.PruebasUsuario
 {
     [TestClass]
     public class PruebasRepositorioUsuario
-    {/*
+    {
         private Mock<IRepositorioUsuario>? mock;
         private RepositorioUsuario? repositorioUsuario;
         private Cliente? cliente;
@@ -186,6 +186,6 @@ namespace Pruebas.PruebasUsuario
             repositorioUsuario!.AgregarUsuario(cliente!);
             repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
             var resultado = repositorioUsuario!.ObtenerComprasDelUsuario(2);
-        }*/
+        }
     }
 }

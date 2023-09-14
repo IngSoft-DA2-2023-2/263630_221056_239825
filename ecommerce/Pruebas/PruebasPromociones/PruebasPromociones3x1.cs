@@ -7,10 +7,10 @@ using DataAccess.Interfaces;
 using DataAccess.Promociones;
 
 namespace Pruebas.PruebasPromociones;
-
+/*
 [TestClass]
 public class PruebasPromociones3x1
-{/*
+{
     private Mock<IPromocionStrategy>? mock;
     private Promocion3x1? promocion3x1;
     private Producto? producto;
@@ -123,6 +123,6 @@ public class PruebasPromociones3x1
         bool aplica = promocion3x1!.AplicarPromo(It.IsAny<List<Producto>>());
         //Assert
         Assert.AreEqual(false, aplica);
-    }*/
+    }
 }
-
+*/
