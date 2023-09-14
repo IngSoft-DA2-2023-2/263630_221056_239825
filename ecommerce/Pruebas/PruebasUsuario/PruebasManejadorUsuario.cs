@@ -3,6 +3,8 @@ using Servicios;
 using Dominio.Usuario;
 using Dominio;
 using DataAccess.Interfaces;
+using DataAccess;
+
 namespace Pruebas.PruebasUsuario
 {
     [TestClass]
@@ -30,6 +32,10 @@ namespace Pruebas.PruebasUsuario
             clienteSinMail = new Cliente("Martin Edelman", "Zorrilla 124");
             clienteNulo = null;
             compra = new Compra();
+            compra.Id = 1;
+            List<Color> colorList = new List<Color>();
+            colorList.Add(new Color());
+            compra.Productos.Add(new Producto("prod", 123, "", new Marca(), new Categoria(), colorList));
         }
 
         [TestMethod]
@@ -41,6 +47,33 @@ namespace Pruebas.PruebasUsuario
 
             //Assert
             Assert.AreEqual(cliente, resultado);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RegistrarUsuarioIncorrectoSinDireccion()
+        {
+            // Act
+            mock!.Setup(x => x.AgregarUsuario(clienteSinDireccion!));
+            manejadorUsuario!.RegistrarUsuario(clienteSinDireccion!);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RegistrarUsuarioIncorrectoSinMail()
+        {
+            // Act
+            mock!.Setup(x => x.AgregarUsuario(clienteSinMail!));
+            manejadorUsuario!.RegistrarUsuario(clienteSinMail!);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void RegistrarUsuarioNulo()
+        {
+            // Act
+            mock!.Setup(x => x.AgregarUsuario(clienteNulo!));
+            manejadorUsuario!.RegistrarUsuario(clienteNulo!);
         }
 
         [TestMethod]
@@ -97,6 +130,24 @@ namespace Pruebas.PruebasUsuario
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AgregarCompraAlUsuarioSinProductos()
+        {
+            Compra compraVacia = new Compra();
+            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compraVacia!));
+            manejadorUsuario!.AgregarCompraAlUsuario(1, compraVacia!);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AgregarCompraAlUsuarioNula()
+        {
+            Compra? compraNula = null;
+            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compraNula!));
+            manejadorUsuario!.AgregarCompraAlUsuario(1, compraNula!);
+        }
+
+        [TestMethod]
         public void ObtenerComprasDelUsuarioOk()
         {
             cliente!.Compras.Add(compra!);
@@ -107,6 +158,15 @@ namespace Pruebas.PruebasUsuario
 
             // Assert
             Assert.AreEqual(cliente!.Compras, resultado);
+        }
+
+        [TestMethod]
+        public void EliminarUsuario()
+        {
+            mock!.Setup(x => x.EliminarUsuario(cliente!));
+            manejadorUsuario!.EliminarUsuario(cliente!);
+
+            mock!.VerifyAll();
         }
     }
 }

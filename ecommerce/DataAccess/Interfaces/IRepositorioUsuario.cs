@@ -11,5 +11,6 @@ namespace DataAccess.Interfaces
         void ActualizarUsuario(int id, string direccionEntrega);
         void AgregarCompraAlUsuario(int id, Compra compra);
         List<Compra> ObtenerComprasDelUsuario(int id);
+        void EliminarUsuario(Usuario usuario);
     }
 }
