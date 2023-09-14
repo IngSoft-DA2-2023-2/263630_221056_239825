@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dominio.Enum
+namespace Dominio
 {
-    public enum Roles
+    public class Categoria
     {
-        Admin,
-        Cliente,
-        ClienteAdministrador
     }
 }
