@@ -1,45 +1,46 @@
 ﻿using Dominio;
 using Dominio.Usuario;
+using DataAccess.Interfaces;
 using Servicios.Interfaces;
 
 namespace Servicios
 {
     public class ManejadorUsuario : IManejadorUsuario
     {
-        private readonly IManejadorUsuario manejadorUsuario;
-        public ManejadorUsuario(IManejadorUsuario manejadorUsuario)
+        private readonly IRepositorioUsuario repositorioUsuario;
+        public ManejadorUsuario(IRepositorioUsuario repositorioUsuario)
         {
-            this.manejadorUsuario = manejadorUsuario;
+            this.repositorioUsuario = repositorioUsuario;
         }
 
         public Usuario RegistrarUsuario(Usuario usuario)
         {
-            throw new NotImplementedException();
+            return repositorioUsuario.AgregarUsuario(usuario);
         }
 
         public void ActualizarUsuario(int id, string direccionEntrega)
         {
-            throw new NotImplementedException();
+            repositorioUsuario.ActualizarUsuario(id, direccionEntrega);
         }
 
         public void AgregarCompraAlUsuario(int id, Compra compra)
         {
-            throw new NotImplementedException();
+            repositorioUsuario.AgregarCompraAlUsuario(id, compra);
         }
 
         public List<Compra> ObtenerComprasDelUsuario(int id)
         {
-            throw new NotImplementedException();
+            return repositorioUsuario.ObtenerComprasDelUsuario(id);
         }
 
         public Usuario ObtenerUsuario(int id)
         {
-            throw new NotImplementedException();
+            return repositorioUsuario.ObtenerUsuario(id);
         }
 
         public List<Usuario> ObtenerUsuarios()
         {
-            throw new NotImplementedException();
+            return repositorioUsuario.ObtenerUsuarios();
         }
     }
 }
