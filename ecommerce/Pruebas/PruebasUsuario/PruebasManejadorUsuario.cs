@@ -1,11 +1,8 @@
 using Moq;
-using Manejador;
+using Servicios;
 using Dominio.Usuario;
 using Dominio;
-using Manejador.Interfaces;
-using Repositorio;
-using Repositorio.Interfaces;
-
+using DataAccess.Interfaces;
 namespace Pruebas.PruebasUsuario
 {
     [TestClass]

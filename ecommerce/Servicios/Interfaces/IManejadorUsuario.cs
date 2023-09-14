@@ -1,15 +1,16 @@
 ﻿using Dominio;
 using Dominio.Usuario;
 
-namespace Repositorio.Interfaces
+namespace Servicios.Interfaces
 {
-    public interface IRepositorioUsuario
+    public interface IManejadorUsuario
     {
-        Usuario AgregarUsuario(Usuario usuario);
         Usuario ObtenerUsuario(int id);
+        // Crea el usuario y devuelve el id
+        Usuario RegistrarUsuario(Usuario usuario);
         List<Usuario> ObtenerUsuarios();
         void ActualizarUsuario(int id, string direccionEntrega);
-        void AgregarCompraAlUsuario(int id, Compra compra);
         List<Compra> ObtenerComprasDelUsuario(int id);
+        void AgregarCompraAlUsuario(int id, Compra compra);
     }
 }
