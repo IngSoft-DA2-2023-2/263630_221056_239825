@@ -25,18 +25,18 @@ namespace Pruebas.PruebasPromociones
             mock = new Mock<IPromocionStrategy>();
             promocionTotalLook = new PromocionTotalLook();
 
-            List<string> marcas = new() { "Zara" };
-            List<string> categorias = new() { "Abrigos" };
-            List<string> colores = new() { "beige" };
-            producto = new Producto("Camisa", 1000, "Larga", marcas, categorias, colores);
+            Marca marca = new Marca { "Zara" };
+            Categoria categoria = new Categoria { "Abrigos" };
+            List<Color> colores = new() { "beige" };
+            producto = new Producto("Camisa", 1000, "Larga", marca, categoria, colores);
 
             productoVacio = null;
 
-            List<string> marcas2 = new() { "Levis" };
-            List<string> categorias2 = new() { "Calzados" };
-            producto2 = new Producto("Botas", 2000, "Con taco", marcas2, categorias2, colores);
+            Marca marca2 = new Marca { "Levis" };
+            Categoria categoria2 = new Categoria { "Calzados" };
+            producto2 = new Producto("Botas", 2000, "Con taco", marca2, categoria2, colores);
 
-            producto3 = new Producto("Campera", 3500, "Impermeable", marcas, categorias, colores);
+            producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria, colores);
 
             carrito = new List<Producto>
             {

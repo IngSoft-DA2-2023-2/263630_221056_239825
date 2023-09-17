@@ -25,20 +25,20 @@ namespace Pruebas.PruebasPromociones
             mock = new Mock<IPromocionStrategy>();
             promocion3x1 = new Promocion3x1();
 
-            List<string> marcas = new List<string> { "Zara" };
-            List<string> categorias = new List<string> { "pantalones" };
-            List<string> colores = new List<string> { "blanco" };
-            producto = new Producto("Jean", 2000, "Largo y blanco", marcas, categorias, colores);
+            Marca marca = new Marca { "Zara" };
+            Categoria categoria = new Categoria { "pantalones" };
+            List<Color> colores = new List<Color> { "blanco" };
+            producto = new Producto("Jean", 2000, "Largo y blanco", marca, categoria, colores);
 
             productoVacio = null;
 
-            List<string> categorias2 = new List<string> { "Blusas" };
-            List<string> colores2 = new List<string> { "Lila" };
-            producto2 = new Producto("Blusa", 800, "Manga larga", marcas, categorias, colores);
+            Categoria categoria2 = new Categoria { "Blusas" };
+            List<Color> colores2 = new List<Color> { "Lila" };
+            producto2 = new Producto("Blusa", 800, "Manga larga", marca, categoria2, colores2);
 
-            List<string> categorias3 = new List<string> { "Abrigos" };
-            List<string> colores3 = new List<string> { "Negro" };
-            producto3 = new Producto("Campera", 3500, "Impermeable", marcas, categorias3, colores3);
+            Categoria categoria3 = new Categoria { "Abrigos" };
+            List<Color> colores3 = new List<Color> { "Negro" };
+            producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria3, colores3);
 
             carrito = new List<Producto>
             {

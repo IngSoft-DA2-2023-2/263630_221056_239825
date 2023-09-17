@@ -24,15 +24,15 @@ namespace Pruebas.PruebasPromociones
         {
             mock = new Mock<IPromocionStrategy>();
             promocion20 = new Promocion20Off();
-            List<string> marcas = new List<string> { "Zara" };
-            List<string> categorias = new List<string> { "pantalones" };
-            List<string> colores = new List<string> { "blanco" };
-            producto = new Producto("Jean", 2000, "Largo y blanco", marcas, categorias, colores);
+            Marca marca = new Marca { "Zara" };
+            Categoria categoria = new Categoria { "pantalones" };
+            List<Color> color = new List<Color> { "blanco" };
+            producto = new Producto("Jean", 2000, "Largo y blanco", marca, categoria, color);
             productoVacio = null;
-            List<string> marcas2 = new List<string> { "Levis" };
-            List<string> categorias2 = new List<string> { "Blusas" };
-            List<string> colores2 = new List<string> { "Lila" };
-            producto2 = new Producto("Blusa", 1890, "Manga larga", marcas2, categorias2, colores2);
+            Marca marca2 = new Marca {"Levis" };
+            Categoria categoria2 = new Categoria { "Blusas" };
+            List<Color> color2 = new List<Color> { "Lila" };
+            producto2 = new Producto("Blusa", 1890, "Manga larga", marca2, categoria2, color2);
             carrito = new List<Producto>();
             carrito.Add(producto);
             carrito.Add(producto2);
