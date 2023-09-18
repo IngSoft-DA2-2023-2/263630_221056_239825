@@ -6,23 +6,8 @@ using DataAccess;
 using DataAccess.Interfaces;
 using DataAccess.Promociones;
 
-<<<<<<< HEAD
 namespace Pruebas.PruebasPromociones
 {
-=======
-namespace Pruebas;
-
-
-[TestClass]
-public class PruebasPromociones20Off
-{/*
-    private Mock<IPromocionStrategy>? mock;
-    private Promocion20Off? promocion20;
-    private Producto? producto;
-    private Producto? productoVacio;
-    private Producto? producto2;
-    private List<Producto>? carrito;
->>>>>>> dcc2fb3bad0e5450b648dbc40d426feeac86a582
 
     [TestClass]
     public class PruebasPromociones20Off
@@ -39,14 +24,14 @@ public class PruebasPromociones20Off
         {
             mock = new Mock<IPromocionStrategy>();
             promocion20 = new Promocion20Off();
-            Marca marca = new Marca { "Zara" };
-            Categoria categoria = new Categoria { "pantalones" };
-            List<Color> color = new List<Color> { "blanco" };
+            Marca marca = new();
+            Categoria categoria = new();
+            List<Color> color = new();
             producto = new Producto("Jean", 2000, "Largo y blanco", marca, categoria, color);
             productoVacio = null;
-            Marca marca2 = new Marca {"Levis" };
-            Categoria categoria2 = new Categoria { "Blusas" };
-            List<Color> color2 = new List<Color> { "Lila" };
+            Marca marca2 = new();
+            Categoria categoria2 = new();
+            List<Color> color2 = new();
             producto2 = new Producto("Blusa", 1890, "Manga larga", marca2, categoria2, color2);
             carrito = new List<Producto>();
             carrito.Add(producto);
@@ -104,7 +89,6 @@ public class PruebasPromociones20Off
             int costoTotal = promocion20!.AplicarPromocion(carrito!);
         }
 
-<<<<<<< HEAD
         [TestMethod]
         public void AplicaPromoErrorNulo()
         {
@@ -125,19 +109,5 @@ public class PruebasPromociones20Off
             //Assert
             Assert.AreEqual(false, aplica);
         }
-
     }
-=======
-    [TestMethod]
-    public void AplicaPromoError()
-    {
-        //Act
-        mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
-        carrito!.Remove(productoVacio!);
-        bool aplica = promocion20!.AplicarPromo(It.IsAny<List<Producto>>());
-        //Assert
-        Assert.AreEqual(false, aplica);
-    }*/
-    
->>>>>>> dcc2fb3bad0e5450b648dbc40d426feeac86a582
 }

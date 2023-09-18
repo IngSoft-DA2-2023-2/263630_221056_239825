@@ -10,7 +10,7 @@ namespace Pruebas.PruebasPromociones
 {
     [TestClass]
     public class PruebasPromocionesTotalLook
-	{/*
+	{
         private Mock<IPromocionStrategy>? mock;
         private PromocionTotalLook? promocionTotalLook;
         private Producto? producto;
@@ -25,18 +25,18 @@ namespace Pruebas.PruebasPromociones
             mock = new Mock<IPromocionStrategy>();
             promocionTotalLook = new PromocionTotalLook();
 
-            Marca marca = new Marca { "Zara" };
-            Categoria categoria = new Categoria { "Abrigos" };
-            List<Color> colores = new() { "beige" };
+            Marca marca = new();
+            Categoria categoria = new();
+            List<Color> colores = new();
             producto = new Producto("Camisa", 1000, "Larga", marca, categoria, colores);
 
             productoVacio = null;
 
-            Marca marca2 = new Marca { "Levis" };
-            Categoria categoria2 = new Categoria { "Calzados" };
+            Marca marca2 = new();
+            Categoria categoria2 = new();
             producto2 = new Producto("Botas", 2000, "Con taco", marca2, categoria2, colores);
 
-            producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoriagit , colores);
+            producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria , colores);
 
             carrito = new List<Producto>
             {
@@ -83,9 +83,9 @@ namespace Pruebas.PruebasPromociones
             //Act
             mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(4750);
             carrito!.Remove(producto!);
-            List<string> marca = new() { "Zara" };
-            List<string> categoria = new() { "Abrigos" };
-            List<string> colorNuevo = new() { "Amarillo" };
+            Marca marca = new();
+            Categoria categoria = new();
+            List<Color> colorNuevo = new();
             Producto? productoDistintaCat = new("Cartera", 5000, "Bandolera", marca, categoria, colorNuevo);
             carrito!.Add(productoDistintaCat);
             int costoTotal = promocionTotalLook!.AplicarPromocion(carrito!);
@@ -121,7 +121,7 @@ namespace Pruebas.PruebasPromociones
             bool aplica = promocionTotalLook!.AplicarPromo(It.IsAny<List<Producto>>());
             //Assert
             Assert.AreEqual(false, aplica);
-        }*/
+        }
     }
 }
 

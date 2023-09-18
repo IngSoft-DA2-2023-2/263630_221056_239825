@@ -9,7 +9,7 @@ using DataAccess.Promociones;
 namespace Pruebas.PruebasPromociones;
     [TestClass]
     public class PruebasPromociones3x2
-	{/*
+	{
         private Mock<IPromocionStrategy>? mock;
         private Promocion3x2? promocion3x2;
         private Producto? producto;
@@ -24,18 +24,18 @@ namespace Pruebas.PruebasPromociones;
             mock = new Mock<IPromocionStrategy>();
             promocion3x2 = new Promocion3x2();
 
-            Marca marca = new Marca { "Zara" };
-            Categoria categoria = new Categoria { "Abrigos" };
-            List<Color> colores = new() { "blanco" };
+            Marca marca = new Marca();
+            Categoria categoria = new();
+            List<Color> colores = new();
             producto = new Producto("Camisa", 1000, "Larga", marca, categoria, colores);
 
             productoVacio = null;
 
-            Marca marca2 = new Marca { "Levis" };
-            List<Color> color2 = new() { "Lila" };
+            Marca marca2 = new Marca();
+            List<Color> color2 = new() ;
             producto2 = new Producto("Buzo", 800, "Bordado", marca2, categoria, color2);
 
-            List<Color> color3 = new List<Color> { "Negro" };
+            List<Color> color3 = new();
             producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria, color3);
 
             carrito = new List<Producto>
@@ -83,9 +83,9 @@ namespace Pruebas.PruebasPromociones;
             //Act
             mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(4500);
             carrito!.Remove(producto!);
-            List<string> marca = new() { "Prune" };
-            List<string> categoriaNueva = new() { "Bolsos" };
-            List<string> colores = new() { "Azul" };
+            Marca marca = new();
+            Categoria categoriaNueva = new();
+            List<Color> colores = new();
             Producto? productoDistintaCat = new("Cartera", 5000, "Bandolera", marca, categoriaNueva, colores);
             carrito!.Add(productoDistintaCat);
             int costoTotal = promocion3x2!.AplicarPromocion(carrito!);
@@ -122,6 +122,6 @@ namespace Pruebas.PruebasPromociones;
             //Assert
             Assert.AreEqual(false, aplica);
         }
-    }*/
-}
+    }
+
 
