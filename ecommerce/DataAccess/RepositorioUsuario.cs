@@ -13,15 +13,20 @@ namespace DataAccess
             this.repositorioUsuario = repositorioUsuario;
             usuarios = new List<Usuario>();
         }
+        public Usuario AgregarUsuario(Usuario usuario)
+        {
+            usuarios.Add(usuario);
+            return usuario;
+        }
 
         public void ActualizarUsuario(int id, string direccionEntrega)
         {
             try
             {
                 Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-                usuarios.Remove(usuarioEncontrado);
+                EliminarUsuario(usuarioEncontrado);
                 usuarioEncontrado.DireccionEntrega = direccionEntrega;
-                usuarios.Add(usuarioEncontrado);
+                AgregarUsuario(usuarioEncontrado);
             }
             catch (Exception)
             {
@@ -31,39 +36,16 @@ namespace DataAccess
 
         public void AgregarCompraAlUsuario(int id, Compra compra)
         {
-            // Falta validar la compra
             try
             {
                 Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-                usuarios.Remove(usuarioEncontrado);
+                EliminarUsuario(usuarioEncontrado);
                 usuarioEncontrado.Compras.Add(compra);
-                usuarios.Add(usuarioEncontrado);
+                AgregarUsuario(usuarioEncontrado);
             }
             catch (Exception) { throw new ArgumentException("El usuario no existe"); }
         }
 
-        public Usuario AgregarUsuario(Usuario usuario)
-        {
-            if (ValidarUsuario(usuario)) usuarios.Add(usuario);
-            return usuario;
-        }
-
-        private static bool ValidarUsuario(Usuario usuario)
-        {
-            if (usuario == null)
-            {
-                throw new ArgumentNullException("El usuario no puede ser nulo");
-            }
-            if (usuario.DireccionEntrega == null || usuario.DireccionEntrega == "")
-            {
-                throw new ArgumentException("La direccion de entrega no puede ser nula o vacia");
-            }
-            if (usuario.CorreoElectronico == null || usuario.CorreoElectronico == "" || !usuario.CorreoElectronico.Contains('@'))
-            {
-                throw new ArgumentException("El email es incorrecto");
-            }
-            return true;
-        }
 
         public List<Compra> ObtenerComprasDelUsuario(int id)
         {
@@ -94,6 +76,15 @@ namespace DataAccess
         public List<Usuario> ObtenerUsuarios()
         {
             return usuarios;
+        }
+
+        public void EliminarUsuario(Usuario usuario)
+        {
+            bool esEliminado = usuarios.Remove(usuario);
+            if(!esEliminado)
+            {
+                throw new ArgumentException("El usuario a eliminar no existe");
+            }
         }
     }
 }

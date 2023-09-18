@@ -8,5 +8,12 @@ namespace Dominio
 {
     public class Compra
     {
+        public int Id { get; set; }
+        public List<Producto> Productos { get; set; }
+
+        public Compra()
+        {
+            Productos = new List<Producto>();
+        }
     }
 }
