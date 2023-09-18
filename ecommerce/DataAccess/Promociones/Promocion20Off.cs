@@ -1,7 +1,7 @@
 ﻿using System;
 using Dominio;
 
-namespace Repositorio.Promociones
+namespace DataAccess.Promociones
 {
 	public class Promocion20Off: IPromocionStrategy
 	{

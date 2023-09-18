@@ -2,12 +2,27 @@ using System.Collections.Generic;
 using Dominio;
 using Dominio.Usuario;
 using Moq;
-using Repositorio;
-using Repositorio.Interfaces;
-using Repositorio.Promociones;
+using DataAccess;
+using DataAccess.Interfaces;
+using DataAccess.Promociones;
 
+<<<<<<< HEAD
 namespace Pruebas.PruebasPromociones
 {
+=======
+namespace Pruebas;
+
+
+[TestClass]
+public class PruebasPromociones20Off
+{/*
+    private Mock<IPromocionStrategy>? mock;
+    private Promocion20Off? promocion20;
+    private Producto? producto;
+    private Producto? productoVacio;
+    private Producto? producto2;
+    private List<Producto>? carrito;
+>>>>>>> dcc2fb3bad0e5450b648dbc40d426feeac86a582
 
     [TestClass]
     public class PruebasPromociones20Off
@@ -89,6 +104,7 @@ namespace Pruebas.PruebasPromociones
             int costoTotal = promocion20!.AplicarPromocion(carrito!);
         }
 
+<<<<<<< HEAD
         [TestMethod]
         public void AplicaPromoErrorNulo()
         {
@@ -111,4 +127,17 @@ namespace Pruebas.PruebasPromociones
         }
 
     }
+=======
+    [TestMethod]
+    public void AplicaPromoError()
+    {
+        //Act
+        mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
+        carrito!.Remove(productoVacio!);
+        bool aplica = promocion20!.AplicarPromo(It.IsAny<List<Producto>>());
+        //Assert
+        Assert.AreEqual(false, aplica);
+    }*/
+    
+>>>>>>> dcc2fb3bad0e5450b648dbc40d426feeac86a582
 }

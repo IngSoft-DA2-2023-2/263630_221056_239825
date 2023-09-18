@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 
-namespace Repositorio
+namespace DataAccess
 {
     public class ECommerceContext: DbContext
     {

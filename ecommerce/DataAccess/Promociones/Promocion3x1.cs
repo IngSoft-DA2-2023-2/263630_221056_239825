@@ -1,11 +1,11 @@
 ﻿using System;
 using Dominio;
 
-namespace Repositorio.Promociones
+namespace DataAccess.Promociones
 {
-	public class Promocion3x2: IPromocionStrategy
+	public class Promocion3x1: IPromocionStrategy
 	{
-		public Promocion3x2()
+		public Promocion3x1()
 		{
 		}
 
