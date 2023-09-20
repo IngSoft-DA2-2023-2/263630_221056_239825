@@ -36,12 +36,12 @@ namespace DataAccess
 
             modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Categoria)
-                .WithMany()
+                .WithMany(c => c.Productos)
                 .HasForeignKey(p => p.Categoria);
 
             modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Marca)
-                .WithMany()
+                .WithMany(m => m.Productos)
                 .HasForeignKey(p => p.Marca);
 
             base.OnModelCreating(modelBuilder);

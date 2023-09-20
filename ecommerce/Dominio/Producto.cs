@@ -8,7 +8,9 @@ namespace Dominio
         public string Nombre { get; set; }
         public int Precio { get; set; }
         public string Descripcion { get; set; }
+        public int MarcaId { get; set; }
         public Marca Marca { get; set; }
+        public int CategoriaId { get; set; }
         public Categoria Categoria { get; set; }
         public List<Color> Colores { get; set; }
 

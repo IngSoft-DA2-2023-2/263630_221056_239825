@@ -9,6 +9,7 @@ namespace Dominio
     public class Color
     {
         public int Id { get; set; }
+        public int Nombre { get; set; }
         public List<ColorPorProducto> ProductosDelColor { get; set; }
     }
 }
