@@ -35,7 +35,17 @@ namespace DataAccess
                 .HasOne(cpp => cpp.Color)
                 .WithMany(c => c.ProductosDelColor)
                 .HasForeignKey(cpp => cpp.ColorId);
+            
+            modelBuilder.Entity<Producto>()
+                .HasOne(p => p.Categoria)
+                .WithMany() 
+                .HasForeignKey(p => p.Categoria);
 
+            modelBuilder.Entity<Producto>()
+                .HasOne(p => p.Marca)
+                .WithMany() 
+                .HasForeignKey(p => p.Marca);
+            
             base.OnModelCreating(modelBuilder);
 
         }
