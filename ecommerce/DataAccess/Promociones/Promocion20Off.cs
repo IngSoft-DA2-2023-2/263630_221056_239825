@@ -31,7 +31,7 @@ namespace DataAccess.Promociones
                     costoTotal += p.Precio;
 
                 }
-
+                NombrePromocion();
                 return costoTotal;
             }           
         }

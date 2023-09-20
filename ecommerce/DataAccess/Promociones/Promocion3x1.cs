@@ -16,12 +16,14 @@ namespace DataAccess.Promociones
 
         public string NombrePromocion()
         {
-            throw new NotImplementedException();
+            return "Se aplico la promocion de Fidelidad, 3x1";
         }
 
         public bool AplicarPromo(List<Producto> carrito)
         {
-            throw new NotImplementedException();
+            
+
+            return false;
         }
     }
 }
