@@ -14,6 +14,7 @@ namespace ServicioFactory
         {
             serviceCollection.AddDbContext<DbContext, ECommerceContext>();
             serviceCollection.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            serviceCollection.AddScoped<IManejadorUsuario, ManejadorUsuario>();
         }
     }
 }

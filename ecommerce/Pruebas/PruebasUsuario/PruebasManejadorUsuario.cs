@@ -106,7 +106,7 @@ namespace Pruebas.PruebasUsuario
             // Act
             mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
             mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
-            mock!.Setup(x => x.ActualizarUsuario(1, "Julio Cesar 1247"));
+            mock!.Setup(x => x.ActualizarUsuario(cliente!));
             manejadorUsuario!.RegistrarUsuario(cliente!);
             manejadorUsuario!.ActualizarUsuario(1, "Julio Cesar 1247");
             cliente!.DireccionEntrega = "Julio Cesar 1247";
@@ -119,7 +119,7 @@ namespace Pruebas.PruebasUsuario
         [TestMethod]
         public void AgregarCompraAlUsuarioOk()
         {
-            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compra!));
+            mock!.Setup(x => x.ActualizarUsuario(cliente!));
             mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
             manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
             cliente!.Compras.Add(compra!);
@@ -134,7 +134,7 @@ namespace Pruebas.PruebasUsuario
         public void AgregarCompraAlUsuarioSinProductos()
         {
             Compra compraVacia = new Compra();
-            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compraVacia!));
+            mock!.Setup(x => x.ActualizarUsuario(cliente!));
             manejadorUsuario!.AgregarCompraAlUsuario(1, compraVacia!);
         }
 
@@ -143,7 +143,7 @@ namespace Pruebas.PruebasUsuario
         public void AgregarCompraAlUsuarioNula()
         {
             Compra? compraNula = null;
-            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compraNula!));
+            mock!.Setup(x => x.ActualizarUsuario(cliente!));
             manejadorUsuario!.AgregarCompraAlUsuario(1, compraNula!);
         }
 
@@ -151,8 +151,8 @@ namespace Pruebas.PruebasUsuario
         public void ObtenerComprasDelUsuarioOk()
         {
             cliente!.Compras.Add(compra!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(1, compra!));
-            mock!.Setup(x => x.ObtenerComprasDelUsuario(1)).Returns(cliente!.Compras);
+            mock!.Setup(x => x.ActualizarUsuario(cliente!));
+            mock!.Setup(x => x.ObtenerUsuario(cliente.Id)).Returns(cliente!);
             manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
             var resultado = manejadorUsuario!.ObtenerComprasDelUsuario(1);
 

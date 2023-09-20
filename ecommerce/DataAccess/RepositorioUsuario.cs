@@ -1,90 +1,42 @@
 ﻿using DataAccess.Interfaces;
 using Dominio;
 using Dominio.Usuario;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess
 {
     public class RepositorioUsuario : IRepositorioUsuario
     {
-        private readonly IRepositorioUsuario repositorioUsuario;
-        private List<Usuario> usuarios;
-        public RepositorioUsuario(IRepositorioUsuario repositorioUsuario)
+        protected readonly DbContext Contexto;
+        public RepositorioUsuario(DbContext contexto)
         {
-            this.repositorioUsuario = repositorioUsuario;
-            usuarios = new List<Usuario>();
+            Contexto = contexto;
         }
+
         public Usuario AgregarUsuario(Usuario usuario)
         {
-            usuarios.Add(usuario);
+            Contexto.Set<Usuario>().Add(usuario);
             return usuario;
         }
 
-        public void ActualizarUsuario(int id, string direccionEntrega)
+        public void ActualizarUsuario(Usuario usuario)
         {
-            try
-            {
-                Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-                EliminarUsuario(usuarioEncontrado);
-                usuarioEncontrado.DireccionEntrega = direccionEntrega;
-                AgregarUsuario(usuarioEncontrado);
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("El usuario no existe");
-            }
-        }
-
-        public void AgregarCompraAlUsuario(int id, Compra compra)
-        {
-            try
-            {
-                Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-                EliminarUsuario(usuarioEncontrado);
-                usuarioEncontrado.Compras.Add(compra);
-                AgregarUsuario(usuarioEncontrado);
-            }
-            catch (Exception) { throw new ArgumentException("El usuario no existe"); }
-        }
-
-
-        public List<Compra> ObtenerComprasDelUsuario(int id)
-        {
-            try
-            {
-                Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-                return (usuarioEncontrado.Compras);
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("El usuario no existe");
-            }
+            Contexto.Entry(usuario).State = EntityState.Modified;
         }
 
         public Usuario ObtenerUsuario(int id)
         {
-            try
-            {
-                Usuario usuarioEncontrado = usuarios.First(u => u.Id == id);
-                return (usuarioEncontrado);
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("El usuario no existe");
-            }
+            return Contexto.Set<Usuario>().First(u => u.Id == id);
         }
 
         public List<Usuario> ObtenerUsuarios()
         {
-            return usuarios;
+            return Contexto.Set<Usuario>().ToList();
         }
 
         public void EliminarUsuario(Usuario usuario)
         {
-            bool esEliminado = usuarios.Remove(usuario);
-            if(!esEliminado)
-            {
-                throw new ArgumentException("El usuario a eliminar no existe");
-            }
+            Contexto.Set<Usuario>().Remove(usuario);
         }
     }
 }

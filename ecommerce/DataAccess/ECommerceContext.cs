@@ -1,13 +1,7 @@
 ﻿using Dominio;
+using Dominio.Usuario;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace DataAccess
 {
@@ -16,9 +10,16 @@ namespace DataAccess
         public ECommerceContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Producto> Productos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Color> Colores { get; set; }
+        public DbSet<Compra> Compras { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Usuario>()
+                .HasKey(u => u.Id);
 
             modelBuilder.Entity<ColorPorProducto>()
                 .HasKey(cpp => new { cpp.ProductoId, cpp.ColorId });
@@ -32,6 +33,16 @@ namespace DataAccess
                 .HasOne(cpp => cpp.Color)
                 .WithMany(c => c.ProductosDelColor)
                 .HasForeignKey(cpp => cpp.ColorId);
+
+            modelBuilder.Entity<Producto>()
+                .HasOne(p => p.Categoria)
+                .WithMany()
+                .HasForeignKey(p => p.Categoria);
+
+            modelBuilder.Entity<Producto>()
+                .HasOne(p => p.Marca)
+                .WithMany()
+                .HasForeignKey(p => p.Marca);
 
             base.OnModelCreating(modelBuilder);
 
@@ -57,7 +68,7 @@ namespace DataAccess
         private string DBConnectionStringFactory(IConfigurationRoot configuration) => Environment.OSVersion.Platform switch
         {
             PlatformID.MacOSX => configuration.GetConnectionString("AppleECommerceDB")!,
-            _ => configuration.GetConnectionString("WinECommerceDB")!
+            PlatformID.Win32NT => configuration.GetConnectionString("WinECommerceDB")!
         };
 
     }

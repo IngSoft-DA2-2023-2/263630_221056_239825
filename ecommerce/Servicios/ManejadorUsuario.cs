@@ -40,14 +40,18 @@ namespace Servicios
 
         public void ActualizarUsuario(int id, string direccionEntrega)
         {
-            repositorioUsuario.ActualizarUsuario(id, direccionEntrega);
+            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+            usuarioObtenido.DireccionEntrega = direccionEntrega;
+            repositorioUsuario.ActualizarUsuario(usuarioObtenido);
         }
 
         public void AgregarCompraAlUsuario(int id, Compra compra)
         {
             if (ValidarCompra(compra))
             {
-                repositorioUsuario.AgregarCompraAlUsuario(id, compra);
+                Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+                usuarioObtenido.Compras.Add(compra);
+                repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
         }
 
@@ -66,7 +70,8 @@ namespace Servicios
 
         public List<Compra> ObtenerComprasDelUsuario(int id)
         {
-            return repositorioUsuario.ObtenerComprasDelUsuario(id);
+            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+            return usuarioObtenido.Compras;
         }
 
         public Usuario ObtenerUsuario(int id)

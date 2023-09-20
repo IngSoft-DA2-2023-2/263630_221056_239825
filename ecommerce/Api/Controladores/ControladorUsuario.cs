@@ -1,4 +1,5 @@
-﻿using Dominio.Usuario;
+﻿using Api.Dtos;
+using Dominio.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
 using Servicios.Interfaces;
@@ -14,6 +15,14 @@ namespace Api.Controladores
         {
             _manejadorUsuario = manejadorUsuario;
         }
+
+        [HttpPost]
+        public IActionResult RegistrarUsuario([FromBody] UsuarioCrearModelo nuevoUsuario)
+        {
+            _manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity());
+            return Ok();
+        }
+
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
