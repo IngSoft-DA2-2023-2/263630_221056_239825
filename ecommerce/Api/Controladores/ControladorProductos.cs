@@ -1,4 +1,5 @@
-﻿using Dominio;
+﻿using DataAccess;
+using Dominio;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controladores
@@ -7,6 +8,7 @@ namespace Api.Controladores
     [Route("api/v1/productos")]
     public class ControladorProductos : ControllerBase
     {
+        private readonly ServicioProducto _servicioProducto = new ServicioProducto();
         private readonly ILogger<ControladorProductos> _logger;
 
         public ControladorProductos(ILogger<ControladorProductos> logger)
@@ -17,20 +19,40 @@ namespace Api.Controladores
         [HttpGet("{id}")]
         public Producto BuscarPorId(int id)
         {
-            //logica de busqueda
-            var marca = new Marca();
-            var categoria = new Categoria();
-            var colores = new List<Color>();
-            var productoBuscado = new Producto("a", 2,"",marca, categoria, colores);
+            var productoBuscado = _servicioProducto.EncontrarPorId(id);
+
             return productoBuscado;
         }
         
         [HttpGet]
         public List<Producto> BuscarTodos()
         {
-            //logica de busqueda
-            var listaProductos = new List<Producto>();
+            var listaProductos = _servicioProducto.RetornarLista();
             return listaProductos;
         }
+        
+        [HttpPost("{nombre,precio,descripcion}")]
+        public void AgregarProducto(string nombre, int precio, string descripcion)
+        {
+            var productoNuevo = new Producto(nombre, precio, descripcion);
+            _servicioProducto.AgregarProducto(productoNuevo);
+        }
+        
+        
+        [HttpPatch("{id}")]
+        public void EliminarProducto(int id)
+        {
+            var productoAEliminar = _servicioProducto.EncontrarPorId(id);
+            _servicioProducto.EliminarProducto(productoAEliminar);
+        }
+        
+        [HttpPatch("{id,nombre,precio,descripcion}")]
+        public void ModificarProducto(int id, string nombre, int precio, string descripcion)
+        {
+            var productoNuevo = new Producto(nombre, precio, descripcion);
+            var productoAReemplazar = _servicioProducto.EncontrarPorId(id);
+            _servicioProducto.ModificarProducto(productoNuevo,productoAReemplazar);
+        }
+        
     }
 }

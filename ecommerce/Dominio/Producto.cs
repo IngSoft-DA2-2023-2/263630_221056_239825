@@ -16,14 +16,13 @@ namespace Dominio
 
         public List<ColorPorProducto> ColoresDelProducto { get; set; }
 
-        public Producto(string nombre, int precio, string descripcion, Marca marca, Categoria categoria, List<Color> colores)
+        public Producto(string nombre, int precio, string descripcion)
         {
             Nombre = nombre;
             Precio = precio;
             Descripcion = descripcion;
-            Marca = marca;
-            Categoria = categoria;
-            Colores = colores;
         }
+        
+        
     }
 }

@@ -3,13 +3,7 @@ using DataAccess;
 
 public class ServicioProducto
 {
-    private IRepositorioProducto _repositorioProductos;
-
-    public ServicioProducto(IRepositorioProducto repoLocal)
-    {
-        _repositorioProductos = repoLocal;
-    }
-
+    private IRepositorioProducto _repositorioProductos = new RepositorioProducto();
     public void AgregarProducto(Producto productoAgregado)
     {
         _repositorioProductos.AgregarProducto(productoAgregado);
@@ -23,5 +17,23 @@ public class ServicioProducto
     public void ModificarProducto(Producto productoNuevo, Producto productoAModificar)
     {
         _repositorioProductos.ModificarProducto(productoNuevo, productoAModificar);
+    }
+
+    public List<Producto> RetornarLista()
+    {
+        var listaDeProductos = _repositorioProductos.RetornarLista();
+
+        return listaDeProductos;
+    }
+    
+    public Producto EncontrarPorId(int idProducto)
+    {
+        var productoEncontrado = _repositorioProductos.EncontrarProductoPorId(idProducto);
+        if (productoEncontrado is null)
+        {
+            throw new ArgumentException("El producto con el id dado no se encontro.");
+        }
+
+        return productoEncontrado;
     }
 }
