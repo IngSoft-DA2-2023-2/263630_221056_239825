@@ -6,9 +6,6 @@ namespace Pruebas.PruebasProducto;
 [TestClass]
 public class PruebasServicioProducto
 {
-    private Marca _marcaDePrueba;
-    private Categoria _categoriaDePrueba;
-    private List<Color> _listaColoresDePrueba;
     private Producto _productoDePrueba;
     private RepositorioProducto _repositorio;
 
@@ -16,11 +13,7 @@ public class PruebasServicioProducto
     public void Init()
     {
         _repositorio = new RepositorioProducto();
-        _marcaDePrueba = new Marca();
-        _categoriaDePrueba = new Categoria();
-        _listaColoresDePrueba = new List<Color>();
-        _productoDePrueba = new Producto("Producto 1", 99, "Este es un producto para pruebas", _marcaDePrueba,
-            _categoriaDePrueba, _listaColoresDePrueba);
+        _productoDePrueba = new Producto("Producto 1", 99, "Este es un producto para pruebas");
         _productoDePrueba.Id = 01;
     }
 
@@ -65,8 +58,7 @@ public class PruebasServicioProducto
     public void ModificarProductoExistente()
     {
         //Arrange
-        var productoDePrueba2 = new Producto("Producto modificado", 78, "Producto nuevo", _marcaDePrueba,
-            _categoriaDePrueba, _listaColoresDePrueba);
+        var productoDePrueba2 = new Producto("Producto modificado", 78, "Producto nuevo");
         productoDePrueba2.Id = 02;
         //Act
         _repositorio.AgregarProducto(_productoDePrueba);
@@ -80,8 +72,7 @@ public class PruebasServicioProducto
     public void ModificarProductoInexistente()
     {
         //Arrange
-        var productoDePrueba2 = new Producto("Producto modificado", 78, "Producto nuevo", _marcaDePrueba,
-            _categoriaDePrueba, _listaColoresDePrueba);
+        var productoDePrueba2 = new Producto("Producto modificado", 78, "Producto nuevo");
         productoDePrueba2.Id = 02;
         //Act
         _repositorio.ModificarProducto(productoDePrueba2, _productoDePrueba);

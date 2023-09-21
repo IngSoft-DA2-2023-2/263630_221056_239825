@@ -7,10 +7,8 @@ namespace DataAccess
 {
     public class ECommerceContext: DbContext
     {
-        public ECommerceContext() : base() { }
-
         public DbSet<Producto> Productos { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
+        //public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Color> Colores { get; set; }
@@ -18,36 +16,8 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Usuario>()
-                .HasKey(u => u.Id);
-
-            modelBuilder.Entity<ColorPorProducto>()
-                .HasKey(cpp => new { cpp.ProductoId, cpp.ColorId });
-
-            modelBuilder.Entity<ColorPorProducto>()
-                .HasOne(cpp => cpp.Producto)
-                .WithMany(p => p.ColoresDelProducto)
-                .HasForeignKey(cpp => cpp.ProductoId);
-
-            modelBuilder.Entity<ColorPorProducto>()
-                .HasOne(cpp => cpp.Color)
-                .WithMany(c => c.ProductosDelColor)
-                .HasForeignKey(cpp => cpp.ColorId);
-            
-            modelBuilder.Entity<Producto>()
-                .HasOne(p => p.Categoria)
-                .WithMany(c => c.Productos)
-                .HasForeignKey(p => p.CategoriaId);
-
-            modelBuilder.Entity<Producto>()
-                .HasOne(p => p.Categoria)
-                .WithMany(c => c.Productos)
-                .HasForeignKey(p => p.Categoria);
-
-            modelBuilder.Entity<Producto>()
-                .HasOne(p => p.Marca)
-                .WithMany(m => m.Productos)
-                .HasForeignKey(p => p.Marca);
+           /* modelBuilder.Entity<Usuario>()
+                .HasKey(u => u.Id);*/
 
             base.OnModelCreating(modelBuilder);
 
@@ -64,17 +34,11 @@ namespace DataAccess
                  .AddJsonFile("appsettings.json")
                  .Build();
 
-                var connectionString = DBConnectionStringFactory(configuration);
+                var connectionString = configuration.GetConnectionString("ECommerceDB");
 
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
-
-        private string DBConnectionStringFactory(IConfigurationRoot configuration) => Environment.OSVersion.Platform switch
-        {
-            PlatformID.MacOSX => configuration.GetConnectionString("AppleECommerceDB")!,
-            PlatformID.Win32NT => configuration.GetConnectionString("WinECommerceDB")!
-        };
 
     }
 }
