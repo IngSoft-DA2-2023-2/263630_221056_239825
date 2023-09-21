@@ -36,6 +36,5 @@ namespace DataAccess
                 optionsBuilder.UseSqlServer(connectionString);
             }
         }
-
     }
 }
