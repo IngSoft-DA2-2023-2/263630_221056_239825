@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using Dominio.Usuario;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +33,11 @@ namespace DataAccess
                 .HasOne(cpp => cpp.Color)
                 .WithMany(c => c.ProductosDelColor)
                 .HasForeignKey(cpp => cpp.ColorId);
+            
+            modelBuilder.Entity<Producto>()
+                .HasOne(p => p.Categoria)
+                .WithMany(c => c.Productos)
+                .HasForeignKey(p => p.CategoriaId);
 
             modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Categoria)
