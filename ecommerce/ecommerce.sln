@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicios", "Servicios\Servicios.csproj", "{627D2801-F53C-494A-B9B5-1046D8682868}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicioFactory", "ServicioFactory\ServicioFactory.csproj", "{C6C1BDD3-DA9E-4C19-AEFE-1E4A2C9CAA5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicioFactory", "ServicioFactory\ServicioFactory.csproj", "{C6C1BDD3-DA9E-4C19-AEFE-1E4A2C9CAA5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrations", "Migrations\Migrations.csproj", "{6084143C-3C6B-4BE1-AA59-907DCC0621CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C6C1BDD3-DA9E-4C19-AEFE-1E4A2C9CAA5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6C1BDD3-DA9E-4C19-AEFE-1E4A2C9CAA5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6C1BDD3-DA9E-4C19-AEFE-1E4A2C9CAA5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6084143C-3C6B-4BE1-AA59-907DCC0621CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6084143C-3C6B-4BE1-AA59-907DCC0621CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6084143C-3C6B-4BE1-AA59-907DCC0621CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6084143C-3C6B-4BE1-AA59-907DCC0621CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

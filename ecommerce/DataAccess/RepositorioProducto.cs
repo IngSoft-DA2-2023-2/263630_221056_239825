@@ -7,87 +7,33 @@ namespace DataAccess;
 
 public class RepositorioProducto : IRepositorioProducto
 {
+    protected readonly DbContext Contexto;
+    public RepositorioProducto(DbContext contexto)
+    {
+        Contexto = contexto;
+    }
     public List<Producto> RetornarLista()
     {
-        List<Producto> listaDeProductos;
-        using (var ctx = new ECommerceContext())
-        {
-            listaDeProductos = ctx.Productos.ToList();
-        }
-
-        return listaDeProductos;
+        return Contexto.Set<Producto>().ToList();
     }
 
     public Producto? EncontrarProductoPorId(int id)
     {
-        Producto productoARetornar;
-        using (var ctx = new ECommerceContext())
-        {
-            productoARetornar = ctx.Productos.FirstOrDefault(p => p.Id == id);
-        }
-
-        return productoARetornar;
+        return Contexto.Set<Producto>().First(p => p.Id == id);
     }
     
     public void AgregarProducto(Producto productoAgregado)
     {
-        try
-        {
-            using (var ctx = new ECommerceContext())
-            {
-                
-                if (ExisteElProducto(productoAgregado))
-                {
-                    throw new ArgumentException("El producto ya existe en el sistema.");
-                }
-                
-                ctx.Productos.Attach(productoAgregado);
-                ctx.SaveChanges();
-            }
-        }
-        catch (Exception x) when (x is DbException || x is DataException)
-        {
-            throw new ArgumentException("El contacto con la BD fallo");
-        }
+        Contexto.Set<Producto>().Add(productoAgregado);
     }
     
     public void EliminarProducto(Producto productoABorrar)
     {
-        try
-        {
-            using (var ctx = new ECommerceContext())
-            {
-                
-                if (!ExisteElProducto(productoABorrar))
-                {
-                    throw new ArgumentException("El producto ya existe en el sistema.");
-                }
-                
-                ctx.Categorias.Remove(productoABorrar.Categoria);
-                ctx.Marcas.Remove(productoABorrar.Marca);
-                ctx.Productos.Remove(productoABorrar);
-                ctx.SaveChanges();
-            }
-        }
-        catch (Exception x) when (x is DbException || x is DataException)
-        {
-            throw new ArgumentException("El contacto con la BD fallo");
-        }
+        Contexto.Set<Producto>().Remove(productoABorrar);
     }
     
     public void ModificarProducto(Producto productoNuevo, Producto productoAModificar)
     {
-        var idOriginal = -999;
-        if (!ExisteElProducto(productoAModificar))
-        {
-            throw new ArgumentException("El producto especificado no fue encontrado.");
-        }
-
-        idOriginal = productoAModificar.Id;
-        productoNuevo.Id = idOriginal;
-        EliminarProducto(productoAModificar);
-        AgregarProducto(productoNuevo);
+        Contexto.Entry(productoAModificar).CurrentValues.SetValues(productoNuevo);
     }
-
-    private bool ExisteElProducto(Producto productoAgregado) => EncontrarProductoPorId((productoAgregado.Id)) is null;
 }
