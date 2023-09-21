@@ -1,9 +1,15 @@
 ﻿using Dominio;
 using DataAccess;
 
-public class ServicioProducto
+public class ServicioProducto : IServicioProducto
 {
-    private IRepositorioProducto _repositorioProductos = new RepositorioProducto();
+    private IRepositorioProducto _repositorioProductos;
+
+    public ServicioProducto(IRepositorioProducto repositorioProductos)
+    {
+        _repositorioProductos = repositorioProductos;
+    }
+    
     public void AgregarProducto(Producto productoAgregado)
     {
         _repositorioProductos.AgregarProducto(productoAgregado);

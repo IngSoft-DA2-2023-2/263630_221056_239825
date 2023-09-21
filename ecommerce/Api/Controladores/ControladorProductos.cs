@@ -8,11 +8,12 @@ namespace Api.Controladores
     [Route("api/v1/productos")]
     public class ControladorProductos : ControllerBase
     {
-        private readonly ServicioProducto _servicioProducto = new ServicioProducto();
+        private readonly IServicioProducto _servicioProducto;
         private readonly ILogger<ControladorProductos> _logger;
 
-        public ControladorProductos(ILogger<ControladorProductos> logger)
+        public ControladorProductos(ILogger<ControladorProductos> logger, IServicioProducto servicio)
         {
+            _servicioProducto = servicio;
             _logger = logger;
         }
 

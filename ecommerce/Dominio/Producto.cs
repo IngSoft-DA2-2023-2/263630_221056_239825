@@ -14,8 +14,6 @@ namespace Dominio
         public Categoria Categoria { get; set; }
         public List<Color> Colores { get; set; }
 
-        public List<ColorPorProducto> ColoresDelProducto { get; set; }
-
         public Producto(string nombre, int precio, string descripcion)
         {
             Nombre = nombre;
