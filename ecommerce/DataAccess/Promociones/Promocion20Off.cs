@@ -11,7 +11,7 @@ namespace DataAccess.Promociones
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
-            if(listaCompra.Count < 2)
+            if(listaCompra.Count < 2 || listaCompra == null)
             {
                 throw new InvalidOperationException("La promocion se aplica si hay, al menos, 2 productos en el carrito");
             }
@@ -20,14 +20,14 @@ namespace DataAccess.Promociones
                 int costoTotal = 0;
                 Producto productoMayorValor = listaCompra.OrderByDescending(p => p.Precio).First();
                 int productoConDescuento = (int)(productoMayorValor.Precio * 0.80);
-                bool esPrimero = true;
+                //bool esPrimero = true;
                 foreach(Producto p in listaCompra)
                 {
-                    if (esPrimero)
-                    {
+                    //if (esPrimero)
+                    //{
                         p.Precio = productoConDescuento;
-                        esPrimero = false;
-                    }
+                        //esPrimero = false;
+                    //}
                     costoTotal += p.Precio;
 
                 }
@@ -43,15 +43,11 @@ namespace DataAccess.Promociones
 
         public bool AplicarPromo(List<Producto> carrito)
         {
-            if (carrito.Count < 2)
+            if (carrito == null || carrito.Count < 2 || carrito.Any(p => p == null))
             {
                 return false;
-            }
-            else
-            {
-                return true;
-            }
-            //Verificar que no sean nulos
+            }           
+            return true;
         }
 
     }

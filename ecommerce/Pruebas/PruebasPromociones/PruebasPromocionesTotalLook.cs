@@ -60,10 +60,10 @@ namespace Pruebas.PruebasPromociones
         public void NombrePromocion()
         {
             //Act
-            mock!.Setup(x => x.NombrePromocion()).Returns("50% de descuento en el producto de mayor valor");
+            mock!.Setup(x => x.NombrePromocion()).Returns("Se aplico un 50% de descuento en el producto de mayor valor");
             string nombre = promocionTotalLook!.NombrePromocion();
             //Assert
-            Assert.AreEqual("50% de descuento en el producto de mayor valor", nombre);
+            Assert.AreEqual("Se aplico un 50% de descuento en el producto de mayor valor", nombre);
         }
 
         [TestMethod]

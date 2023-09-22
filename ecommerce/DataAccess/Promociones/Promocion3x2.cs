@@ -21,27 +21,28 @@ namespace DataAccess.Promociones
 
             foreach (Producto p in listaCompra)
             {
-                int cant = 0;
-                int menorProducto = int.MaxValue;
+                costoTotal += p.Precio;
+            }
 
                 foreach (Producto p2 in listaCompra)
                 {
-                    costoTotal += p.Precio;
-                    if (p2.Categoria == p.Categoria)
+                    int cant = 0;
+                    int menorProducto = int.MaxValue;
+
+                    foreach (Producto prod in listaCompra)
                     {
-                        cant++;
-                        menorProducto = Math.Min(menorProducto, p2.Precio);
+                        if (p2.Categoria == prod.Categoria)
+                        {
+                            cant++;
+                            menorProducto = Math.Min(menorProducto, p2.Precio);
+                        }
                     }
-                }
-
-                if (cant >= 2 && p.Precio == menorProducto)
-                {
-                    p.Precio = 0; 
-                    promoAplicada = true;
-                }
-
-                costoTotal -= p.Precio;
-            }           
+                    if (cant >= 2 && p2.Precio == menorProducto)
+                    {
+                        costoTotal -= menorProducto;
+                        promoAplicada = true;                      
+                    }
+                }                      
                 return costoTotal;            
         }
 

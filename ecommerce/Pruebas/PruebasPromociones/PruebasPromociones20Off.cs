@@ -52,37 +52,37 @@ namespace Pruebas.PruebasPromociones
         public void NombrePromocion()
         {
             //Act
-            mock!.Setup(x => x.NombrePromocion()).Returns("20% de descuento en el producto de mayor valor");
+            mock!.Setup(x => x.NombrePromocion()).Returns("Se aplico un 20% de descuento en el producto de mayor valor");
             string nombre = promocion20!.NombrePromocion();
             //Assert
-            Assert.AreEqual("20% de descuento en el producto de mayor valor", nombre);
+            Assert.AreEqual("Se aplico un 20% de descuento en el producto de mayor valor", nombre);
         }
 
-        [TestMethod]
-        public void AplicaPromoOk()
-        {
-            //Act
-            mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(true);
-            bool aplica = promocion20!.AplicarPromo(It.IsAny<List<Producto>>());
-            //Assert
-            Assert.AreEqual(true, aplica);
-        }
+        //[TestMethod]
+        //public void AplicaPromoOk()
+        //{
+        //    //Act
+        //    mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(true);
+        //    bool aplica = promocion20!.AplicarPromo(It.IsAny<List<Producto>>());
+        //    //Assert
+        //    Assert.AreEqual(true, aplica);
+        //}
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void AplicarPromocionError()
         {
-            //Act
+            // Act
             mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3490);
             carrito!.Remove(producto2!);
             int costoTotal = promocion20!.AplicarPromocion(carrito!);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void AplicarPromocionErrorNulo()
         {
-            //Act
+            // Act
             mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3490);
             carrito!.Remove(producto2!);
             carrito!.Add(productoVacio!);

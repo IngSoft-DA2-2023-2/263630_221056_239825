@@ -62,10 +62,10 @@ namespace Pruebas.PruebasPromociones
         public void NombrePromocion()
         {
             //Act
-            mock!.Setup(x => x.NombrePromocion()).Returns("Los dos productos de menor valor son gratis");
+            mock!.Setup(x => x.NombrePromocion()).Returns("Se aplico la promocion de Fidelidad, 3x1");
             string nombre = promocion3x1!.NombrePromocion();
             //Assert
-            Assert.AreEqual("Los dos productos de menor valor son gratis", nombre);
+            Assert.AreEqual("Se aplico la promocion de Fidelidad, 3x1", nombre);
         }
 
         [TestMethod]
