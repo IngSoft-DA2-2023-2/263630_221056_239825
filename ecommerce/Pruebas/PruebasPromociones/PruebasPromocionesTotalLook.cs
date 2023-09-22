@@ -27,7 +27,7 @@ namespace Pruebas.PruebasPromociones
 
             Marca marca = new();
             Categoria categoria = new();
-            List<Color> colores = new();
+            List<Color> colores = new ();
             producto = new Producto("Camisa", 1000, "Larga", marca, categoria, colores);
 
             productoVacio = null;
@@ -38,12 +38,7 @@ namespace Pruebas.PruebasPromociones
 
             producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria , colores);
 
-            carrito = new List<Producto>
-            {
-                producto,
-                producto2,
-                producto3
-            };
+            carrito = new List<Producto> {producto, producto2, producto3};
         }
 
         [TestMethod]
@@ -71,7 +66,7 @@ namespace Pruebas.PruebasPromociones
         {
             //Act
             mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(true);
-            bool aplica = promocionTotalLook!.AplicarPromo(It.IsAny<List<Producto>>());
+            bool aplica = promocionTotalLook!.AplicarPromo(carrito!);
             //Assert
             Assert.AreEqual(true, aplica);
         }
@@ -82,7 +77,7 @@ namespace Pruebas.PruebasPromociones
         {
             //Act
             mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(4750);
-            carrito!.Remove(producto!);
+            carrito!.Remove(producto2!);
             Marca marca = new();
             Categoria categoria = new();
             List<Color> colorNuevo = new();
@@ -107,7 +102,9 @@ namespace Pruebas.PruebasPromociones
         {
             //Act
             mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
-            bool aplica = promocionTotalLook!.AplicarPromo(It.IsAny<List<Producto>>());
+            carrito!.Remove(producto2!);
+            carrito.Add(null);
+            bool aplica = promocionTotalLook!.AplicarPromo(carrito);
             //Assert
             Assert.AreEqual(false, aplica);
         }
@@ -118,7 +115,7 @@ namespace Pruebas.PruebasPromociones
             //Act
             mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
             carrito!.Remove(productoVacio!);
-            bool aplica = promocionTotalLook!.AplicarPromo(It.IsAny<List<Producto>>());
+            bool aplica = promocionTotalLook!.AplicarPromo(carrito);
             //Assert
             Assert.AreEqual(false, aplica);
         }
