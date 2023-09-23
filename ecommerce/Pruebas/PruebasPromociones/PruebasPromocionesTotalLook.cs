@@ -10,9 +10,9 @@ namespace Pruebas.PruebasPromociones
 {
     [TestClass]
     public class PruebasPromocionesTotalLook
-	{
-        private Mock<IPromocionStrategy>? mock;
-        private PromocionTotalLook? promocionTotalLook;
+    {
+        private IPromocionStrategy? promocionTotalLook;
+        private Producto? producto0;
         private Producto? producto;
         private Producto? productoVacio;
         private Producto? producto2;
@@ -22,30 +22,54 @@ namespace Pruebas.PruebasPromociones
         [TestInitialize]
         public void InitTest()
         {
-            mock = new Mock<IPromocionStrategy>();
             promocionTotalLook = new PromocionTotalLook();
-
             Marca marca = new();
             Categoria categoria = new();
-            List<Color> colores = new ();
-            producto = new Producto("Camisa", 1000, "Larga", marca, categoria, colores);
-
-            productoVacio = null;
-
+            Color rojo = new Color()
+            {
+                Id = 0,
+                Nombre = "Rojo"
+            };
+            Color azul = new Color()
+            {
+                Id = 1,
+                Nombre = "Azul"
+            };
+            Color verde = new Color()
+            {
+                Id = 2,
+                Nombre = "Verde"
+            };
+            List<Color> coloresProducto1 = new()
+            {
+                rojo
+            };
+            List<Color> coloresProducto2 = new()
+            {
+                azul, rojo
+            };
+            List<Color> coloresProducto3 = new()
+            {
+                azul, rojo, verde
+            };
+            List<Color> coloresProducto0 = new List<Color>()
+            {
+                verde
+            };
+            producto0 = new Producto("aaa", 22, "vvv", marca, categoria, coloresProducto0);
+            producto = new Producto("Camisa", 1000, "Larga", marca, categoria, coloresProducto1);
             Marca marca2 = new();
             Categoria categoria2 = new();
-            producto2 = new Producto("Botas", 2000, "Con taco", marca2, categoria2, colores);
-
-            producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria , colores);
-
-            carrito = new List<Producto> {producto, producto2, producto3};
+            producto2 = new Producto("Botas", 2000, "Con taco", marca2, categoria2, coloresProducto2);
+            producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria, coloresProducto3);
+            productoVacio = null;
+            carrito = new List<Producto> { producto, producto2, producto3 };
         }
 
         [TestMethod]
         public void AplicarPromocionOk()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(4750);
             int costoTotal = promocionTotalLook!.AplicarPromocion(carrito!);
             // Assert
             Assert.AreEqual(4750, costoTotal);
@@ -55,7 +79,6 @@ namespace Pruebas.PruebasPromociones
         public void NombrePromocion()
         {
             //Act
-            mock!.Setup(x => x.NombrePromocion()).Returns("Se aplico un 50% de descuento en el producto de mayor valor");
             string nombre = promocionTotalLook!.NombrePromocion();
             //Assert
             Assert.AreEqual("Se aplico un 50% de descuento en el producto de mayor valor", nombre);
@@ -65,7 +88,6 @@ namespace Pruebas.PruebasPromociones
         public void AplicaPromoOk()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(true);
             bool aplica = promocionTotalLook!.AplicarPromo(carrito!);
             //Assert
             Assert.AreEqual(true, aplica);
@@ -76,7 +98,6 @@ namespace Pruebas.PruebasPromociones
         public void AplicarPromocionError()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(4750);
             carrito!.Remove(producto2!);
             Marca marca = new();
             Categoria categoria = new();
@@ -87,11 +108,10 @@ namespace Pruebas.PruebasPromociones
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void AplicarPromocionErrorNulo()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(4750);
             carrito!.Remove(producto2!);
             carrito!.Add(productoVacio!);
             int costoTotal = promocionTotalLook!.AplicarPromocion(carrito!);
@@ -101,7 +121,6 @@ namespace Pruebas.PruebasPromociones
         public void AplicaPromoErrorNulo()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
             carrito!.Remove(producto2!);
             carrito.Add(null);
             bool aplica = promocionTotalLook!.AplicarPromo(carrito);
@@ -113,7 +132,6 @@ namespace Pruebas.PruebasPromociones
         public void AplicaPromoError()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
             carrito!.Remove(productoVacio!);
             bool aplica = promocionTotalLook!.AplicarPromo(carrito);
             //Assert
