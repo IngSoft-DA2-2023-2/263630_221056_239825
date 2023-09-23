@@ -11,7 +11,7 @@ namespace DataAccess.Promociones
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
-            if (listaCompra.Count < 3)
+            if (listaCompra.Count < 3 || listaCompra==null)
             {
                 throw new InvalidOperationException("La promoción se aplica si hay, al menos, 3 productos en el carrito");
             }
@@ -53,26 +53,11 @@ namespace DataAccess.Promociones
 
         public bool AplicarPromo(List<Producto> carrito)
         {
-            //if (carrito == null || carrito.Count < 3)
-            //{
-            //    return false;
-            //}
-            //foreach (Producto prod in carrito)
-            //{
-            //    int contCategoria = 0;
-            //    foreach (Producto p in carrito)
-            //    {
-            //        if (CoincideCategoria(prod, p))
-            //        {
-            //            contCategoria++;
-            //            if (contCategoria >= 3)
-            //            {
-            //                return true;
-            //            }
-            //        }
-            //    }
-            //}
-            return false;
+            if (carrito == null || carrito.Count < 3 || carrito.Any(p => p == null))
+            {
+                return false;
+            }
+            return true;
         }
 
         //private static bool CoincideCategoria(Producto prod, Producto p)
