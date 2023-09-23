@@ -21,9 +21,7 @@ namespace DataAccess.Promociones
 
         public bool AplicarPromo(List<Producto> carrito)
         {
-
-
-            return false;
+            throw new NotImplementedException();
         }
     }
 }

@@ -53,8 +53,42 @@ namespace DataAccess.Promociones
 
         public bool AplicarPromo(List<Producto> carrito)
         {
-            throw new NotImplementedException();
+            //if (carrito == null || carrito.Count < 3)
+            //{
+            //    return false;
+            //}
+            //foreach (Producto prod in carrito)
+            //{
+            //    int contCategoria = 0;
+            //    foreach (Producto p in carrito)
+            //    {
+            //        if (CoincideCategoria(prod, p))
+            //        {
+            //            contCategoria++;
+            //            if (contCategoria >= 3)
+            //            {
+            //                return true;
+            //            }
+            //        }
+            //    }
+            //}
+            return false;
         }
+
+        //private static bool CoincideCategoria(Producto prod, Producto p)
+        //{
+        //    foreach (var c in prod.Categoria)
+        //    {
+        //        foreach (Categoria categoria in p.Categoria)
+        //        {
+        //            if (c.Id == categoria.Id)
+        //            {
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    return false;
+        //}
     }
 }
 

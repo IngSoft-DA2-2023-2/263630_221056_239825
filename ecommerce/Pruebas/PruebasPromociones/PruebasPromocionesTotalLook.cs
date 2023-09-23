@@ -122,7 +122,7 @@ namespace Pruebas.PruebasPromociones
         {
             //Act
             carrito!.Remove(producto2!);
-            carrito.Add(null);
+            carrito.Add(productoVacio!);
             bool aplica = promocionTotalLook!.AplicarPromo(carrito);
             //Assert
             Assert.AreEqual(false, aplica);

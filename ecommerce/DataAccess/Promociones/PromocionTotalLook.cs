@@ -11,53 +11,53 @@ namespace DataAccess.Promociones
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
-            Dictionary<string, int> coloresCount = new Dictionary<string, int>();
-            Dictionary<string, Producto> productosMasCarosPorColor = new Dictionary<string, Producto>();
-            int costoTotal = 0;
-
-            foreach(Producto p in listaCompra)
+            if (listaCompra == null || listaCompra.Count < 3)
             {
-                costoTotal += p.Precio;
+                throw new InvalidOperationException("La promoción se aplica si hay, al menos, 3 productos en el carrito");
             }
 
-            // Paso 1: Contar cuántas veces aparece cada color y realizar un seguimiento del producto más caro de cada color.
-            foreach (var producto in listaCompra)
-            {
-                foreach (var color in producto.Colores)
-                {
-                    string colorNombre = color.Nombre;
+            Dictionary<string, int> coloresCount = new();
+                Dictionary<string, Producto> productosMasCarosPorColor = new();
+                int costoTotal = 0;
 
-                    if (coloresCount.ContainsKey(colorNombre))
+                foreach (Producto p in listaCompra)
+                {
+                    costoTotal += p.Precio;
+                }
+
+                foreach (var producto in listaCompra)
+                {
+                    foreach (Color color in producto.Colores)
                     {
-                        coloresCount[colorNombre]++;
-                        if (producto.Precio > productosMasCarosPorColor[colorNombre].Precio)
+                        string colorNombre = color.Nombre;
+
+                        if (coloresCount.ContainsKey(colorNombre))
                         {
+                            coloresCount[colorNombre]++;
+                            if (producto.Precio > productosMasCarosPorColor[colorNombre].Precio)
+                            {
+                                productosMasCarosPorColor[colorNombre] = producto;
+                            }
+                        }
+                        else
+                        {
+                            coloresCount[colorNombre] = 1;
                             productosMasCarosPorColor[colorNombre] = producto;
                         }
                     }
-                    else
-                    {
-                        coloresCount[colorNombre] = 1;
-                        productosMasCarosPorColor[colorNombre] = producto;
-                    }
                 }
-            }
 
-            // Paso 2: Buscar colores que se repiten al menos tres veces.
-            foreach (var colorNombre in coloresCount.Keys)
-            {
-                if (coloresCount[colorNombre] >= 3)
+                foreach (var colorNombre in coloresCount.Keys)
                 {
-                    // Paso 3: Aplicar un 50% de descuento al producto más caro de ese color.
-                    Producto productoMasCaro = productosMasCarosPorColor[colorNombre];
-                    int prodMasCaro = productoMasCaro.Precio / 2;
-                    return costoTotal -= prodMasCaro;
-                }
+                    if (coloresCount[colorNombre] >= 3)
+                    {
+                        Producto productoMasCaro = productosMasCarosPorColor[colorNombre];
+                        int prodMasCaro = productoMasCaro.Precio / 2;
+                        return costoTotal -= prodMasCaro;
+                    }
+                
             }
-
-
-            // Si no se aplica descuento, puedes devolver un valor predeterminado, como -1.
-            return -1;
+                return -1;            
         }
 
         public string NombrePromocion()
