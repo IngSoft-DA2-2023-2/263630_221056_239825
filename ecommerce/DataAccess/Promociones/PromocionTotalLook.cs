@@ -91,6 +91,10 @@ namespace DataAccess.Promociones
 
         private static bool CoincideColor(Producto prod, Producto p)
         {
+            if (prod == null || p == null)
+            {
+                throw new InvalidOperationException("el producto es null");
+            }
             foreach (Color color in prod.Colores)
             {
                 foreach (Color c in p.Colores)

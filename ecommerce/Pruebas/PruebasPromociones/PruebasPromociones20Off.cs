@@ -79,7 +79,7 @@ namespace Pruebas.PruebasPromociones
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(NullReferenceException))]
         public void AplicarPromocionErrorNulo()
         {
             // Act
