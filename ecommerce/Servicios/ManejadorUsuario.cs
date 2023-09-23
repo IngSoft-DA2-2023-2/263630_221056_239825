@@ -16,7 +16,7 @@ namespace Servicios
         public Usuario RegistrarUsuario(Usuario usuario)
         {
             if (ValidarUsuario(usuario)) {
-                usuario = repositorioUsuario.AgregarUsuario(usuario);
+                usuario = repositorioUsuario.AgregarUsuario((Cliente) usuario);
             }
             return usuario;
         }
@@ -81,7 +81,12 @@ namespace Servicios
 
         public List<Usuario> ObtenerUsuarios()
         {
-            return repositorioUsuario.ObtenerUsuarios();
+            List<Cliente> clientes = repositorioUsuario.ObtenerClientes();
+            List<Administrador> administradors = repositorioUsuario.ObtenerAdministradores();
+            List<Usuario> usuarios = new List<Usuario>();
+            usuarios.AddRange(clientes);
+            usuarios.AddRange(administradors);
+            return usuarios;
         }
 
         public void EliminarUsuario(Usuario usuario)

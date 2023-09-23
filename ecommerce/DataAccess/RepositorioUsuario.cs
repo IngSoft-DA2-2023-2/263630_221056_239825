@@ -15,28 +15,55 @@ namespace DataAccess
 
         public Usuario AgregarUsuario(Usuario usuario)
         {
-            Contexto.Set<Usuario>().Add(usuario);
+            if (usuario is Cliente)
+            {
+                Contexto.Set<Cliente>().Add((Cliente) usuario);
+            }
+            else if (usuario is Administrador) 
+            {
+                Contexto.Set<Administrador>().Add((Administrador) usuario);
+            }
+            Contexto.SaveChanges();
             return usuario;
         }
 
         public void ActualizarUsuario(Usuario usuario)
         {
             Contexto.Entry(usuario).State = EntityState.Modified;
+            Contexto.SaveChanges();
         }
 
         public Usuario ObtenerUsuario(int id)
         {
-            return Contexto.Set<Usuario>().First(u => u.Id == id);
+            try
+            {
+                return Contexto.Set<Cliente>().First(u => u.Id == id);
+            } catch (Exception)
+            {
+                return Contexto.Set<Administrador>().First(u => u.Id == id);
+            }
         }
 
-        public List<Usuario> ObtenerUsuarios()
+        public List<Cliente> ObtenerClientes()
         {
-            return Contexto.Set<Usuario>().ToList();
+            return Contexto.Set<Cliente>().ToList();
+        }
+
+        public List<Administrador> ObtenerAdministradores()
+        {
+            return Contexto.Set<Administrador>().ToList();
         }
 
         public void EliminarUsuario(Usuario usuario)
         {
-            Contexto.Set<Usuario>().Remove(usuario);
+            if(usuario is Cliente)
+            {
+                Contexto.Set<Cliente>().Remove((Cliente) usuario);
+            } else if(usuario is Administrador)
+            {
+                Contexto.Set<Administrador>().Remove((Administrador) usuario);
+            }
+            Contexto.SaveChanges();
         }
     }
 }

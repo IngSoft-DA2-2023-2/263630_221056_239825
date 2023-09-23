@@ -10,7 +10,8 @@ namespace DataAccess
         public ECommerceContext() : base() { }
 
         public virtual DbSet<Producto> Productos { get; set; }
-        //public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Cliente> Clientes { get; set; }
+        public virtual DbSet<Administrador> Administradores { get; set; }
         public virtual DbSet<Marca> Marcas { get; set; }
         public virtual DbSet<Categoria> Categorias { get; set; }
         public virtual DbSet<Color> Colores { get; set; }
@@ -31,7 +32,7 @@ namespace DataAccess
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-                var connectionString = configuration.GetConnectionString(@"WinECommerceDB");
+                var connectionString = configuration.GetConnectionString(@"connectionMartin");
 
                 optionsBuilder.UseSqlServer(connectionString);
             }

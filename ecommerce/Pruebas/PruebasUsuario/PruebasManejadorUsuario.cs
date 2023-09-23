@@ -91,7 +91,8 @@ namespace Pruebas.PruebasUsuario
         public void ObtenerUsuariosOk()
         {
             mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
+            mock!.Setup(x => x.ObtenerClientes()).Returns(new List<Cliente>());
+            mock!.Setup(x => x.ObtenerAdministradores()).Returns(new List<Administrador>());
             manejadorUsuario!.RegistrarUsuario(cliente!);
             var resultado = manejadorUsuario!.ObtenerUsuarios();
 
