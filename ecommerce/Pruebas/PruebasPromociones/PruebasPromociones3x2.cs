@@ -52,7 +52,7 @@ public class PruebasPromociones3x2
     public void AplicarPromocionOk()
     {
         int costoTotal = promocion3x2!.AplicarPromocion(carrito!);
-        Assert.AreEqual(4500, costoTotal);
+        Assert.AreEqual(2900, costoTotal);
     }
 
     [TestMethod]
@@ -65,7 +65,8 @@ public class PruebasPromociones3x2
     [TestMethod]
     public void AplicaPromoOk()
     {
-        bool aplica = promocion3x2!.AplicarPromo(It.IsAny<List<Producto>>());
+        List<Producto> carritoConPromo = new(){ producto1!, producto2!, producto3!};
+        bool aplica = promocion3x2!.AplicarPromo(carritoConPromo);
         Assert.AreEqual(true, aplica);
     }
 

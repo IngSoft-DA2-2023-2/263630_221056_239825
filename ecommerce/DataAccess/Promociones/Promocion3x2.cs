@@ -11,7 +11,7 @@ namespace DataAccess.Promociones
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
-            if (listaCompra.Count < 3 || listaCompra==null)
+            if (listaCompra == null || listaCompra.Count < 3)
             {
                 throw new InvalidOperationException("La promoción se aplica si hay, al menos, 3 productos en el carrito");
             }
@@ -24,26 +24,38 @@ namespace DataAccess.Promociones
                 costoTotal += p.Precio;
             }
 
-                foreach (Producto p2 in listaCompra)
-                {
-                    int cant = 0;
-                    int menorProducto = int.MaxValue;
+            Dictionary<Categoria, int> categorias = new();
 
+            foreach (Producto prod in listaCompra)
+            {
+                if (!categorias.ContainsKey(prod.Categoria))
+                {
+                    categorias[prod.Categoria] = 1;
+                }
+                else
+                {
+                    categorias[prod.Categoria]++;
+                }
+            }
+
+            foreach (Producto p in listaCompra)
+            {
+                if (categorias[p.Categoria] >= 3)
+                {
+                    int menorPrecio = int.MaxValue;
                     foreach (Producto prod in listaCompra)
                     {
-                        if (p2.Categoria == prod.Categoria)
+                        if (CoincideCategoria(prod, p) && prod.Precio < menorPrecio)
                         {
-                            cant++;
-                            menorProducto = Math.Min(menorProducto, p2.Precio);
+                            menorPrecio = prod.Precio;
                         }
                     }
-                    if (cant >= 2 && p2.Precio == menorProducto)
-                    {
-                        costoTotal -= menorProducto;
-                        promoAplicada = true;                      
-                    }
-                }                      
-                return costoTotal;            
+                    costoTotal -= menorPrecio;
+                    promoAplicada = true;
+                }
+            }
+
+            return costoTotal;
         }
 
         public string NombrePromocion()
@@ -60,20 +72,10 @@ namespace DataAccess.Promociones
             return true;
         }
 
-        //private static bool CoincideCategoria(Producto prod, Producto p)
-        //{
-        //    foreach (var c in prod.Categoria)
-        //    {
-        //        foreach (Categoria categoria in p.Categoria)
-        //        {
-        //            if (c.Id == categoria.Id)
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    return false;
-        //}
+        private static bool CoincideCategoria(Producto prod, Producto p)
+        {
+            return prod.Categoria == p.Categoria;
+        }
     }
 }
 
