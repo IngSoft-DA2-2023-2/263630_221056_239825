@@ -45,7 +45,7 @@ namespace Pruebas.PruebasPromociones
             mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3490);
             int costoTotal = promocion20!.AplicarPromocion(carrito!);
             // Assert
-            Assert.AreEqual(3490, costoTotal);
+            Assert.AreEqual(3200, costoTotal);
         }
 
         [TestMethod]
