@@ -3,11 +3,11 @@ using Dominio;
 
 namespace DataAccess.Promociones
 {
-	public class PromocionTotalLook: IPromocionStrategy
-	{
-		public PromocionTotalLook()
-		{
-		}
+    public class PromocionTotalLook : IPromocionStrategy
+    {
+        public PromocionTotalLook()
+        {
+        }
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
@@ -17,47 +17,47 @@ namespace DataAccess.Promociones
             }
 
             Dictionary<string, int> coloresCount = new();
-                Dictionary<string, Producto> productosMasCarosPorColor = new();
-                int costoTotal = 0;
+            Dictionary<string, Producto> productosMasCarosPorColor = new();
+            int costoTotal = 0;
 
-                foreach (Producto p in listaCompra)
-                {
-                    costoTotal += p.Precio;
-                }
+            foreach (Producto p in listaCompra)
+            {
+                costoTotal += p.Precio;
+            }
 
-                foreach (var producto in listaCompra)
+            foreach (var producto in listaCompra)
+            {
+                foreach (Color color in producto.Colores)
                 {
-                    foreach (Color color in producto.Colores)
+                    string colorNombre = color.Nombre;
+
+                    if (coloresCount.ContainsKey(colorNombre))
                     {
-                        string colorNombre = color.Nombre;
-
-                        if (coloresCount.ContainsKey(colorNombre))
+                        coloresCount[colorNombre]++;
+                        if (producto.Precio > productosMasCarosPorColor[colorNombre].Precio)
                         {
-                            coloresCount[colorNombre]++;
-                            if (producto.Precio > productosMasCarosPorColor[colorNombre].Precio)
-                            {
-                                productosMasCarosPorColor[colorNombre] = producto;
-                            }
-                        }
-                        else
-                        {
-                            coloresCount[colorNombre] = 1;
                             productosMasCarosPorColor[colorNombre] = producto;
                         }
                     }
+                    else
+                    {
+                        coloresCount[colorNombre] = 1;
+                        productosMasCarosPorColor[colorNombre] = producto;
+                    }
+                }
+            }
+
+            foreach (var colorNombre in coloresCount.Keys)
+            {
+                if (coloresCount[colorNombre] >= 3)
+                {
+                    Producto productoMasCaro = productosMasCarosPorColor[colorNombre];
+                    int prodMasCaro = productoMasCaro.Precio / 2;
+                    return costoTotal -= prodMasCaro;
                 }
 
-                foreach (var colorNombre in coloresCount.Keys)
-                {
-                    if (coloresCount[colorNombre] >= 3)
-                    {
-                        Producto productoMasCaro = productosMasCarosPorColor[colorNombre];
-                        int prodMasCaro = productoMasCaro.Precio / 2;
-                        return costoTotal -= prodMasCaro;
-                    }
-                
             }
-                return -1;            
+            return -1;
         }
 
         public string NombrePromocion()
@@ -67,13 +67,13 @@ namespace DataAccess.Promociones
 
         public bool AplicarPromo(List<Producto> carrito)
         {
-            if(carrito == null || carrito.Count < 3)
+            if (carrito == null || carrito.Count < 3)
             {
                 return false;
             }
             foreach (Producto prod in carrito)
             {
-                int contColor = 0; 
+                int contColor = 0;
                 foreach (Producto p in carrito)
                 {
                     if (CoincideColor(prod, p))
@@ -93,7 +93,7 @@ namespace DataAccess.Promociones
         {
             if (prod == null || p == null)
             {
-                throw new InvalidOperationException("el producto es null");
+                throw new ArgumentNullException("el producto es null");
             }
             foreach (Color color in prod.Colores)
             {

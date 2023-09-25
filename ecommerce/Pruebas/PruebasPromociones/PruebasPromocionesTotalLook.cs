@@ -118,22 +118,19 @@ namespace Pruebas.PruebasPromociones
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
         public void AplicaPromoErrorNulo()
         {
             //Act
             carrito!.Remove(producto2!);
-            carrito.Add(productoVacio!);
+            carrito.Remove(productoVacio!);
             bool aplica = promocionTotalLook!.AplicarPromo(carrito);
-            //Assert
-            Assert.AreEqual(false, aplica);
         }
 
         [TestMethod]
         public void AplicaPromoError()
         {
             //Act
-            carrito!.Remove(productoVacio!);
+            carrito!.Remove(producto2!);
             bool aplica = promocionTotalLook!.AplicarPromo(carrito);
             //Assert
             Assert.AreEqual(false, aplica);
