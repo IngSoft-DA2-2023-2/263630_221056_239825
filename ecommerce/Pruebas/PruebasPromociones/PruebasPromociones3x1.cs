@@ -40,12 +40,7 @@ namespace Pruebas.PruebasPromociones
             List<Color> colores3 = new();
             producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria3, colores3);
 
-            carrito = new List<Producto>
-            {
-                producto,
-                producto2,
-                producto3
-            };
+            carrito = new List<Producto> { producto, producto2, producto3 };
         }
 
         [TestMethod]
@@ -60,10 +55,11 @@ namespace Pruebas.PruebasPromociones
         [TestMethod]
         public void AplicaPromoOk()
         {
-            //Act
-            bool aplica = promocion3x1!.AplicarPromo(It.IsAny<List<Producto>>());
-            //Assert
-            Assert.AreEqual(true, aplica);
+            List<Producto> carrito = new List<Producto> {producto!, producto2!,producto3! };
+            // Act
+            bool aplica = promocion3x1!.AplicarPromo(carrito);
+            // Assert
+            Assert.IsTrue(aplica);
         }
 
         [TestMethod]
@@ -71,7 +67,7 @@ namespace Pruebas.PruebasPromociones
         public void AplicarPromocionError()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3500);
+            //mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3500);
             carrito!.Remove(producto!);
             Marca marcaNueva = new();
             Categoria categoria4 = new();
@@ -79,6 +75,7 @@ namespace Pruebas.PruebasPromociones
             Producto? productoDistintaMarca = new Producto("Cartera", 5000, "Bandolera", marcaNueva, categoria4, colores);
             carrito!.Add(productoDistintaMarca);
             int costoTotal = promocion3x1!.AplicarPromocion(carrito!);
+
         }
 
         [TestMethod]

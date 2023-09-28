@@ -3,13 +3,13 @@ using Dominio;
 
 namespace DataAccess.Promociones
 {
-	public class Promocion3x1: IPromocionStrategy
-	{
+    public class Promocion3x1 : IPromocionStrategy
+    {
         public string NombrePromocion { get; set; } = "Se aplicó la promoción de Fidelidad, 3x1";
 
         public Promocion3x1()
-		{
-		}
+        {
+        }
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
@@ -20,48 +20,46 @@ namespace DataAccess.Promociones
 
             int costoTotal = 0;
 
-            foreach (Producto producto in listaCompra)
+            if (CoincideMarca(listaCompra))
             {
-                costoTotal += producto.Precio;
-            }
+                var precioProds = listaCompra.OrderBy(p => p.Precio).ToList();
 
-            foreach (Producto producto in listaCompra)
-            {
-                if (CoincideMarca(listaCompra, producto))
+                for (int i = 2; i < listaCompra.Count; i++)
                 {
-                    int menorProducto = int.MaxValue;
-                    int cantidadProductos = 0;
-
-                    foreach (Producto prod in listaCompra)
-                    {
-                        if (producto.Marca == prod.Marca)
-                        {
-                            cantidadProductos++;
-                            menorProducto = Math.Min(menorProducto, prod.Precio);
-                        }
-                    }
-
-                    if (cantidadProductos >= 3 && producto.Precio == menorProducto)
-                    {
-                        costoTotal -= menorProducto;
-                    }
+                    costoTotal += precioProds[i].Precio;
+                }
+            }
+            else
+            {
+                foreach (Producto producto in listaCompra)
+                {
+                    costoTotal += producto.Precio;
                 }
             }
 
             return costoTotal;
         }
 
-        private static bool CoincideMarca(List<Producto> listaCompra, Producto prod)
+        private static bool CoincideMarca(List<Producto> listaCompra)
         {
-            int cantMarca = 0;
             foreach (Producto p in listaCompra)
             {
-                if (prod.Marca == p.Marca)
+                int cantProd = 0;
+
+                foreach (Producto prod in listaCompra)
                 {
-                    cantMarca++;
+                    if (p.Marca == prod.Marca)
+                    {
+                        cantProd++;
+                    }
+
+                    if (cantProd >= 3)
+                    {
+                        return true;
+                    }
                 }
             }
-            return cantMarca >= 3;
+            return false;
         }
 
         public bool AplicarPromo(List<Producto> carrito)
