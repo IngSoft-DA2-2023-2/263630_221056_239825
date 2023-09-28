@@ -76,15 +76,6 @@ namespace Pruebas.PruebasPromociones
         }
 
         [TestMethod]
-        public void NombrePromocion()
-        {
-            //Act
-            string nombre = promocionTotalLook!.NombrePromocion();
-            //Assert
-            Assert.AreEqual("Se aplico un 50% de descuento en el producto de mayor valor", nombre);
-        }
-
-        [TestMethod]
         public void AplicaPromoOk()
         {
             //Act

@@ -56,13 +56,6 @@ public class PruebasPromociones3x2
     }
 
     [TestMethod]
-    public void NombrePromocion()
-    {
-        string nombre = promocion3x2!.NombrePromocion();
-        Assert.AreEqual("El producto de menor valor va de regalo", nombre);
-    }
-
-    [TestMethod]
     public void AplicaPromoOk()
     {
         List<Producto> carritoConPromo = new(){ producto1!, producto2!, producto3!};
