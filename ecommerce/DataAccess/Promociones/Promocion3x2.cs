@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Drawing;
 using Dominio;
 
 namespace DataAccess.Promociones
 {
 	public class Promocion3x2: IPromocionStrategy
 	{
-		public Promocion3x2()
+        public string NombrePromocion { get; set; } = "El producto de menor valor va de regalo";
+
+        public Promocion3x2()
 		{
 		}
 
@@ -58,9 +61,9 @@ namespace DataAccess.Promociones
             return costoTotal;
         }
 
-        public string NombrePromocion()
+        private static bool CoincideCategoria(Producto prod, Producto p)
         {
-            return "El producto de menor valor va de regalo";
+            return prod.Categoria == p.Categoria;
         }
 
         public bool AplicarPromo(List<Producto> carrito)
@@ -72,10 +75,7 @@ namespace DataAccess.Promociones
             return true;
         }
 
-        private static bool CoincideCategoria(Producto prod, Producto p)
-        {
-            return prod.Categoria == p.Categoria;
-        }
+        
     }
 }
 

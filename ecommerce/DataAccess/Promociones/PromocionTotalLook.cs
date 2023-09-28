@@ -5,6 +5,8 @@ namespace DataAccess.Promociones
 {
     public class PromocionTotalLook : IPromocionStrategy
     {
+        public string NombrePromocion { get; set; } = "Se aplico un 50% de descuento en el producto de mayor valor";
+
         public PromocionTotalLook()
         {
         }
@@ -58,11 +60,6 @@ namespace DataAccess.Promociones
 
             }
             return -1;
-        }
-
-        public string NombrePromocion()
-        {
-            return "Se aplico un 50% de descuento en el producto de mayor valor";
         }
 
         public bool AplicarPromo(List<Producto> carrito)

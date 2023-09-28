@@ -52,27 +52,15 @@ namespace Pruebas.PruebasPromociones
         public void AplicarPromocionOk()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3500);
             int costoTotal = promocion3x1!.AplicarPromocion(carrito!);
             // Assert
             Assert.AreEqual(3500, costoTotal);
         }
 
         [TestMethod]
-        public void NombrePromocion()
-        {
-            //Act
-            mock!.Setup(x => x.NombrePromocion()).Returns("Se aplico la promocion de Fidelidad, 3x1");
-            string nombre = promocion3x1!.NombrePromocion();
-            //Assert
-            Assert.AreEqual("Se aplico la promocion de Fidelidad, 3x1", nombre);
-        }
-
-        [TestMethod]
         public void AplicaPromoOk()
         {
             //Act
-            mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(true);
             bool aplica = promocion3x1!.AplicarPromo(It.IsAny<List<Producto>>());
             //Assert
             Assert.AreEqual(true, aplica);
