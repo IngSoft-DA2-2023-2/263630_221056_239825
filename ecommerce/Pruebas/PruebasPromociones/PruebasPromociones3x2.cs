@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Dominio;
 using Dominio.Usuario;
 using Moq;
@@ -16,7 +16,6 @@ public class PruebasPromociones3x2
     private Producto? producto2;
     private Producto? producto3;
     private List<Producto>? carrito;
-
     [TestInitialize]
     public void InitTest()
     {
@@ -100,5 +99,3 @@ public class PruebasPromociones3x2
         Assert.AreEqual(false, aplica);
     }
 }
-
-

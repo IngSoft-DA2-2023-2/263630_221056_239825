@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Dominio;
 using Dominio.Usuario;
 using Moq;
@@ -117,4 +117,3 @@ namespace Pruebas.PruebasPromociones
         }
     }
 }
-

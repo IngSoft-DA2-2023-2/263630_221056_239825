@@ -9,7 +9,7 @@ namespace Pruebas.PruebasUsuario
 {
     [TestClass]
     public class PruebasRepositorioUsuario
-    {/*
+    {
         private Mock<IRepositorioUsuario>? mock;
         private RepositorioUsuario? repositorioUsuario;
         private Cliente? cliente;
@@ -42,39 +42,6 @@ namespace Pruebas.PruebasUsuario
 
             // Assert
             Assert.AreEqual(cliente, resultado);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void RegistrarUsuarioIncorrectoSinDireccion()
-        {
-            // Act
-            mock!.Setup(x => x.AgregarUsuario(clienteSinDireccion!));
-            repositorioUsuario!.AgregarUsuario(clienteSinDireccion!);
-            //Assert
-            mock.VerifyAll();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void RegistrarUsuarioIncorrectoSinMail()
-        {
-            // Act
-            mock!.Setup(x => x.AgregarUsuario(clienteSinMail!));
-            repositorioUsuario!.AgregarUsuario(clienteSinMail!);
-            //Assert
-            mock.VerifyAll();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void RegistrarUsuarioNulo()
-        {
-            // Act
-            mock!.Setup(x => x.AgregarUsuario(clienteNulo!));
-            repositorioUsuario!.AgregarUsuario(clienteNulo!);
-            //Assert
-            mock.VerifyAll();
         }
 
         [TestMethod]
@@ -186,6 +153,27 @@ namespace Pruebas.PruebasUsuario
             repositorioUsuario!.AgregarUsuario(cliente!);
             repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
             var resultado = repositorioUsuario!.ObtenerComprasDelUsuario(2);
-        }*/
+        }
+
+        [TestMethod]
+        public void EliminarUsuarioCorrecto()
+        {
+            mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
+            mock!.Setup(x => x.EliminarUsuario(cliente!));
+            repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.EliminarUsuario(cliente!);
+            List<Usuario> usuarios = repositorioUsuario!.ObtenerUsuarios();
+
+            Assert.IsTrue(usuarios.Count() == 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void EliminarUsuarioIncorrecto()
+        {
+            Cliente nuevoCliente = new Cliente("martin@edelman.com.uy", "Zorrilla 142");
+            mock!.Setup(x => x.EliminarUsuario(nuevoCliente!));
+            repositorioUsuario!.EliminarUsuario(nuevoCliente!);
+        }
     }
 }

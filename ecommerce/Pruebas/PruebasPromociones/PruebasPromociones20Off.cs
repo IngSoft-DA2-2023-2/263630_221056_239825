@@ -90,4 +90,5 @@ namespace Pruebas.PruebasPromociones
             Assert.AreEqual(false, aplica);
         }
     }
+
 }
