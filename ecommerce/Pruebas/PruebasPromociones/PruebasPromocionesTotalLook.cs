@@ -40,22 +40,11 @@ namespace Pruebas.PruebasPromociones
                 Id = 2,
                 Nombre = "Verde"
             };
-            List<Color> coloresProducto1 = new()
-            {
-                rojo
-            };
-            List<Color> coloresProducto2 = new()
-            {
-                azul, rojo
-            };
-            List<Color> coloresProducto3 = new()
-            {
-                azul, rojo, verde
-            };
-            List<Color> coloresProducto0 = new List<Color>()
-            {
-                verde
-            };
+            List<Color> coloresProducto1 = new() { rojo };
+            List<Color> coloresProducto2 = new() { azul, rojo };
+            List<Color> coloresProducto3 = new() { azul, rojo, verde };
+            List<Color> coloresProducto0 = new List<Color>() { verde };
+
             producto0 = new Producto("aaa", 22, "vvv", marca, categoria, coloresProducto0);
             producto = new Producto("Camisa", 1000, "Larga", marca, categoria, coloresProducto1);
             Marca marca2 = new();

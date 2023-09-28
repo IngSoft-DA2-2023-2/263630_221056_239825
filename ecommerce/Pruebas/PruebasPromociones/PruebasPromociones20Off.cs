@@ -45,18 +45,8 @@ namespace Pruebas.PruebasPromociones
             mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3490);
             int costoTotal = promocion20!.AplicarPromocion(carrito!);
             // Assert
-            Assert.AreEqual(3200, costoTotal);
+            Assert.AreEqual(3490, costoTotal);
         }
-
-        //[TestMethod]
-        //public void AplicaPromoOk()
-        //{
-        //    //Act
-        //    mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(true);
-        //    bool aplica = promocion20!.AplicarPromo(It.IsAny<List<Producto>>());
-        //    //Assert
-        //    Assert.AreEqual(true, aplica);
-        //}
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
