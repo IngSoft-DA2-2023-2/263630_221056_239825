@@ -1,63 +1,52 @@
 ﻿using System;
-using System.Drawing;
 using Dominio;
 
 namespace DataAccess.Promociones
 {
-	public class Promocion3x2: IPromocionStrategy
-	{
+    public class Promocion3x2 : IPromocionStrategy
+    {
         public string NombrePromocion { get; set; } = "El producto de menor valor va de regalo";
 
         public Promocion3x2()
-		{
-		}
+        {
+        }
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
-            if (listaCompra == null || listaCompra.Count < 3)
+            if (!AplicarPromo(listaCompra))
             {
-                throw new InvalidOperationException("La promoción se aplica si hay, al menos, 3 productos en el carrito");
+                throw new NullReferenceException("La promoción se aplica si hay, al menos, 3 productos en el carrito");
             }
 
             int costoTotal = 0;
-            bool promoAplicada = false;
+            //bool promoAplicada = false;
 
-            foreach (Producto p in listaCompra)
-            {
-                costoTotal += p.Precio;
-            }
+            //foreach (Producto p in listaCompra)
+            //{
+            //    costoTotal += p.Precio;
+            //}
 
-            Dictionary<Categoria, int> categorias = new();
+            Dictionary<Categoria, List<Producto>> categorias = new Dictionary<Categoria, List<Producto>>();
 
             foreach (Producto prod in listaCompra)
             {
+                costoTotal += prod.Precio;
+
                 if (!categorias.ContainsKey(prod.Categoria))
                 {
-                    categorias[prod.Categoria] = 1;
+                    categorias[prod.Categoria] = new List<Producto>();
                 }
-                else
-                {
-                    categorias[prod.Categoria]++;
-                }
+                categorias[prod.Categoria].Add(prod);
             }
 
-            foreach (Producto p in listaCompra)
+            foreach (var categProd in categorias.Values)
             {
-                if (categorias[p.Categoria] >= 3)
+                if (categProd.Count >= 3)
                 {
-                    int menorPrecio = int.MaxValue;
-                    foreach (Producto prod in listaCompra)
-                    {
-                        if (CoincideCategoria(prod, p) && prod.Precio < menorPrecio)
-                        {
-                            menorPrecio = prod.Precio;
-                        }
-                    }
+                    int menorPrecio = categProd.Min(p => p.Precio);
                     costoTotal -= menorPrecio;
-                    promoAplicada = true;
                 }
             }
-
             return costoTotal;
         }
 
@@ -75,7 +64,7 @@ namespace DataAccess.Promociones
             return true;
         }
 
-        
+
     }
 }
 
