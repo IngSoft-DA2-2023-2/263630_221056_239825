@@ -13,10 +13,10 @@ namespace ServicioFactory
         public void RegistrateServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddDbContext<DbContext, ECommerceContext>();
-            //DataAccess
+
             serviceCollection.AddScoped<IRepositorioProducto, RepositorioProducto>();
             serviceCollection.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
-            //Servicios
+            
             serviceCollection.AddScoped<IManejadorUsuario, ManejadorUsuario>();
             serviceCollection.AddScoped<IServicioProducto, ServicioProducto>();
         }

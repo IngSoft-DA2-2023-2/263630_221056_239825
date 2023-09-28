@@ -16,7 +16,7 @@ namespace Servicios
         public Usuario RegistrarUsuario(Usuario usuario)
         {
             if (ValidarUsuario(usuario)) {
-                usuario = repositorioUsuario.AgregarUsuario((Cliente) usuario);
+                usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;
         }
@@ -34,7 +34,10 @@ namespace Servicios
             if (usuario.CorreoElectronico == null || usuario.CorreoElectronico == "" || !usuario.CorreoElectronico.Contains('@'))
             {
                 throw new ArgumentException("El email es incorrecto");
-            }
+            } 
+            // TODO: Validar que el email no exista en la base de datos
+            // TODO: Validar que la contraseña tenga al menos 8 caracteres
+            // TODO: Validar que tenga un rol, si no, asignarle el rol de cliente
             return true;
         }
 
@@ -82,10 +85,6 @@ namespace Servicios
         public List<Usuario> ObtenerUsuarios()
         {
             List<Cliente> clientes = repositorioUsuario.ObtenerClientes();
-            List<Administrador> administradors = repositorioUsuario.ObtenerAdministradores();
-            List<Usuario> usuarios = new List<Usuario>();
-            usuarios.AddRange(clientes);
-            usuarios.AddRange(administradors);
             return usuarios;
         }
 

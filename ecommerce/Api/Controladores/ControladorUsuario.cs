@@ -19,8 +19,7 @@ namespace Api.Controladores
         [HttpPost]
         public IActionResult RegistrarUsuario([FromBody] UsuarioCrearModelo nuevoUsuario)
         {
-            _manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity());
-            return Ok();
+            return Ok(_manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity()));
         }
 
         [HttpGet("{id}")]

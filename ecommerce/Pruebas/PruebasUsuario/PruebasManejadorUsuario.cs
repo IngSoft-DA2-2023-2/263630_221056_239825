@@ -12,11 +12,11 @@ namespace Pruebas.PruebasUsuario
     {
         private Mock<IRepositorioUsuario>? mock;
         private ManejadorUsuario? manejadorUsuario;
-        private Administrador? cliente;
+        private Usuario? cliente;
         private List<Usuario>? listaClientes;
-        private Cliente? clienteSinDireccion;
-        private Cliente? clienteSinMail;
-        private Cliente? clienteNulo;
+        private Usuario? clienteSinDireccion;
+        private Usuario? clienteSinMail;
+        private Usuario? clienteNulo;
         private Compra? compra;
 
         [TestInitialize]
@@ -24,12 +24,12 @@ namespace Pruebas.PruebasUsuario
         {
             mock = new Mock<IRepositorioUsuario>(MockBehavior.Strict);
             manejadorUsuario = new ManejadorUsuario(mock.Object);
-            cliente = new Administrador("martin@edelman.com.uy", "Zorrilla 124");
+            cliente = new Usuario("martin@edelman.com.uy", "Zorrilla 124", "Password1");
             cliente.Id = 1;
             listaClientes = new List<Usuario>();
             listaClientes.Add(cliente);
-            clienteSinDireccion = new Cliente("Martín@Edelman", "");
-            clienteSinMail = new Cliente("Martin Edelman", "Zorrilla 124");
+            clienteSinDireccion = new Usuario("Martín@Edelman", "", "Password1");
+            clienteSinMail = new Usuario("Martin Edelman", "Zorrilla 124", "Password1");
             clienteNulo = null;
             compra = new Compra();
             compra.Id = 1;
@@ -91,8 +91,7 @@ namespace Pruebas.PruebasUsuario
         public void ObtenerUsuariosOk()
         {
             mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerClientes()).Returns(new List<Cliente>());
-            mock!.Setup(x => x.ObtenerAdministradores()).Returns(new List<Administrador>());
+            mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
             manejadorUsuario!.RegistrarUsuario(cliente!);
             var resultado = manejadorUsuario!.ObtenerUsuarios();
 

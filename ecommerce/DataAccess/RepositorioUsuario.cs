@@ -15,14 +15,7 @@ namespace DataAccess
 
         public Usuario AgregarUsuario(Usuario usuario)
         {
-            if (usuario is Cliente)
-            {
-                Contexto.Set<Cliente>().Add((Cliente) usuario);
-            }
-            else if (usuario is Administrador) 
-            {
-                Contexto.Set<Administrador>().Add((Administrador) usuario);
-            }
+            Contexto.Set<Usuario>().Add(usuario);
             Contexto.SaveChanges();
             return usuario;
         }
@@ -35,34 +28,17 @@ namespace DataAccess
 
         public Usuario ObtenerUsuario(int id)
         {
-            try
-            {
-                return Contexto.Set<Cliente>().First(u => u.Id == id);
-            } catch (Exception)
-            {
-                return Contexto.Set<Administrador>().First(u => u.Id == id);
-            }
+            return Contexto.Set<Usuario>().First(u => u.Id == id);
         }
 
-        public List<Cliente> ObtenerClientes()
+        public List<Usuario> ObtenerUsuarios()
         {
-            return Contexto.Set<Cliente>().ToList();
-        }
-
-        public List<Administrador> ObtenerAdministradores()
-        {
-            return Contexto.Set<Administrador>().ToList();
+            return Contexto.Set<Usuario>().ToList();
         }
 
         public void EliminarUsuario(Usuario usuario)
         {
-            if(usuario is Cliente)
-            {
-                Contexto.Set<Cliente>().Remove((Cliente) usuario);
-            } else if(usuario is Administrador)
-            {
-                Contexto.Set<Administrador>().Remove((Administrador) usuario);
-            }
+            Contexto.Set<Usuario>().Remove(usuario);
             Contexto.SaveChanges();
         }
     }

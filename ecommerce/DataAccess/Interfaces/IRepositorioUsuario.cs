@@ -7,8 +7,7 @@ namespace DataAccess.Interfaces
     {
         Usuario AgregarUsuario(Usuario usuario);
         Usuario ObtenerUsuario(int id);
-        List<Cliente> ObtenerClientes();
-        List<Administrador> ObtenerAdministradores();
+        List<Usuario> ObtenerUsuarios();
         void ActualizarUsuario(Usuario usuario);
         void EliminarUsuario(Usuario usuario);
     }
