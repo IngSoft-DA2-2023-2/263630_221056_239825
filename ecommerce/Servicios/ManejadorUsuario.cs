@@ -52,20 +52,17 @@ namespace Servicios
             {
                 if (usuario.CorreoElectronico == null || usuario.CorreoElectronico == "" || !usuario.CorreoElectronico.Contains('@'))
                 {
-                    return false;
+                    return true;
                 }
                 else if (repositorioUsuario.ObtenerUsuarios().First(x => x.CorreoElectronico == usuario.CorreoElectronico) != null)
-                {
-                    return false;
-                }
-                else
                 {
                     return true;
                 }
             } catch (Exception)
             {
-                return true;
+                return false;
             }
+            return false;
         }
 
         public void ActualizarUsuario(int id, string direccionEntrega)

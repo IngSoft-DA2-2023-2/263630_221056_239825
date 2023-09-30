@@ -28,7 +28,7 @@ namespace Pruebas.PruebasUsuario
             cliente.Id = 1;
             listaClientes = new List<Usuario>();
             listaClientes.Add(cliente);
-            clienteSinDireccion = new Usuario("Martín@Edelman", "", "Password1");
+            clienteSinDireccion = new Usuario("Martin@Edelman", "", "Password1");
             clienteSinMail = new Usuario("Martin Edelman", "Zorrilla 124", "Password1");
             clienteNulo = null;
             compra = new Compra();
@@ -92,7 +92,6 @@ namespace Pruebas.PruebasUsuario
         {
             mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
             mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
-            manejadorUsuario!.RegistrarUsuario(cliente!);
             var resultado = manejadorUsuario!.ObtenerUsuarios();
 
             // Assert
