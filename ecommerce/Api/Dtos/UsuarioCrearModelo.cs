@@ -9,13 +9,16 @@ namespace Api.Dtos
         public string CorreoElectronico { get; set; }
         public string DireccionEntrega { get; set; }
         public List<Compra> Compras { get; set; }
+        public List<CategoriaRol> Rol { get; set; }
+        public string contrasena { get; set; }
 
-        public Cliente ToEntity()
+        public Usuario ToEntity()
         {
-            return new Cliente(this.CorreoElectronico, this.DireccionEntrega)
+            return new Usuario(this.CorreoElectronico, this.DireccionEntrega, this.contrasena)
             {
                 Id = this.Id,
-                Compras = this.Compras
+                Compras = this.Compras,
+                Rol = this.Rol,
             };
         }
     }

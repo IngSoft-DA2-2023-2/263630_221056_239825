@@ -21,7 +21,7 @@ namespace Servicios
             return usuario;
         }
 
-        private static bool ValidarUsuario(Usuario usuario)
+        private bool ValidarUsuario(Usuario usuario)
         {
             if (usuario == null)
             {
@@ -31,14 +31,41 @@ namespace Servicios
             {
                 throw new ArgumentException("La direccion de entrega no puede ser nula o vacia");
             }
-            if (usuario.CorreoElectronico == null || usuario.CorreoElectronico == "" || !usuario.CorreoElectronico.Contains('@'))
+            if (CheckearMail(usuario))
             {
                 throw new ArgumentException("El email es incorrecto");
             } 
-            // TODO: Validar que el email no exista en la base de datos
-            // TODO: Validar que la contraseña tenga al menos 8 caracteres
-            // TODO: Validar que tenga un rol, si no, asignarle el rol de cliente
+            if(usuario.Contrasena.Length < 8)
+            {
+                throw new ArgumentException("Contraseña no valida");
+            }
+            if(usuario.Rol.Count == 0)
+            {
+                usuario.Rol.Add(CategoriaRol.Cliente);
+            }
             return true;
+        }
+
+        private bool CheckearMail(Usuario usuario)
+        {
+            try
+            {
+                if (usuario.CorreoElectronico == null || usuario.CorreoElectronico == "" || !usuario.CorreoElectronico.Contains('@'))
+                {
+                    return false;
+                }
+                else if (repositorioUsuario.ObtenerUsuarios().First(x => x.CorreoElectronico == usuario.CorreoElectronico) != null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            } catch (Exception)
+            {
+                return true;
+            }
         }
 
         public void ActualizarUsuario(int id, string direccionEntrega)
@@ -84,8 +111,7 @@ namespace Servicios
 
         public List<Usuario> ObtenerUsuarios()
         {
-            List<Cliente> clientes = repositorioUsuario.ObtenerClientes();
-            return usuarios;
+            return repositorioUsuario.ObtenerUsuarios();
         }
 
         public void EliminarUsuario(Usuario usuario)
