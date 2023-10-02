@@ -8,9 +8,7 @@ namespace DataAccess.Interfaces
         Usuario AgregarUsuario(Usuario usuario);
         Usuario ObtenerUsuario(int id);
         List<Usuario> ObtenerUsuarios();
-        void ActualizarUsuario(int id, string direccionEntrega);
-        void AgregarCompraAlUsuario(int id, Compra compra);
-        List<Compra> ObtenerComprasDelUsuario(int id);
+        void ActualizarUsuario(Usuario usuario);
         void EliminarUsuario(Usuario usuario);
     }
 }
