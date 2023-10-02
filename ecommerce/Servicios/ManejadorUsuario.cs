@@ -21,7 +21,7 @@ namespace Servicios
             return usuario;
         }
 
-        private static bool ValidarUsuario(Usuario usuario)
+        private bool ValidarUsuario(Usuario usuario)
         {
             if (usuario == null)
             {
@@ -31,23 +31,54 @@ namespace Servicios
             {
                 throw new ArgumentException("La direccion de entrega no puede ser nula o vacia");
             }
-            if (usuario.CorreoElectronico == null || usuario.CorreoElectronico == "" || !usuario.CorreoElectronico.Contains('@'))
+            if (CheckearMail(usuario))
             {
                 throw new ArgumentException("El email es incorrecto");
+            } 
+            if(usuario.Contrasena.Length < 8)
+            {
+                throw new ArgumentException("Contraseña no valida");
+            }
+            if(usuario.Roles.Count == 0)
+            {
+                usuario.Roles.Add(CategoriaRol.Cliente);
             }
             return true;
         }
 
+        private bool CheckearMail(Usuario usuario)
+        {
+            try
+            {
+                if (usuario.CorreoElectronico == null || usuario.CorreoElectronico == "" || !usuario.CorreoElectronico.Contains('@'))
+                {
+                    return true;
+                }
+                else if (repositorioUsuario.ObtenerUsuarios().First(x => x.CorreoElectronico == usuario.CorreoElectronico) != null)
+                {
+                    return true;
+                }
+            } catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
+
         public void ActualizarUsuario(int id, string direccionEntrega)
         {
-            repositorioUsuario.ActualizarUsuario(id, direccionEntrega);
+            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+            usuarioObtenido.DireccionEntrega = direccionEntrega;
+            repositorioUsuario.ActualizarUsuario(usuarioObtenido);
         }
 
         public void AgregarCompraAlUsuario(int id, Compra compra)
         {
             if (ValidarCompra(compra))
             {
-                repositorioUsuario.AgregarCompraAlUsuario(id, compra);
+                Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+                usuarioObtenido.Compras.Add(compra);
+                repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
         }
 
@@ -66,7 +97,8 @@ namespace Servicios
 
         public List<Compra> ObtenerComprasDelUsuario(int id)
         {
-            return repositorioUsuario.ObtenerComprasDelUsuario(id);
+            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+            return usuarioObtenido.Compras;
         }
 
         public Usuario ObtenerUsuario(int id)

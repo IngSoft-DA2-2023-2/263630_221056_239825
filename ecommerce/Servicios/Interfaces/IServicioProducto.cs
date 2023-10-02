@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 
 public interface IServicioProducto
 {
