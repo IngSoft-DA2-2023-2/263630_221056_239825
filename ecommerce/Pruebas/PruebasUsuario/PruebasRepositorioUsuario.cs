@@ -10,25 +10,25 @@ namespace Pruebas.PruebasUsuario
     [TestClass]
     public class PruebasRepositorioUsuario
     {
-        private Mock<IRepositorioUsuario>? mock;
+        private Mock<ECommerceContext>? mock;
         private RepositorioUsuario? repositorioUsuario;
-        private Cliente? cliente;
+        private Usuario? cliente;
         private List<Usuario>? listaClientes;
-        private Cliente? clienteSinDireccion;
-        private Cliente? clienteSinMail;
-        private Cliente? clienteNulo;
+        private Usuario? clienteSinDireccion;
+        private Usuario? clienteSinMail;
+        private Usuario? clienteNulo;
         private Compra? compra;
         [TestInitialize]
         public void InitTest()
         {
-            mock = new Mock<IRepositorioUsuario>();
+            mock = new Mock<ECommerceContext>();
             repositorioUsuario = new RepositorioUsuario(mock.Object);
-            cliente = new Cliente("martin@edelman.com.uy", "Zorrilla 124");
+            cliente = new Usuario("martin@edelman.com.uy", "Zorrilla 124", "Password123");
             cliente.Id = 1;
             listaClientes = new List<Usuario>();
             listaClientes.Add(cliente);
-            clienteSinDireccion = new Cliente("Martín@Edelman","");
-            clienteSinMail = new Cliente("Martin Edelman", "Zorrilla 124");
+            clienteSinDireccion = new Usuario("Martín@Edelman", "", "Password123");
+            clienteSinMail = new Usuario("Martin Edelman", "Zorrilla 124", "Password123");
             clienteNulo = null;
             compra = new Compra();
         }
@@ -37,7 +37,8 @@ namespace Pruebas.PruebasUsuario
         public void RegistrarUsuarioOk()
         {
             // Act
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
+            mock!.Setup(x => x.Set<Usuario>());
+            mock!.Setup(x => x.SaveChanges());
             var resultado = repositorioUsuario!.AgregarUsuario(cliente!);
 
             // Assert
@@ -48,8 +49,7 @@ namespace Pruebas.PruebasUsuario
         public void ObtenerUsuarioOk()
         {
             // Act
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
+            mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
             var resultado = repositorioUsuario!.ObtenerUsuario(1);
 
@@ -60,16 +60,14 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void ObtenerUsuarioNoExiste()
         {
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
+            mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
             var resultado = repositorioUsuario!.ObtenerUsuario(2);
         }
         [TestMethod]
         public void ObtenerUsuariosOk()
         {
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
+            mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
             var resultado = repositorioUsuario!.ObtenerUsuarios();
 
@@ -82,12 +80,10 @@ namespace Pruebas.PruebasUsuario
         public void ActualizarUsuariosOk()
         {
             // Act
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
-            mock!.Setup(x => x.ActualizarUsuario(It.IsAny<int>(), It.IsAny<string>()));
+            mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.ActualizarUsuario(1, "Julio Cesar 1247");
             cliente!.DireccionEntrega = "Julio Cesar 1247";
+            repositorioUsuario!.ActualizarUsuario(cliente!);
             var resultado = repositorioUsuario!.ObtenerUsuario(1);
 
             // Assert
@@ -98,68 +94,15 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void ActualizarUsuarioNoExiste()
         {
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.ObtenerUsuario(It.IsAny<int>())).Returns(cliente!);
-            mock!.Setup(x => x.ActualizarUsuario(It.IsAny<int>(), It.IsAny<string>()));
+            mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.ActualizarUsuario(2, "Julio Cesar 1247");
-        }
-
-        [TestMethod]
-        public void AgregarCompraAlUsuarioOk()
-        {
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
-            cliente!.Compras.Add(compra!);
-            var resultado = repositorioUsuario!.ObtenerUsuario(1);
-
-            // Assert
-            Assert.AreEqual(cliente.Compras, resultado.Compras);
-        }
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void AgregarCompraAlUsuarioNoExiste()
-        {
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.AgregarCompraAlUsuario(2, compra!);
-        }
-
-        [TestMethod]
-        public void ObtenerComprasDelUsuarioOk()
-        {
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            mock!.Setup(x => x.ObtenerComprasDelUsuario(It.IsAny<int>()));
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
-            var resultado = repositorioUsuario!.ObtenerComprasDelUsuario(1);
-            cliente!.Compras.Add(compra!);
-
-            // Assert
-            Assert.AreEqual(cliente!.Compras, resultado);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ObtenerComprasDelUsuarioNoExiste()
-        {
-            mock!.Setup(x => x.AgregarUsuario(It.IsAny<Usuario>())).Returns(cliente!);
-            mock!.Setup(x => x.AgregarCompraAlUsuario(It.IsAny<int>(), It.IsAny<Compra>()));
-            mock!.Setup(x => x.ObtenerComprasDelUsuario(It.IsAny<int>()));
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.AgregarCompraAlUsuario(1, compra!);
-            var resultado = repositorioUsuario!.ObtenerComprasDelUsuario(2);
+            repositorioUsuario!.ActualizarUsuario(clienteNulo!);
         }
 
         [TestMethod]
         public void EliminarUsuarioCorrecto()
         {
-            mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
-            mock!.Setup(x => x.EliminarUsuario(cliente!));
+            mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
             repositorioUsuario!.EliminarUsuario(cliente!);
             List<Usuario> usuarios = repositorioUsuario!.ObtenerUsuarios();
@@ -171,8 +114,14 @@ namespace Pruebas.PruebasUsuario
         [ExpectedException(typeof(ArgumentException))]
         public void EliminarUsuarioIncorrecto()
         {
-            Cliente nuevoCliente = new Cliente("martin@edelman.com.uy", "Zorrilla 142");
-            mock!.Setup(x => x.EliminarUsuario(nuevoCliente!));
+            Usuario nuevoCliente = new Usuario("martin@edelman.com.uy", "Zorrilla 142", "Password123")
+            {
+                Id = 100,
+                Rol = new List<CategoriaRol>() {
+                    CategoriaRol.Cliente
+                }
+            };
+            mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.EliminarUsuario(nuevoCliente!);
         }
     }

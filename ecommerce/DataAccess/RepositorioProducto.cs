@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq.Expressions;
 using Dominio;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess;
 
@@ -60,12 +61,7 @@ public class RepositorioProducto : IRepositorioProducto
     
     public void EliminarProducto(Producto productoABorrar)
     {
-
-        if (!ExisteElProducto(productoABorrar))
-        {
-            throw new ArgumentException("El producto ya existe en el sistema.");
-        }
-        _listaProductos.Remove(productoABorrar);
+        Contexto.Set<Producto>().Remove(productoABorrar);
     }
     
     public void GuardarCambios()

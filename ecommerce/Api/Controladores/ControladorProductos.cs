@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controladores
 {
     [ApiController]
-    [Route("ECommerceAPI/productos")]
+    [Route("api/v1/productos")]
     public class ControladorProductos : ControllerBase
     {
         private readonly IServicioProducto _servicioProducto;
