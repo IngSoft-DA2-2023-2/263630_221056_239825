@@ -14,28 +14,19 @@ namespace Dominio
         public Categoria Categoria { get; set; }
         public List<Color> Colores { get; set; }
 
-<<<<<<< HEAD
         public Producto()
         {
             
         }
 
         public Producto(string nombre, int precio, string descripcion, int marcaId, int categoriaId, List<Color> colores)
-=======
-        public Producto(string nombre, int precio, string descripcion)
->>>>>>> api_usuario
         {
             Nombre = nombre;
             Precio = precio;
             Descripcion = descripcion;
-<<<<<<< HEAD
             MarcaId = marcaId;
             CategoriaId = categoriaId;
             Colores = colores;
-=======
->>>>>>> api_usuario
         }
-        
-        
     }
 }

@@ -39,9 +39,9 @@ namespace Servicios
             {
                 throw new ArgumentException("Contraseña no valida");
             }
-            if(usuario.Rol.Count == 0)
+            if(usuario.Roles.Count == 0)
             {
-                usuario.Rol.Add(CategoriaRol.Cliente);
+                usuario.Roles.Add(CategoriaRol.Cliente);
             }
             return true;
         }
