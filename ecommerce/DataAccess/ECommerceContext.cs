@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -48,7 +48,7 @@ namespace DataAccess
                  .AddJsonFile("appsettings.json")
                  .Build();
 
-                var connectionString = DBConnectionStringFactory(configuration);
+                var connectionString = configuration.GetConnectionString("ECommerceDB");
 
                 optionsBuilder.UseSqlServer(connectionString);
             }
