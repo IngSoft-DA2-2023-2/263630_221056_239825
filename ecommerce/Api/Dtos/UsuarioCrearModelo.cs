@@ -9,7 +9,7 @@ namespace Api.Dtos
         public string CorreoElectronico { get; set; }
         public string DireccionEntrega { get; set; }
         public List<Compra> Compras { get; set; }
-        public List<CategoriaRol> Rol { get; set; }
+        public CategoriaRol Rol { get; set; }
         public string contrasena { get; set; }
 
         public Usuario ToEntity()
