@@ -24,28 +24,31 @@ namespace Api.Controladores
 
         // Endpoint solo admin
         [HttpGet("{id}")]
-        public IActionResult BuscarPorId(int id)
+        public IActionResult BuscarPorId(int id, [FromHeader(Name = "Authorization")] string authorizationHeader)
         {
             return Ok(_manejadorUsuario.ObtenerUsuario(id));
         }
 
         // Endpoint solo admin
         [HttpGet]
-        public IActionResult BuscarTodos()
+        public IActionResult BuscarTodos([FromHeader(Name = "Authorization")] string authorizationHeader)
         {
             return Ok(_manejadorUsuario.ObtenerUsuarios());
         }
 
         // Endpoint solo admin si id es distinta a la suya, si no, comprar token con su id y es necesario logearse
         [HttpPatch("{id}")]
-        public IActionResult ModificarUsuario([FromBody] UsuarioCrearModelo usuario)
+        public IActionResult ModificarUsuario(
+            int id, 
+            [FromHeader(Name = "Authorization")] string authorizationHeader, 
+            [FromBody] UsuarioCrearModelo usuario)
         {
             throw new NotImplementedException();
         }
 
         // Endpoint solo admin
         [HttpDelete("{id}")]
-        public IActionResult EliminarUsuario(int id)
+        public IActionResult EliminarUsuario(int id, [FromHeader(Name = "Authorization")] string authorizationHeader)
         {
             throw new NotImplementedException();
         }
