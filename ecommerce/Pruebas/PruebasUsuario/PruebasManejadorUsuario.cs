@@ -68,6 +68,28 @@ namespace Pruebas.PruebasUsuario
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RegistrarUsuarioIncorrectoContrasena ()
+        {
+            clienteSinMail!.CorreoElectronico = "tati@gmail.com";
+            clienteSinMail!.Contrasena = "abc";
+            // Act
+            mock!.Setup(x => x.AgregarUsuario(clienteSinMail!));
+            manejadorUsuario!.RegistrarUsuario(clienteSinMail!);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RegistrarUsuarioIncorrectoRepetido()
+        {
+            // Act
+            mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
+
+            mock!.Setup(x => x.AgregarUsuario(cliente!));
+            manejadorUsuario!.RegistrarUsuario(cliente!);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void RegistrarUsuarioNulo()
         {

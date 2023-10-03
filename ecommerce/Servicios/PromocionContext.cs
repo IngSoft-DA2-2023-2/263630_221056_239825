@@ -1,8 +1,9 @@
 ﻿using System;
+using Servicios;
 using Servicios.Promociones;
 using Dominio;
 
-namespace Servicios.Promociones
+namespace Servicios
 {
 
     public class PromocionContext
