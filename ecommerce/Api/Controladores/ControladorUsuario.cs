@@ -43,20 +43,22 @@ namespace Api.Controladores
             [FromHeader(Name = "Authorization")] string authorizationHeader, 
             [FromBody] UsuarioCrearModelo usuario)
         {
-            throw new NotImplementedException();
+            return Ok(); // TODO Ver errores con manejador usuario
         }
 
         // Endpoint solo admin
         [HttpDelete("{id}")]
         public IActionResult EliminarUsuario(int id, [FromHeader(Name = "Authorization")] string authorizationHeader)
         {
-            throw new NotImplementedException();
+            Usuario usuario = _manejadorUsuario.ObtenerUsuario(id);
+            _manejadorUsuario.EliminarUsuario(usuario);
+            return Ok();
         }
 
         [HttpGet("usuarios/{id}/compras")]
         public IActionResult BuscarCompras(int id)
         {
-            throw new NotImplementedException();
+            return Ok(_manejadorUsuario.ObtenerComprasDelUsuario(id));
         }
 
         [HttpPost("usuarios/{id}/compras")]
@@ -65,7 +67,8 @@ namespace Api.Controladores
             [FromHeader(Name = "Authorization")] string authorizationHeader, 
             [FromBody] CompraModelo compraModelo)
         {
-            throw new NotImplementedException();
+            _manejadorUsuario.AgregarCompraAlUsuario(id, compraModelo.ToEntity());
+            return Created("", compraModelo);
         }
     }
 }
