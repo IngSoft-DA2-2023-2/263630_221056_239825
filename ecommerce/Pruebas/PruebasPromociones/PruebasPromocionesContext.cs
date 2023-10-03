@@ -25,12 +25,12 @@ namespace Pruebas.PruebasPromociones
             Marca marca = new();
             Categoria categoria = new();
             List<Color> color = new();
-            producto = new Producto("Jean", 2000, "Largo y blanco", marca, categoria, color);
+            producto = new Producto("Jean", 2000, "Largo y blanco", 1, 1, color) { Marca = marca, Categoria = categoria };
             productoVacio = null;
             Marca marca2 = new();
             Categoria categoria2 = new();
             List<Color> color2 = new();
-            producto2 = new Producto("Blusa", 1890, "Manga larga", marca2, categoria2, color2);
+            producto2 = new Producto("Blusa", 1890, "Manga larga", 2, 2, color2) { Marca = marca2, Categoria = categoria2 };
             carrito = new List<Producto> { producto, producto2 };
         }
 
@@ -49,13 +49,13 @@ namespace Pruebas.PruebasPromociones
         public void AplicarStrategyError()
         {
             carrito!.Remove(producto!);
-            int costoTotal = promocionContext.AplicarStrategy(carrito!);
+            int costoTotal = promocionContext!.AplicarStrategy(carrito!);
         }
 
         [TestMethod]
         public void NombrePromocion()
         {
-            Assert.AreEqual(promocionContext.NombrePromocion(), "Se aplico un 20% de descuento en el producto de mayor valor");
+            Assert.AreEqual(promocionContext!.NombrePromocion(), "Se aplico un 20% de descuento en el producto de mayor valor");
         }
 
         [TestMethod]

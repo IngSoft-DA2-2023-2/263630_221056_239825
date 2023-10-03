@@ -28,16 +28,16 @@ public class PruebasPromociones3x2
             Nombre = "Nike"
         };
         List<Color> colores = new();
-        producto1 = new Producto("Camisa", 1000, "Larga", marca, categoria, colores);
+        producto1 = new Producto("Camisa", 1000, "Larga", 1, 1, colores) { Marca = marca, Categoria = categoria };
 
         productoVacio = null;
 
         Marca marca2 = new Marca();
         List<Color> color2 = new();
-        producto2 = new Producto("Buzo", 800, "Bordado", marca2, categoria, color2);
+        producto2 = new Producto("Buzo", 800, "Bordado", 2, 1, color2) { Marca = marca2, Categoria = categoria };
 
         List<Color> color3 = new();
-        producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria, color3);
+        producto3 = new Producto("Campera", 3500, "Impermeable", 1, 1, color3) { Marca = marca, Categoria = categoria };
 
         carrito = new List<Producto>
         {
@@ -70,7 +70,7 @@ public class PruebasPromociones3x2
         Marca marca = new();
         Categoria categoriaNueva = new();
         List<Color> colores = new();
-        Producto? productoDistintaCat = new("Cartera", 5000, "Bandolera", marca, categoriaNueva, colores);
+        Producto? productoDistintaCat = new("Cartera", 5000, "Bandolera", 1, 1, colores) { Marca = marca, Categoria = categoriaNueva };
         carrito!.Add(productoDistintaCat);
         int costoTotal = promocion3x2!.AplicarPromocion(carrito!);
     }

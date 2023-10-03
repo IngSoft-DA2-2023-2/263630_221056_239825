@@ -27,12 +27,12 @@ namespace Pruebas.PruebasPromociones
             Marca marca = new();
             Categoria categoria = new();
             List<Color> color = new();
-            producto = new Producto("Jean", 2000, "Largo y blanco", marca, categoria, color);
+            producto = new Producto("Jean", 2000, "Largo y blanco", 1, 1, color) { Marca = marca, Categoria = categoria};
             productoVacio = null;
             Marca marca2 = new();
             Categoria categoria2 = new();
             List<Color> color2 = new();
-            producto2 = new Producto("Blusa", 1890, "Manga larga", marca2, categoria2, color2);
+            producto2 = new Producto("Blusa", 1890, "Manga larga", 2, 2, color2);
             carrito = new List<Producto>();
             carrito.Add(producto);
             carrito.Add(producto2);

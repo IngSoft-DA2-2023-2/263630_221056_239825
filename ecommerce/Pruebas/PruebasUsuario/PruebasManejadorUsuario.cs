@@ -35,7 +35,7 @@ namespace Pruebas.PruebasUsuario
             compra.Id = 1;
             List<Color> colorList = new List<Color>();
             colorList.Add(new Color());
-            compra.Productos.Add(new Producto("prod", 123, ""));
+            compra.Productos.Add(new Producto("prod", 123, "", 1, 1, colorList));
         }
 
         [TestMethod]

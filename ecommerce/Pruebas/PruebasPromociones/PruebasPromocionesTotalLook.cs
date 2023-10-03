@@ -45,12 +45,12 @@ namespace Pruebas.PruebasPromociones
             List<Color> coloresProducto3 = new() { azul, rojo, verde };
             List<Color> coloresProducto0 = new List<Color>() { verde };
 
-            producto0 = new Producto("aaa", 22, "vvv", marca, categoria, coloresProducto0);
-            producto = new Producto("Camisa", 1000, "Larga", marca, categoria, coloresProducto1);
+            producto0 = new Producto("aaa", 22, "vvv", 1, 1, coloresProducto0) { Marca = marca, Categoria = categoria };
+            producto = new Producto("Camisa", 1000, "Larga", 1, 1, coloresProducto1) { Marca = marca, Categoria = categoria };
             Marca marca2 = new();
             Categoria categoria2 = new();
-            producto2 = new Producto("Botas", 2000, "Con taco", marca2, categoria2, coloresProducto2);
-            producto3 = new Producto("Campera", 3500, "Impermeable", marca, categoria, coloresProducto3);
+            producto2 = new Producto("Botas", 2000, "Con taco", 2, 2, coloresProducto2) { Marca = marca2, Categoria = categoria2 };
+            producto3 = new Producto("Campera", 3500, "Impermeable", 1, 1, coloresProducto3) { Marca = marca, Categoria = categoria };
             productoVacio = null;
             carrito = new List<Producto> { producto, producto2, producto3 };
         }
@@ -82,7 +82,7 @@ namespace Pruebas.PruebasPromociones
             Marca marca = new();
             Categoria categoria = new();
             List<Color> colorNuevo = new();
-            Producto? productoDistintaCat = new("Cartera", 5000, "Bandolera", marca, categoria, colorNuevo);
+            Producto? productoDistintaCat = new("Cartera", 5000, "Bandolera", 1, 1, colorNuevo) { Marca = marca, Categoria = categoria };
             carrito!.Add(productoDistintaCat);
             int costoTotal = promocionTotalLook!.AplicarPromocion(carrito!);
         }
