@@ -9,7 +9,7 @@ namespace Pruebas.PruebasPromociones
 	[TestClass]
 	public class PruebasPromocionesContext
 	{
-        private PromocionContext promocionContext;
+        private PromocionContext? promocionContext;
         private Promocion20Off? promocion20;
         private Producto? producto;
         private Producto? productoVacio;
