@@ -55,13 +55,13 @@ namespace Api.Controladores
             return Ok();
         }
 
-        [HttpGet("usuarios/{id}/compras")]
+        [HttpGet("{id}/compras")]
         public IActionResult BuscarCompras(int id)
         {
             return Ok(_manejadorUsuario.ObtenerComprasDelUsuario(id));
         }
 
-        [HttpPost("usuarios/{id}/compras")]
+        [HttpPost("{id}/compras")]
         public IActionResult RealizarCompra(
             int id, 
             [FromHeader(Name = "Authorization")] string authorizationHeader, 
