@@ -1,6 +1,7 @@
 ﻿using Dominio.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Servicios.Interfaces;
+using Api.Dtos;
 
 namespace Api.Controladores
 {
@@ -14,10 +15,10 @@ namespace Api.Controladores
             _manejadorUsuario = manejadorUsuario;
         }
         [HttpPost]
-        public IActionResult RegistrarSesion([FromBody] string mail, string password)
+        public IActionResult RegistrarSesion([FromBody] CredencialesControlador credenciales)
         {
-            //Usuario usuario = _manejadorUsuario.login(mail, password);
-            //return Created("", usuario);
+            //Usuario usuario = _manejadorUsuario.login(credenciales.CorreoElectronico, credenciales.Contrasena);
+            //return Created("", usuario);  
             throw new NotImplementedException();
         }
         [HttpDelete]
