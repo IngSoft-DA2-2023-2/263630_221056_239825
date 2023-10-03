@@ -36,7 +36,7 @@ namespace Api.Controladores
             return Ok(_manejadorUsuario.ObtenerUsuarios());
         }
 
-        // Endpoint solo admin si id es distinta a la suya y es necesario logearse
+        // Endpoint solo admin si id es distinta a la suya, si no, comprar token con su id y es necesario logearse
         [HttpPatch("{id}")]
         public IActionResult ModificarUsuario([FromBody] UsuarioCrearModelo usuario)
         {
@@ -46,6 +46,21 @@ namespace Api.Controladores
         // Endpoint solo admin
         [HttpDelete("{id}")]
         public IActionResult EliminarUsuario(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet("usuarios/{id}/compras")]
+        public IActionResult BuscarCompras(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost("usuarios/{id}/compras")]
+        public IActionResult RealizarCompra(
+            int id, 
+            [FromHeader(Name = "Authorization")] string authorizationHeader, 
+            [FromBody] CompraModelo compraModelo)
         {
             throw new NotImplementedException();
         }
