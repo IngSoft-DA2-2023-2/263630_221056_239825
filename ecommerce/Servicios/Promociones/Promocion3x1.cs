@@ -1,11 +1,11 @@
 ﻿using System;
 using Dominio;
 
-namespace DataAccess.Promociones
+namespace Servicios.Promociones
 {
     public class Promocion3x1 : IPromocionStrategy
     {
-        public string NombrePromocion { get; set; } = "Se aplicó la promoción de Fidelidad, 3x1";
+        public string NombrePromocion { get;} = "Se aplicó la promoción de Fidelidad, 3x1";
 
         public Promocion3x1()
         {

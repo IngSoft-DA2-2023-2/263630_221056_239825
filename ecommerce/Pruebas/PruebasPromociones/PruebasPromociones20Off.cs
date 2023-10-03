@@ -3,8 +3,8 @@ using Dominio;
 using Dominio.Usuario;
 using Moq;
 using DataAccess;
-using DataAccess.Interfaces;
-using DataAccess.Promociones;
+using Servicios.Interfaces;
+using Servicios.Promociones;
 
 namespace Pruebas.PruebasPromociones
 {
