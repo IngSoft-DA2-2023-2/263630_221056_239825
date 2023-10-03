@@ -19,19 +19,35 @@ namespace Api.Controladores
         [HttpPost]
         public IActionResult RegistrarUsuario([FromBody] UsuarioCrearModelo nuevoUsuario)
         {
-            return Ok(_manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity()));
+            return Created("", _manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity()));
         }
 
+        // Endpoint solo admin
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_manejadorUsuario.ObtenerUsuario(id));
         }
 
+        // Endpoint solo admin
         [HttpGet]
         public IActionResult BuscarTodos()
         {
             return Ok(_manejadorUsuario.ObtenerUsuarios());
+        }
+
+        // Endpoint solo admin si id es distinta a la suya y es necesario logearse
+        [HttpPatch("{id}")]
+        public IActionResult ModificarUsuario([FromBody] UsuarioCrearModelo usuario)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Endpoint solo admin
+        [HttpDelete("{id}")]
+        public IActionResult EliminarUsuario(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
