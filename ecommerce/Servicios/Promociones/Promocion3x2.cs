@@ -1,11 +1,11 @@
 ﻿using System;
 using Dominio;
 
-namespace DataAccess.Promociones
+namespace Servicios.Promociones
 {
     public class Promocion3x2 : IPromocionStrategy
     {
-        public string NombrePromocion { get; set; } = "El producto de menor valor va de regalo";
+        public string NombrePromocion { get;} = "El producto de menor valor va de regalo";
 
         public Promocion3x2()
         {
@@ -18,14 +18,7 @@ namespace DataAccess.Promociones
                 throw new NullReferenceException("La promoción se aplica si hay, al menos, 3 productos en el carrito");
             }
 
-            int costoTotal = 0;
-            //bool promoAplicada = false;
-
-            //foreach (Producto p in listaCompra)
-            //{
-            //    costoTotal += p.Precio;
-            //}
-
+            int costoTotal = 0;       
             Dictionary<Categoria, List<Producto>> categorias = new Dictionary<Categoria, List<Producto>>();
 
             foreach (Producto prod in listaCompra)

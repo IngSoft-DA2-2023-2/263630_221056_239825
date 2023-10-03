@@ -1,11 +1,11 @@
 ﻿using System;
 using Dominio;
 
-namespace DataAccess.Promociones
+namespace Servicios.Promociones
 {
     public class Promocion20Off : IPromocionStrategy
     {
-        public string NombrePromocion { get; set; } = "Se aplico un 20% de descuento en el producto de mayor valor";
+        public string NombrePromocion { get; } = "Se aplico un 20% de descuento en el producto de mayor valor";
 
         public Promocion20Off()
         {
