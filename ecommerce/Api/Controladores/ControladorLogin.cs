@@ -25,7 +25,7 @@ namespace Api.Controladores
         {
             Usuario usuario = _manejadorUsuario.Login(credenciales.CorreoElectronico, credenciales.Contrasena);
             JwtModelo jwt = _configuration.GetSection("Jwt").Get<JwtModelo>();
-            var claims = new[]
+            Claim[] claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, jwt.Subject),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -34,10 +34,10 @@ namespace Api.Controladores
                 new Claim("correoElectronico", usuario.CorreoElectronico)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
+            SigningCredentials signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
+            JwtSecurityToken token = new JwtSecurityToken(
                 jwt.Issuer,
                 jwt.Audience,
                 claims,

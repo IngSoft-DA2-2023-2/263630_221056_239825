@@ -41,7 +41,7 @@ namespace DataAccess
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-                var connectionString = configuration.GetConnectionString("ECommerceDB");
+                String? connectionString = configuration.GetConnectionString("ECommerceDB");
 
                 optionsBuilder.UseSqlServer(connectionString);
             }

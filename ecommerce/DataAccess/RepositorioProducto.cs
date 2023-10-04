@@ -15,7 +15,7 @@ public class RepositorioProducto : IRepositorioProducto
     }
     public List<Producto> RetornarLista(QueryProducto filtro)
     {
-        var query = Contexto.Set<Producto>().AsQueryable();
+        IQueryable<Producto> query = Contexto.Set<Producto>().AsQueryable();
 
         if (!string.IsNullOrEmpty(filtro.Nombre))
         {

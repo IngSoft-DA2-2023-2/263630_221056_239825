@@ -27,7 +27,7 @@ namespace Servicios.Promociones
                 costoTotal += p.Precio;
             }
 
-            foreach (var producto in listaCompra)
+            foreach (Producto producto in listaCompra)
             {
                 foreach (Color color in producto.Colores)
                 {
@@ -49,7 +49,7 @@ namespace Servicios.Promociones
                 }
             }
 
-            foreach (var colorNombre in coloresCount.Keys)
+            foreach (string colorNombre in coloresCount.Keys)
             {
                 if (coloresCount[colorNombre] >= 3)
                 {

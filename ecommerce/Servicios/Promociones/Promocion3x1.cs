@@ -22,7 +22,7 @@ namespace Servicios.Promociones
 
             if (CoincideMarca(listaCompra))
             {
-                var precioProds = listaCompra.OrderBy(p => p.Precio).ToList();
+                List<Producto> precioProds = listaCompra.OrderBy(p => p.Precio).ToList();
 
                 for (int i = 2; i < listaCompra.Count; i++)
                 {

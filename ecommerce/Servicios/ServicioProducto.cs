@@ -25,7 +25,7 @@ public class ServicioProducto : IServicioProducto
     
     public void ModificarProducto(int id, Producto productoNuevo)
     {
-        var productoViejo = EncontrarPorId(id);
+        Producto productoViejo = EncontrarPorId(id);
         if (productoViejo is null)
         {
             throw new KeyNotFoundException($"El producto de id = {id} no se encuentra");
@@ -44,7 +44,7 @@ public class ServicioProducto : IServicioProducto
 
     public List<Producto> RetornarLista(QueryProducto queryProducto)
     {
-        var listaDeProductos = _repositorioProductos.RetornarLista(queryProducto);
+        List<Producto> listaDeProductos = _repositorioProductos.RetornarLista(queryProducto);
 
         return listaDeProductos;
     }
@@ -56,7 +56,7 @@ public class ServicioProducto : IServicioProducto
     
     public Producto EncontrarPorId(int idProducto)
     {
-        var productoEncontrado = _repositorioProductos.EncontrarProductoPorId(idProducto);
+        Producto productoEncontrado = _repositorioProductos.EncontrarProductoPorId(idProducto);
         if (productoEncontrado is null)
         {
             throw new KeyNotFoundException("El producto con el id dado no se encontro.");
