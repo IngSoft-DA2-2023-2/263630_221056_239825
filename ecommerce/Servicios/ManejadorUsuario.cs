@@ -16,6 +16,23 @@ namespace Servicios
         public Usuario RegistrarUsuario(Usuario usuario)
         {
             if (ValidarUsuario(usuario)) {
+                List<Compra> compras = new List<Compra>();
+                Compra compra = new Compra()
+                {
+                    Id = 1,
+                    Productos = new List<Producto>()
+                    {
+                        new Producto()
+                        {
+                            Id = 10,
+                            Precio = 100,
+                            Nombre = "Camisa",
+                            MarcaId = 1,
+                            CategoriaId = 1,
+                        }
+                    }
+                };
+                usuario.Compras = compras;
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;
@@ -99,7 +116,13 @@ namespace Servicios
 
         public Usuario ObtenerUsuario(int id)
         {
-            return repositorioUsuario.ObtenerUsuario(u => u.Id == id);
+            try
+            {
+                return repositorioUsuario.ObtenerUsuario(u => u.Id == id);
+            } catch (Exception)
+            {
+                throw new KeyNotFoundException("No existe el usuario con la id dada");
+            }
         }
 
         public List<Usuario> ObtenerUsuarios()
@@ -114,8 +137,14 @@ namespace Servicios
 
         public Usuario Login(string correoElectronico, string contrasena)
         {
-            Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico && u.Contrasena == contrasena);
-            return usuario;
+            try
+            {
+                Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico && u.Contrasena == contrasena);
+                return usuario;
+            } catch (Exception)
+            {
+                throw new KeyNotFoundException("Credenciales incorrectas");
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Api.Dtos;
+using Dominio;
 using Dominio.Usuario;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Servicios;
 using Servicios.Interfaces;
 using System.Security.Claims;
 
@@ -13,9 +13,11 @@ namespace Api.Controladores
     public class ControladorUsuario : ControllerBase
     {
         private IManejadorUsuario _manejadorUsuario;
-        public ControladorUsuario(IManejadorUsuario manejadorUsuario)
+        private IServicioProducto _manejadorProducto;
+        public ControladorUsuario(IManejadorUsuario manejadorUsuario, IServicioProducto manejadorProducto)
         {
             _manejadorUsuario = manejadorUsuario;
+            _manejadorProducto = manejadorProducto;
         }
 
         [HttpPost]
@@ -28,7 +30,7 @@ namespace Api.Controladores
         public IActionResult BuscarPorId(int id)
         {
             Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
+            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador || usuario.Id == id)
             {
                 return Ok(_manejadorUsuario.ObtenerUsuario(id));
             }
@@ -89,21 +91,44 @@ namespace Api.Controladores
         [HttpPost("{id}/compras")]
         public IActionResult RealizarCompra(int id, [FromBody] CompraModelo compraModelo)
         {
+            
             Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
             if(usuario.Id == id)
             {
-                _manejadorUsuario.AgregarCompraAlUsuario(id, compraModelo.ToEntity());
+                Compra compra = new Compra()
+                {
+                    Id = id,
+                    Productos = crearListaProductos(compraModelo),
+                };
+                _manejadorUsuario.AgregarCompraAlUsuario(id, compra);
                 return Created("", compraModelo);
             }
             return Unauthorized();
         }
 
+        private List<Producto> crearListaProductos(CompraModelo compra)
+        {
+            List<Producto> resultado = new List<Producto>();
+            foreach (int id in compra.idProductos)
+            {
+                Producto producto = _manejadorProducto.EncontrarPorId(id);
+                resultado.Add(producto);
+            }
+            return resultado;
+        }
+
         private Usuario ValidarToken(ClaimsIdentity identity)
         {
-            if (identity == null) throw new ArgumentNullException(nameof(identity));
-            string id = identity.Claims.FirstOrDefault(x => x.Type == "id")!.Value;
-            Usuario usuario = _manejadorUsuario.ObtenerUsuario(int.Parse(id));
-            return usuario;
+            try
+            {
+                if (identity == null) throw new ArgumentNullException(nameof(identity));
+                string id = identity.Claims.FirstOrDefault(x => x.Type == "id")!.Value;
+                Usuario usuario = _manejadorUsuario.ObtenerUsuario(int.Parse(id));
+                return usuario;
+            } catch (Exception)
+            {
+                throw new UnauthorizedAccessException("No Autorizado");
+            }
         }
     }
 }
