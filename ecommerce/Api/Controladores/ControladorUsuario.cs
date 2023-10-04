@@ -1,5 +1,6 @@
 ﻿using Api.Dtos;
 using Dominio.Usuario;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
 using Servicios.Interfaces;
@@ -23,65 +24,78 @@ namespace Api.Controladores
             return Created("", _manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity()));
         }
 
-        // Endpoint solo admin
         [HttpGet("{id}")]
-        public IActionResult BuscarPorId(int id, [FromHeader(Name = "Authorization")] string authorizationHeader)
+        public IActionResult BuscarPorId(int id)
         {
-            return Ok(_manejadorUsuario.ObtenerUsuario(id));
+            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
+            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
+            {
+                return Ok(_manejadorUsuario.ObtenerUsuario(id));
+            }
+            return Unauthorized();
         }
 
-        // Endpoint solo admin
         [HttpGet]
-        public IActionResult BuscarTodos([FromHeader(Name = "Authorization")] string authorizationHeader)
+        public IActionResult BuscarTodos()
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Usuario usuario = ValidarToken(identity!);
+            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
             if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
             {
                 return Ok(_manejadorUsuario.ObtenerUsuarios());
             }
-            return BadRequest();
+            return Unauthorized();
         }
 
         // Endpoint solo admin si id es distinta a la suya, si no, comprar token con su id y es necesario logearse
         [HttpPatch("{id}")]
-        public IActionResult ModificarUsuario(
-            int id, 
-            [FromHeader(Name = "Authorization")] string authorizationHeader, 
-            [FromBody] UsuarioCrearModelo usuario)
+        public IActionResult ModificarUsuario(int id, JsonPatchDocument<Usuario> usuarioModificado)
         {
+            Usuario usuarioLogeado = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
+            if (usuarioLogeado.Rol == CategoriaRol.Administrador || usuarioLogeado.Rol == CategoriaRol.ClienteAdministrador || usuarioLogeado.Id==id)
+            {
+                Usuario original = _manejadorUsuario.ObtenerUsuario(id);
+                Usuario usuarioAModificar = original;
+                usuarioModificado.ApplyTo(usuarioAModificar, (Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter) ModelState);
+                //Falta modificar el usuario en el manejador
+                return Ok();
+            }
             return Ok(); // TODO Ver errores con manejador usuario
         }
 
-        // Endpoint solo admin
         [HttpDelete("{id}")]
         public IActionResult EliminarUsuario(int id)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Usuario usuario = ValidarToken(identity!);
-            if(usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
+            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
+            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
             {
                 Usuario usuarioAEliminar = _manejadorUsuario.ObtenerUsuario(id);
                 _manejadorUsuario.EliminarUsuario(usuarioAEliminar);
                 return Ok();
             }
-            return BadRequest();
+            return Unauthorized();
         }
 
         [HttpGet("{id}/compras")]
         public IActionResult BuscarCompras(int id)
         {
-            return Ok(_manejadorUsuario.ObtenerComprasDelUsuario(id));
+            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
+            if (usuario.Id == id)
+            {
+                return Ok(_manejadorUsuario.ObtenerComprasDelUsuario(id));
+            }
+            return Unauthorized();
         }
 
         [HttpPost("{id}/compras")]
-        public IActionResult RealizarCompra(
-            int id, 
-            [FromHeader(Name = "Authorization")] string authorizationHeader, 
-            [FromBody] CompraModelo compraModelo)
+        public IActionResult RealizarCompra(int id, [FromBody] CompraModelo compraModelo)
         {
-            _manejadorUsuario.AgregarCompraAlUsuario(id, compraModelo.ToEntity());
-            return Created("", compraModelo);
+            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
+            if(usuario.Id == id)
+            {
+                _manejadorUsuario.AgregarCompraAlUsuario(id, compraModelo.ToEntity());
+                return Created("", compraModelo);
+            }
+            return Unauthorized();
         }
 
         private Usuario ValidarToken(ClaimsIdentity identity)
