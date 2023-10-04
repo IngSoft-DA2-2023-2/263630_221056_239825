@@ -32,7 +32,7 @@ namespace Servicios.Promociones
                 categorias[prod.Categoria].Add(prod);
             }
 
-            foreach (var categProd in categorias.Values)
+            foreach (List<Producto> categProd in categorias.Values)
             {
                 if (categProd.Count >= 3)
                 {
