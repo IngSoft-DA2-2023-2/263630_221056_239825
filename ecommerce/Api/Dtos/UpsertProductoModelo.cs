@@ -2,7 +2,7 @@
 
 namespace Api.Dtos;
 
-public class ProductoUpsertModelo
+public class UpsertProductoModelo
 {
     public string Nombre { get; set; }
     public int Precio { get; set; }

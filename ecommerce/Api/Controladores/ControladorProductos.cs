@@ -30,9 +30,9 @@ namespace Api.Controladores
         }
         
         [HttpPost]
-        public IActionResult AgregarProducto([FromBody] ProductoUpsertModelo productoNuevo)
+        public IActionResult AgregarProducto([FromBody] UpsertProductoModelo upsertProductoNuevo)
         {
-            var productoCreadoId = _servicioProducto.AgregarProducto(productoNuevo.AEntidad());
+            var productoCreadoId = _servicioProducto.AgregarProducto(upsertProductoNuevo.AEntidad());
             var productoCreado = _servicioProducto.EncontrarPorId(productoCreadoId);
             return CreatedAtRoute(nameof(BuscarPorId), new { id = productoCreadoId }, new ProductoModelo(productoCreado));
         }
@@ -46,9 +46,9 @@ namespace Api.Controladores
         }
         
         [HttpPut("{id}")]
-        public IActionResult ModificarProducto(int id, [FromBody] ProductoUpsertModelo productoNuevo)
+        public IActionResult ModificarProducto(int id, [FromBody] UpsertProductoModelo upsertProductoNuevo)
         {
-            _servicioProducto.ModificarProducto(id, productoNuevo.AEntidad());
+            _servicioProducto.ModificarProducto(id, upsertProductoNuevo.AEntidad());
             var productoActualizado = _servicioProducto.EncontrarPorId(id);
             return Ok(new ProductoModelo(productoActualizado));
         }
