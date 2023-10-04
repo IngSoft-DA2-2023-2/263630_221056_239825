@@ -18,7 +18,7 @@ namespace Api.Dtos
             {
                 Id = this.Id,
                 Compras = this.Compras,
-                Roles = this.Rol,
+                Rol = this.Rol,
             };
         }
     }
