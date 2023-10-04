@@ -49,7 +49,7 @@ public class ServicioProducto : IServicioProducto
         return listaDeProductos;
     }
     
-    public void GuardarCambios()
+    private void GuardarCambios()
     {
         _repositorioProductos.GuardarCambios();
     }

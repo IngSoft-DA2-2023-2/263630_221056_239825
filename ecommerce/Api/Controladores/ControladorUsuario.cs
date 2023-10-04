@@ -1,7 +1,5 @@
 ﻿using Api.Dtos;
-using Dominio.Usuario;
 using Microsoft.AspNetCore.Mvc;
-using Servicios;
 using Servicios.Interfaces;
 
 namespace Api.Controladores

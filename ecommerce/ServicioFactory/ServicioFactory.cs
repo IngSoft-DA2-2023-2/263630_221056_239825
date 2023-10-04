@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.DependencyInjection;
 using DataAccess;
 using DataAccess.Interfaces;
 using Servicios;
@@ -7,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ServicioFactory
 {
+    [ExcludeFromCodeCoverage]
     public class ServiciosFactory
     {
-        public ServiciosFactory() { }
         public void RegistrateServices(IServiceCollection serviceCollection)
         {
             serviceCollection.AddDbContext<DbContext, ECommerceContext>();

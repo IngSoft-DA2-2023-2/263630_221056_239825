@@ -26,7 +26,7 @@ public class PruebasRepositorioProducto
         var marcaDummy = new Marca() { Id = 1, Nombre = "Colgate" };
         var categoriaDummy = new Categoria() { Id = 1, Nombre = "Pasta dental" };
         var coloresDummies = new List<Color>() { new() { Id = 1, Nombre = "Azul" }, new() { Id = 2, Nombre = "Rojo" } };
-        return new Producto("Pasta ProWhite", 99, "Esto es una pasta de dientes pro", marcaDummy.Id, categoriaDummy.Id, coloresDummies)
+        return new Producto("Pasta ProXL", 99, "Esto es una pasta de dientes pro", marcaDummy.Id, categoriaDummy.Id, coloresDummies)
         {
             Categoria = categoriaDummy,
             Marca = marcaDummy,
@@ -70,11 +70,11 @@ public class PruebasRepositorioProducto
         _contexto.SaveChanges();
 
         //Act
-        var result = _repositorio.RetornarLista(filtro);
+        var resultado = _repositorio.RetornarLista(filtro);
             
         // Assert
-        Assert.AreEqual(1, result.Count());
-        Assert.AreEqual(result.First(), _productoDePrueba);
+        Assert.AreEqual(1, resultado.Count());
+        Assert.AreEqual(resultado.First(), _productoDePrueba);
     }
     
     [TestMethod]
@@ -104,11 +104,11 @@ public class PruebasRepositorioProducto
         _contexto.SaveChanges();
 
         //Act
-        var result = _repositorio.RetornarLista(filtroVacio);
+        var resultado = _repositorio.RetornarLista(filtroVacio);
             
         // Assert
-        Assert.AreEqual(result.Count, 2);
-        CollectionAssert.AreEqual(result, listaProductos);
+        Assert.AreEqual(resultado.Count, 2);
+        CollectionAssert.AreEqual(resultado, listaProductos);
     }
 
     [TestMethod]
