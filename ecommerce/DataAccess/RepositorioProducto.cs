@@ -8,8 +8,8 @@ namespace DataAccess;
 
 public class RepositorioProducto : IRepositorioProducto
 {
-    protected readonly DbContext Contexto;
-    public RepositorioProducto(DbContext contexto)
+    protected readonly ECommerceContext Contexto;
+    public RepositorioProducto(ECommerceContext contexto)
     {
         Contexto = contexto;
     }
@@ -46,11 +46,12 @@ public class RepositorioProducto : IRepositorioProducto
 
     public Producto? EncontrarProductoPorId(int id)
     {
-        return Contexto.Set<Producto>()
+        var productoEnDb = Contexto.Set<Producto>()
             .Include(p => p.Categoria)
             .Include(p => p.Marca)
             .Include(p => p.Colores)
             .FirstOrDefault(p => p.Id == id);
+        return productoEnDb;
     }
     
     public void AgregarProducto(Producto productoAgregado)

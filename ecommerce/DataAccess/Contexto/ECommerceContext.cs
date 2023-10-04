@@ -15,6 +15,10 @@ namespace DataAccess
         public virtual DbSet<Categoria> Categorias { get; set; }
         public virtual DbSet<Color> Colores { get; set; }
         public virtual DbSet<Compra> Compras { get; set; }
+        
+        public ECommerceContext(DbContextOptions<ECommerceContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
