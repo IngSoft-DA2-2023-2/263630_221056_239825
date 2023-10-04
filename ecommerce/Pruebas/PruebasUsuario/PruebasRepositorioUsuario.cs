@@ -117,9 +117,7 @@ namespace Pruebas.PruebasUsuario
             Usuario nuevoCliente = new Usuario("martin@edelman.com.uy", "Zorrilla 142", "Password123")
             {
                 Id = 100,
-                Roles = new List<CategoriaRol>() {
-                    CategoriaRol.Cliente
-                }
+                Rol = CategoriaRol.Cliente
             };
             mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.EliminarUsuario(nuevoCliente!);

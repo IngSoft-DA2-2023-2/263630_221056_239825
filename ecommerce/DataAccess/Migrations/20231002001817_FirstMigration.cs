@@ -9,20 +9,6 @@ namespace DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Administradores",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CorreoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DireccionEntrega = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Administradores", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categorias",
                 columns: table => new
                 {
@@ -33,20 +19,6 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categorias", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Clientes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CorreoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DireccionEntrega = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,26 +48,36 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CorreoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DireccionEntrega = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rol = table.Column<int>(type: "int", nullable: false),
+                    Contrasena = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Compras",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AdministradorId = table.Column<int>(type: "int", nullable: true),
-                    ClienteId = table.Column<int>(type: "int", nullable: true)
+                    UsuarioId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Compras", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Compras_Administradores_AdministradorId",
-                        column: x => x.AdministradorId,
-                        principalTable: "Administradores",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Compras_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
+                        name: "FK_Compras_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
                         principalColumn: "Id");
                 });
 
@@ -164,14 +146,9 @@ namespace DataAccess.Migrations
                 column: "ProductosId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Compras_AdministradorId",
+                name: "IX_Compras_UsuarioId",
                 table: "Compras",
-                column: "AdministradorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Compras_ClienteId",
-                table: "Compras",
-                column: "ClienteId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_CategoriaId",
@@ -210,10 +187,7 @@ namespace DataAccess.Migrations
                 name: "Marcas");
 
             migrationBuilder.DropTable(
-                name: "Administradores");
-
-            migrationBuilder.DropTable(
-                name: "Clientes");
+                name: "Usuarios");
         }
     }
 }

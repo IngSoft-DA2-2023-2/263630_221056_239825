@@ -2,6 +2,7 @@
 using Dominio;
 using Dominio.Usuario;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DataAccess
 {
@@ -26,9 +27,9 @@ namespace DataAccess
             Contexto.SaveChanges();
         }
 
-        public Usuario ObtenerUsuario(int id)
+        public Usuario ObtenerUsuario(Expression<Func<Usuario, bool>> criterio)
         {
-            return Contexto.Set<Usuario>().First(u => u.Id == id);
+            return Contexto.Set<Usuario>().First(criterio);
         }
 
         public List<Usuario> ObtenerUsuarios()

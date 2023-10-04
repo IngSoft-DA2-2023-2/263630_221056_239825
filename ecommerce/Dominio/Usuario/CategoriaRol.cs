@@ -8,7 +8,8 @@ namespace Dominio.Usuario
 {
     public enum CategoriaRol
     {
+        Cliente,
         Administrador,
-        Cliente
+        ClienteAdministrador
     }
 }
