@@ -3,6 +3,7 @@ using Dominio.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Servicios;
 using Servicios.Interfaces;
+using System.Security.Claims;
 
 namespace Api.Controladores
 {
@@ -33,7 +34,13 @@ namespace Api.Controladores
         [HttpGet]
         public IActionResult BuscarTodos([FromHeader(Name = "Authorization")] string authorizationHeader)
         {
-            return Ok(_manejadorUsuario.ObtenerUsuarios());
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Usuario usuario = ValidarToken(identity!);
+            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
+            {
+                return Ok(_manejadorUsuario.ObtenerUsuarios());
+            }
+            return BadRequest();
         }
 
         // Endpoint solo admin si id es distinta a la suya, si no, comprar token con su id y es necesario logearse
@@ -48,11 +55,17 @@ namespace Api.Controladores
 
         // Endpoint solo admin
         [HttpDelete("{id}")]
-        public IActionResult EliminarUsuario(int id, [FromHeader(Name = "Authorization")] string authorizationHeader)
+        public IActionResult EliminarUsuario(int id)
         {
-            Usuario usuario = _manejadorUsuario.ObtenerUsuario(id);
-            _manejadorUsuario.EliminarUsuario(usuario);
-            return Ok();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Usuario usuario = ValidarToken(identity!);
+            if(usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
+            {
+                Usuario usuarioAEliminar = _manejadorUsuario.ObtenerUsuario(id);
+                _manejadorUsuario.EliminarUsuario(usuarioAEliminar);
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpGet("{id}/compras")]
@@ -69,6 +82,14 @@ namespace Api.Controladores
         {
             _manejadorUsuario.AgregarCompraAlUsuario(id, compraModelo.ToEntity());
             return Created("", compraModelo);
+        }
+
+        private Usuario ValidarToken(ClaimsIdentity identity)
+        {
+            if (identity == null) throw new ArgumentNullException(nameof(identity));
+            string id = identity.Claims.FirstOrDefault(x => x.Type == "id")!.Value;
+            Usuario usuario = _manejadorUsuario.ObtenerUsuario(int.Parse(id));
+            return usuario;
         }
     }
 }
