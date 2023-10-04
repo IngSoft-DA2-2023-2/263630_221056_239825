@@ -12,5 +12,6 @@ namespace Servicios.Interfaces
         List<Compra> ObtenerComprasDelUsuario(int id);
         void AgregarCompraAlUsuario(int id, Compra compra);
         void EliminarUsuario(Usuario usuario);
+        Usuario Login(string correoElectronico, string contrasena);
     }
 }

@@ -41,10 +41,7 @@ namespace Servicios
             {
                 throw new ArgumentException("Contraseña no valida");
             }
-            if (usuario.Roles.Count == 0)
-            {
-                usuario.Roles.Add(CategoriaRol.Cliente);
-            }
+
             return true;
         }
 
@@ -70,7 +67,7 @@ namespace Servicios
 
         public void ActualizarUsuario(int id, string direccionEntrega)
         {
-            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
             usuarioObtenido.DireccionEntrega = direccionEntrega;
             repositorioUsuario.ActualizarUsuario(usuarioObtenido);
         }
@@ -103,7 +100,7 @@ namespace Servicios
                 compra.Precio = precio;
                 compra.NombrePromo = nombrePromo;
 
-                Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+                Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
                 usuarioObtenido.Compras.Add(compra);
                 repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
@@ -134,13 +131,13 @@ namespace Servicios
 
         public List<Compra> ObtenerComprasDelUsuario(int id)
         {
-            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(id);
+            Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
             return usuarioObtenido.Compras;
         }
 
         public Usuario ObtenerUsuario(int id)
         {
-            return repositorioUsuario.ObtenerUsuario(id);
+            return repositorioUsuario.ObtenerUsuario(u => u.Id == id);
         }
 
         public List<Usuario> ObtenerUsuarios()
@@ -151,6 +148,12 @@ namespace Servicios
         public void EliminarUsuario(Usuario usuario)
         {
             repositorioUsuario.EliminarUsuario(usuario);
+        }
+
+        public Usuario Login(string correoElectronico, string contrasena)
+        {
+            Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico && u.Contrasena == contrasena);
+            return usuario;
         }
     }
 }

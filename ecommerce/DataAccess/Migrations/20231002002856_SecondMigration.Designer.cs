@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20230921200216_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20231002002856_SecondMigration")]
+    partial class SecondMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,17 +80,12 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AdministradorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClienteId")
+                    b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdministradorId");
-
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Compras");
                 });
@@ -151,13 +146,17 @@ namespace DataAccess.Migrations
                     b.ToTable("Productos");
                 });
 
-            modelBuilder.Entity("Dominio.Usuario.Administrador", b =>
+            modelBuilder.Entity("Dominio.Usuario.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Contrasena")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CorreoElectronico")
                         .IsRequired()
@@ -167,30 +166,12 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Administradores");
-                });
-
-            modelBuilder.Entity("Dominio.Usuario.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Rol")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CorreoElectronico")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DireccionEntrega")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("ColorProducto", b =>
@@ -210,13 +191,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Dominio.Compra", b =>
                 {
-                    b.HasOne("Dominio.Usuario.Administrador", null)
+                    b.HasOne("Dominio.Usuario.Usuario", null)
                         .WithMany("Compras")
-                        .HasForeignKey("AdministradorId");
-
-                    b.HasOne("Dominio.Usuario.Cliente", null)
-                        .WithMany("Compras")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("Dominio.Producto", b =>
@@ -257,12 +234,7 @@ namespace DataAccess.Migrations
                     b.Navigation("Productos");
                 });
 
-            modelBuilder.Entity("Dominio.Usuario.Administrador", b =>
-                {
-                    b.Navigation("Compras");
-                });
-
-            modelBuilder.Entity("Dominio.Usuario.Cliente", b =>
+            modelBuilder.Entity("Dominio.Usuario.Usuario", b =>
                 {
                     b.Navigation("Compras");
                 });

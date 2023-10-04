@@ -18,16 +18,6 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder
-                .Entity<Usuario>()
-                .Property(e => e.Roles)
-                .HasConversion(
-                    v => string.Join(",", v.Select(e => e.ToString("D")).ToArray()),
-                    v => v.Split(new[] { ',' })
-                        .Select(e =>  Enum.Parse(typeof(CategoriaRol), e))
-                        .Cast<CategoriaRol>()
-                        .ToList()
-                );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,7 +31,7 @@ namespace DataAccess
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-                var connectionString = configuration.GetConnectionString("ECommerceDB");
+                String? connectionString = configuration.GetConnectionString("ECommerceDB");
 
                 optionsBuilder.UseSqlServer(connectionString);
             }

@@ -39,7 +39,7 @@ namespace Pruebas.PruebasUsuario
             // Act
             mock!.Setup(x => x.Set<Usuario>());
             mock!.Setup(x => x.SaveChanges());
-            var resultado = repositorioUsuario!.AgregarUsuario(cliente!);
+            Usuario resultado = repositorioUsuario!.AgregarUsuario(cliente!);
 
             // Assert
             Assert.AreEqual(cliente, resultado);
@@ -51,7 +51,7 @@ namespace Pruebas.PruebasUsuario
             // Act
             mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
-            var resultado = repositorioUsuario!.ObtenerUsuario(1);
+            Usuario resultado = repositorioUsuario!.ObtenerUsuario(1);
 
             // Assert
             Assert.AreEqual(cliente, resultado);
@@ -62,14 +62,14 @@ namespace Pruebas.PruebasUsuario
         {
             mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
-            var resultado = repositorioUsuario!.ObtenerUsuario(2);
+            Usuario resultado = repositorioUsuario!.ObtenerUsuario(2);
         }
         [TestMethod]
         public void ObtenerUsuariosOk()
         {
             mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
-            var resultado = repositorioUsuario!.ObtenerUsuarios();
+            List<Usuario> resultado = repositorioUsuario!.ObtenerUsuarios();
 
             // Assert
             Assert.AreEqual(listaClientes!.Count, resultado.Count);
@@ -84,7 +84,7 @@ namespace Pruebas.PruebasUsuario
             repositorioUsuario!.AgregarUsuario(cliente!);
             cliente!.DireccionEntrega = "Julio Cesar 1247";
             repositorioUsuario!.ActualizarUsuario(cliente!);
-            var resultado = repositorioUsuario!.ObtenerUsuario(1);
+            Usuario resultado = repositorioUsuario!.ObtenerUsuario(1);
 
             // Assert
             Assert.AreEqual(cliente.DireccionEntrega, resultado.DireccionEntrega);
@@ -117,9 +117,7 @@ namespace Pruebas.PruebasUsuario
             Usuario nuevoCliente = new Usuario("martin@edelman.com.uy", "Zorrilla 142", "Password123")
             {
                 Id = 100,
-                Roles = new List<CategoriaRol>() {
-                    CategoriaRol.Cliente
-                }
+                Rol = CategoriaRol.Cliente
             };
             mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.EliminarUsuario(nuevoCliente!);

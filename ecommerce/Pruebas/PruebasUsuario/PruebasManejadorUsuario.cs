@@ -43,7 +43,7 @@ namespace Pruebas.PruebasUsuario
         {
             // Act
             mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
-            var resultado = manejadorUsuario!.RegistrarUsuario(cliente!);
+            Usuario resultado = manejadorUsuario!.RegistrarUsuario(cliente!);
 
             //Assert
             Assert.AreEqual(cliente, resultado);
@@ -103,7 +103,7 @@ namespace Pruebas.PruebasUsuario
         {
             // Act
             mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
-            var resultado = manejadorUsuario!.ObtenerUsuario(1);
+            Usuario resultado = manejadorUsuario!.ObtenerUsuario(1);
 
             //Assert
             Assert.AreEqual(cliente, resultado);
@@ -114,7 +114,7 @@ namespace Pruebas.PruebasUsuario
         {
             mock!.Setup(x => x.AgregarUsuario(cliente!)).Returns(cliente!);
             mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
-            var resultado = manejadorUsuario!.ObtenerUsuarios();
+            List<Usuario> resultado = manejadorUsuario!.ObtenerUsuarios();
 
             // Assert
             Assert.AreEqual(listaClientes!.Count, resultado.Count);
@@ -131,7 +131,7 @@ namespace Pruebas.PruebasUsuario
             manejadorUsuario!.RegistrarUsuario(cliente!);
             manejadorUsuario!.ActualizarUsuario(1, "Julio Cesar 1247");
             cliente!.DireccionEntrega = "Julio Cesar 1247";
-            var resultado = manejadorUsuario!.ObtenerUsuario(1);
+            Usuario resultado = manejadorUsuario!.ObtenerUsuario(1);
 
             // Assert
             Assert.AreEqual(cliente.DireccionEntrega, resultado.DireccionEntrega);
@@ -144,7 +144,7 @@ namespace Pruebas.PruebasUsuario
             mock!.Setup(x => x.ObtenerUsuario(1)).Returns(cliente!);
             manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
             cliente!.Compras.Add(compra!);
-            var resultado = manejadorUsuario!.ObtenerUsuario(1);
+            Usuario resultado = manejadorUsuario!.ObtenerUsuario(1);
 
             // Assert
             Assert.AreEqual(cliente.Compras, resultado.Compras);
@@ -175,7 +175,7 @@ namespace Pruebas.PruebasUsuario
             mock!.Setup(x => x.ActualizarUsuario(cliente!));
             mock!.Setup(x => x.ObtenerUsuario(cliente.Id)).Returns(cliente!);
             manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
-            var resultado = manejadorUsuario!.ObtenerComprasDelUsuario(1);
+            List<Compra> resultado = manejadorUsuario!.ObtenerComprasDelUsuario(1);
 
             // Assert
             Assert.AreEqual(cliente!.Compras, resultado);
