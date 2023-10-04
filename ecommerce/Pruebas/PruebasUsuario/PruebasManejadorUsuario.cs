@@ -35,7 +35,7 @@ namespace Pruebas.PruebasUsuario
             compra.Id = 1;
             List<Color> colorList = new List<Color>();
             colorList.Add(new Color());
-            compra.Productos.Add(new Producto("prod", 123, ""));
+            compra.Productos.Add(new Producto("prod", 123, "", 1, 1, colorList));
         }
 
         [TestMethod]
@@ -65,6 +65,28 @@ namespace Pruebas.PruebasUsuario
             // Act
             mock!.Setup(x => x.AgregarUsuario(clienteSinMail!));
             manejadorUsuario!.RegistrarUsuario(clienteSinMail!);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RegistrarUsuarioIncorrectoContrasena ()
+        {
+            clienteSinMail!.CorreoElectronico = "tati@gmail.com";
+            clienteSinMail!.Contrasena = "abc";
+            // Act
+            mock!.Setup(x => x.AgregarUsuario(clienteSinMail!));
+            manejadorUsuario!.RegistrarUsuario(clienteSinMail!);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RegistrarUsuarioIncorrectoRepetido()
+        {
+            // Act
+            mock!.Setup(x => x.ObtenerUsuarios()).Returns(listaClientes!);
+
+            mock!.Setup(x => x.AgregarUsuario(cliente!));
+            manejadorUsuario!.RegistrarUsuario(cliente!);
         }
 
         [TestMethod]

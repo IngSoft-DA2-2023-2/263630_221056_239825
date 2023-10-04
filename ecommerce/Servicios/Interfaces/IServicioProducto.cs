@@ -1,14 +1,14 @@
-﻿using Dominio;
+using Dominio;
 
 public interface IServicioProducto
 {
-    void AgregarProducto(Producto productoAgregado);
+    int AgregarProducto(Producto productoAgregado);
 
     void EliminarProducto(Producto productoAgregado);
 
-    void ModificarProducto(Producto productoNuevo, Producto productoAModificar);
+    void ModificarProducto(int id, Producto productoNuevo);
 
-    List<Producto> RetornarLista();
+    List<Producto> RetornarLista(QueryProducto queryProducto);
 
     Producto EncontrarPorId(int idProducto);
 }

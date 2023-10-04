@@ -1,4 +1,4 @@
-﻿using Dominio;
+using Dominio;
 using DataAccess;
 
 public class ServicioProducto : IServicioProducto
@@ -10,26 +10,48 @@ public class ServicioProducto : IServicioProducto
         _repositorioProductos = repositorioProductos;
     }
     
-    public void AgregarProducto(Producto productoAgregado)
+    public int AgregarProducto(Producto productoAgregado)
     {
         _repositorioProductos.AgregarProducto(productoAgregado);
+        GuardarCambios();
+        return productoAgregado.Id;
     }
 
     public void EliminarProducto(Producto productoAgregado)
     {
         _repositorioProductos.EliminarProducto(productoAgregado);
+        GuardarCambios();
     }
     
-    public void ModificarProducto(Producto productoNuevo, Producto productoAModificar)
+    public void ModificarProducto(int id, Producto productoNuevo)
     {
-        _repositorioProductos.ModificarProducto(productoNuevo, productoAModificar);
+        var productoViejo = EncontrarPorId(id);
+        if (productoViejo is null)
+        {
+            throw new KeyNotFoundException($"El producto de id = {id} no se encuentra");
+        }
+
+        productoViejo.Nombre = productoNuevo.Nombre;
+        productoViejo.Precio = productoNuevo.Precio;
+        productoViejo.Descripcion = productoNuevo.Descripcion;
+        productoViejo.CategoriaId = productoNuevo.CategoriaId;
+        productoViejo.MarcaId = productoNuevo.MarcaId;
+        productoViejo.Colores = productoNuevo.Colores;
+        
+        _repositorioProductos.ModificarProducto(productoViejo);
+        GuardarCambios();
     }
 
-    public List<Producto> RetornarLista()
+    public List<Producto> RetornarLista(QueryProducto queryProducto)
     {
-        var listaDeProductos = _repositorioProductos.RetornarLista();
+        var listaDeProductos = _repositorioProductos.RetornarLista(queryProducto);
 
         return listaDeProductos;
+    }
+    
+    public void GuardarCambios()
+    {
+        _repositorioProductos.GuardarCambios();
     }
     
     public Producto EncontrarPorId(int idProducto)
@@ -37,7 +59,7 @@ public class ServicioProducto : IServicioProducto
         var productoEncontrado = _repositorioProductos.EncontrarProductoPorId(idProducto);
         if (productoEncontrado is null)
         {
-            throw new ArgumentException("El producto con el id dado no se encontro.");
+            throw new KeyNotFoundException("El producto con el id dado no se encontro.");
         }
 
         return productoEncontrado;

@@ -50,7 +50,7 @@ namespace Servicios
                 {
                     return true;
                 }
-                else if (repositorioUsuario.ObtenerUsuarios().First(x => x.CorreoElectronico == usuario.CorreoElectronico) != null)
+                else if (repositorioUsuario.ObtenerUsuarios().FirstOrDefault(x => x.CorreoElectronico == usuario.CorreoElectronico) != null)
                 {
                     return true;
                 }

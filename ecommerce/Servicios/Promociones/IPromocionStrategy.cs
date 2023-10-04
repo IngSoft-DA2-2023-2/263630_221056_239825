@@ -5,14 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Dominio;
 
-namespace DataAccess.Promociones
+namespace Servicios.Promociones
 {
     public interface IPromocionStrategy
     {
         public int AplicarPromocion(List<Producto> listaCompra);
-
-        public string NombrePromocion();
-
+        public string NombrePromocion { get;}
         bool AplicarPromo(List<Producto> carrito);
     }
 }

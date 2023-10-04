@@ -1,4 +1,4 @@
-﻿using Servicios.Interfaces;
+using Api.Dtos;
 using Dominio;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,51 +9,48 @@ namespace Api.Controladores
     public class ControladorProductos : ControllerBase
     {
         private readonly IServicioProducto _servicioProducto;
-        private readonly ILogger<ControladorProductos> _logger;
 
-        public ControladorProductos(ILogger<ControladorProductos> logger, IServicioProducto servicio)
+        public ControladorProductos(IServicioProducto servicio)
         {
             _servicioProducto = servicio;
-            _logger = logger;
         }
 
-        [HttpGet("{id}")]
-        public Producto BuscarPorId(int id)
+        [HttpGet("{id}", Name = nameof(BuscarPorId))]
+        public IActionResult BuscarPorId(int id)
         {
             var productoBuscado = _servicioProducto.EncontrarPorId(id);
-
-            return productoBuscado;
+            return Ok(new ProductoModelo(productoBuscado));
         }
         
         [HttpGet]
-        public List<Producto> BuscarTodos()
+        public IActionResult BuscarTodos([FromQuery] QueryProducto query)
         {
-            var listaProductos = _servicioProducto.RetornarLista();
-            return listaProductos;
+            var productos = _servicioProducto.RetornarLista(query);
+            return Ok(productos.Select(p => new ProductoModelo(p)));
         }
         
-        [HttpPost("{nombre,precio,descripcion}")]
-        public void AgregarProducto(string nombre, int precio, string descripcion)
+        [HttpPost]
+        public IActionResult AgregarProducto([FromBody] ProductoUpsertModelo productoNuevo)
         {
-            var productoNuevo = new Producto(nombre, precio, descripcion);
-            _servicioProducto.AgregarProducto(productoNuevo);
+            var productoCreadoId = _servicioProducto.AgregarProducto(productoNuevo.AEntidad());
+            var productoCreado = _servicioProducto.EncontrarPorId(productoCreadoId);
+            return CreatedAtRoute(nameof(BuscarPorId), new { id = productoCreadoId }, new ProductoModelo(productoCreado));
         }
         
-        
-        [HttpPatch("{id}")]
-        public void EliminarProducto(int id)
+        [HttpDelete("{id}")]
+        public IActionResult EliminarProducto(int id)
         {
             var productoAEliminar = _servicioProducto.EncontrarPorId(id);
             _servicioProducto.EliminarProducto(productoAEliminar);
+            return NoContent();
         }
         
-        [HttpPatch("{id,nombre,precio,descripcion}")]
-        public void ModificarProducto(int id, string nombre, int precio, string descripcion)
+        [HttpPut("{id}")]
+        public IActionResult ModificarProducto(int id, [FromBody] ProductoUpsertModelo productoNuevo)
         {
-            var productoNuevo = new Producto(nombre, precio, descripcion);
-            var productoAReemplazar = _servicioProducto.EncontrarPorId(id);
-            _servicioProducto.ModificarProducto(productoNuevo,productoAReemplazar);
+            _servicioProducto.ModificarProducto(id, productoNuevo.AEntidad());
+            var productoActualizado = _servicioProducto.EncontrarPorId(id);
+            return Ok(new ProductoModelo(productoActualizado));
         }
-        
     }
 }
