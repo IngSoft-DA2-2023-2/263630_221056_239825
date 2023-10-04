@@ -2,6 +2,7 @@
 using Dominio.Usuario;
 using DataAccess.Interfaces;
 using Servicios.Interfaces;
+using Servicios.Promociones;
 
 namespace Servicios
 {
@@ -15,7 +16,8 @@ namespace Servicios
 
         public Usuario RegistrarUsuario(Usuario usuario)
         {
-            if (ValidarUsuario(usuario)) {
+            if (ValidarUsuario(usuario))
+            {
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;
@@ -34,11 +36,12 @@ namespace Servicios
             if (CheckearMail(usuario))
             {
                 throw new ArgumentException("El email es incorrecto");
-            } 
-            if(usuario.Contrasena.Length < 8)
+            }
+            if (usuario.Contrasena.Length < 8)
             {
                 throw new ArgumentException("Contraseña no valida");
             }
+
             return true;
         }
 
@@ -54,7 +57,8 @@ namespace Servicios
                 {
                     return true;
                 }
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 return false;
             }
@@ -72,10 +76,44 @@ namespace Servicios
         {
             if (ValidarCompra(compra))
             {
+                int precio = PrecioTotal(compra.Productos);
+                string nombrePromo = "";
+                PromocionContext promocionContext = new();
+                List<IPromocionStrategy> promociones = new()
+                {
+                    new Promocion20Off(),
+                    new Promocion3x1(),
+                    new Promocion3x2(),
+                    new PromocionTotalLook()
+                };
+
+                foreach (IPromocionStrategy promo in promociones)
+                {
+                    promocionContext.promocionStrategy = promo;
+                    int precioConDescuento = promocionContext.AplicarStrategy(compra.Productos);
+                    if (precioConDescuento < precio)
+                    {
+                        precio = precioConDescuento;
+                        nombrePromo = promo.NombrePromocion;
+                    }
+                }
+                compra.Precio = precio;
+                compra.NombrePromo = nombrePromo;
+
                 Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
                 usuarioObtenido.Compras.Add(compra);
                 repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
+        }
+
+        private int PrecioTotal(List<Producto> listaProductos)
+        {
+            int precio = 0;
+            foreach (Producto p in listaProductos)
+            {
+                precio += p.Precio;
+            }
+            return precio;
         }
 
         private bool ValidarCompra(Compra compra)
