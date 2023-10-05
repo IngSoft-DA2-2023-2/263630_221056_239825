@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Principal;
 
 namespace Api.Controladores
 {
@@ -45,12 +46,6 @@ namespace Api.Controladores
                 signingCredentials: signIn
             );
             return Created("", new JwtSecurityTokenHandler().WriteToken(token));  
-        }
-
-        [HttpDelete]
-        public IActionResult EliminarSesion([FromHeader(Name = "Authorization")] string authorizationHeader)
-        {
-            return Ok();
         }
     }
 }

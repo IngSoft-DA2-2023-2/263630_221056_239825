@@ -15,6 +15,14 @@ public class FiltroExcepciones : IExceptionFilter
         {
             context.Result = new JsonResult(e.Message) { StatusCode = 404 };
         }
+        catch (ArgumentException e)
+        {
+            context.Result = new JsonResult(e.Message) { StatusCode = 400 };
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            context.Result = new JsonResult(e.Message) { StatusCode = 401 };
+        }
         catch (Exception e)
         {
             context.Result = new JsonResult(e.Message) { StatusCode = 500 };

@@ -23,7 +23,7 @@ namespace DataAccess
 
         public void ActualizarUsuario(Usuario usuario)
         {
-            Contexto.Entry(usuario).State = EntityState.Modified;
+            Contexto.Set<Usuario>().Update(usuario);
             Contexto.SaveChanges();
         }
 
@@ -34,7 +34,7 @@ namespace DataAccess
 
         public List<Usuario> ObtenerUsuarios()
         {
-            return Contexto.Set<Usuario>().ToList();
+            return Contexto.Set<Usuario>().Include(u => u.Rol).ToList();
         }
 
         public void EliminarUsuario(Usuario usuario)
