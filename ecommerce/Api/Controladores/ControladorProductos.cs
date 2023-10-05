@@ -1,6 +1,8 @@
 using Api.Dtos;
 using Dominio;
+using Dominio.Usuario;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Api.Controladores
 {
@@ -32,6 +34,13 @@ namespace Api.Controladores
         [HttpPost]
         public IActionResult AgregarProducto([FromBody] ProductoUpsertModelo productoNuevo)
         {
+            ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+            string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
+            CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
+            if (rolUsuario != CategoriaRol.Administrador || rolUsuario != CategoriaRol.ClienteAdministrador)
+            {
+                return Unauthorized();
+            }
             int productoCreadoId = _servicioProducto.AgregarProducto(productoNuevo.AEntidad());
             Producto productoCreado = _servicioProducto.EncontrarPorId(productoCreadoId);
             return CreatedAtRoute(nameof(BuscarPorId), new { id = productoCreadoId }, new ProductoModelo(productoCreado));
@@ -40,6 +49,13 @@ namespace Api.Controladores
         [HttpDelete("{id}")]
         public IActionResult EliminarProducto(int id)
         {
+            ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+            string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
+            CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
+            if (rolUsuario != CategoriaRol.Administrador || rolUsuario != CategoriaRol.ClienteAdministrador)
+            {
+                return Unauthorized();
+            }
             Producto productoAEliminar = _servicioProducto.EncontrarPorId(id);
             _servicioProducto.EliminarProducto(productoAEliminar);
             return NoContent();
@@ -48,6 +64,13 @@ namespace Api.Controladores
         [HttpPut("{id}")]
         public IActionResult ModificarProducto(int id, [FromBody] ProductoUpsertModelo productoNuevo)
         {
+            ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+            string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
+            CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
+            if (rolUsuario != CategoriaRol.Administrador || rolUsuario != CategoriaRol.ClienteAdministrador)
+            {
+                return Unauthorized();
+            }
             _servicioProducto.ModificarProducto(id, productoNuevo.AEntidad());
             Producto productoActualizado = _servicioProducto.EncontrarPorId(id);
             return Ok(new ProductoModelo(productoActualizado));

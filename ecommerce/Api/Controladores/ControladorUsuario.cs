@@ -1,7 +1,6 @@
 ﻿using Api.Dtos;
 using Dominio;
 using Dominio.Usuario;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Servicios.Interfaces;
 using System.Security.Claims;

@@ -21,10 +21,10 @@ public class ControladorCompra : ControllerBase
     [HttpGet]
     public IActionResult RetornarTodas()
     {
-        ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
-        string nombreRol = identity.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
+        ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
+        string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
         CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
-        if (rolUsuario != CategoriaRol.Administrador)
+        if (rolUsuario != CategoriaRol.Administrador || rolUsuario != CategoriaRol.ClienteAdministrador)
         {
             return Unauthorized();
         }
