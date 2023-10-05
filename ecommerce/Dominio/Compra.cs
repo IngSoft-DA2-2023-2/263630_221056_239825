@@ -12,6 +12,9 @@ namespace Dominio
         public List<Producto> Productos { get; set; }
         public int Precio { get; set; }
         public string NombrePromo { get; set; }
+        public DateTime FechaCompra { get; set; } = DateTime.Now;
+        public int UsuarioId { get; set; }
+
         public Compra()
         {
             Productos = new List<Producto>();

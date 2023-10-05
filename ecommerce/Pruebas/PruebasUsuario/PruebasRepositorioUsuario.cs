@@ -51,7 +51,7 @@ namespace Pruebas.PruebasUsuario
             // Act
             mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
-            Usuario resultado = repositorioUsuario!.ObtenerUsuario(1);
+            Usuario resultado = repositorioUsuario!.ObtenerUsuario(u => u.Id == 1);
 
             // Assert
             Assert.AreEqual(cliente, resultado);
@@ -62,7 +62,7 @@ namespace Pruebas.PruebasUsuario
         {
             mock!.Setup(x => x.Set<Usuario>());
             repositorioUsuario!.AgregarUsuario(cliente!);
-            Usuario resultado = repositorioUsuario!.ObtenerUsuario(2);
+            Usuario resultado = repositorioUsuario!.ObtenerUsuario(u => u.Id == 1);
         }
         [TestMethod]
         public void ObtenerUsuariosOk()
@@ -84,7 +84,7 @@ namespace Pruebas.PruebasUsuario
             repositorioUsuario!.AgregarUsuario(cliente!);
             cliente!.DireccionEntrega = "Julio Cesar 1247";
             repositorioUsuario!.ActualizarUsuario(cliente!);
-            Usuario resultado = repositorioUsuario!.ObtenerUsuario(1);
+            Usuario resultado = repositorioUsuario!.ObtenerUsuario(u => u.Id == 1);
 
             // Assert
             Assert.AreEqual(cliente.DireccionEntrega, resultado.DireccionEntrega);

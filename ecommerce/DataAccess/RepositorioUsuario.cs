@@ -34,7 +34,7 @@ namespace DataAccess
 
         public List<Usuario> ObtenerUsuarios()
         {
-            return Contexto.Set<Usuario>().Include(u => u.Rol).ToList();
+            return Contexto.Set<Usuario>().ToList();
         }
 
         public void EliminarUsuario(Usuario usuario)

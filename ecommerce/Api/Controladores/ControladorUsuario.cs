@@ -89,27 +89,27 @@ namespace Api.Controladores
         }
 
         [HttpPost("{id}/compras")]
-        public IActionResult RealizarCompra(int id, [FromBody] CompraModelo compraModelo)
+        public IActionResult RealizarCompra(int id, [FromBody] CompraCrearModelo compraCrearModelo)
         {
             
             Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if(usuario.Id == id)
+            
+            if (usuario.Id != id) return Unauthorized();
+            
+            Compra compra = new Compra()
             {
-                Compra compra = new Compra()
-                {
-                    Id = id,
-                    Productos = crearListaProductos(compraModelo),
-                };
-                _manejadorUsuario.AgregarCompraAlUsuario(id, compra);
-                return Created("", compraModelo);
-            }
-            return Unauthorized();
+                UsuarioId = id,
+                Productos = crearListaProductos(compraCrearModelo),
+            };
+            
+            _manejadorUsuario.AgregarCompraAlUsuario(id, compra);
+            return Created("", compraCrearModelo);
         }
 
-        private List<Producto> crearListaProductos(CompraModelo compra)
+        private List<Producto> crearListaProductos(CompraCrearModelo compraCrear)
         {
             List<Producto> resultado = new List<Producto>();
-            foreach (int id in compra.idProductos)
+            foreach (int id in compraCrear.idProductos)
             {
                 Producto producto = _manejadorProducto.EncontrarPorId(id);
                 resultado.Add(producto);

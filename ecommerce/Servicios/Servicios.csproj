@@ -21,7 +21,4 @@
   <ItemGroup>
     <None Remove="Promociones\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Promociones\" />
-  </ItemGroup>
 </Project>

@@ -16,9 +16,11 @@ namespace ServicioFactory
 
             serviceCollection.AddScoped<IRepositorioProducto, RepositorioProducto>();
             serviceCollection.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            serviceCollection.AddScoped<IRepositorioCompra, RepositorioCompra>();
             
             serviceCollection.AddScoped<IManejadorUsuario, ManejadorUsuario>();
             serviceCollection.AddScoped<IServicioProducto, ServicioProducto>();
+            serviceCollection.AddScoped<IServicioCompra, ServicioCompra>();
         }
     }
 }

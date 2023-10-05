@@ -17,23 +17,6 @@ namespace Servicios
         public Usuario RegistrarUsuario(Usuario usuario)
         {
             if (ValidarUsuario(usuario)) {
-                List<Compra> compras = new List<Compra>();
-                Compra compra = new Compra()
-                {
-                    Id = 1,
-                    Productos = new List<Producto>()
-                    {
-                        new Producto()
-                        {
-                            Id = 10,
-                            Precio = 100,
-                            Nombre = "Camisa",
-                            MarcaId = 1,
-                            CategoriaId = 1,
-                        }
-                    }
-                };
-                usuario.Compras = compras;
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;

@@ -1,10 +1,23 @@
 ﻿using Dominio;
 
-namespace Api.Dtos
+namespace Api.Dtos;
+
+public class CompraModelo
 {
-    public class CompraModelo
+    public int Id { get; set; }
+    public List<int> Productos { get; set; }
+    public int Precio { get; set; }
+    public string NombrePromo { get; set; }
+    public DateTime FechaCompra { get; set; } 
+    public int UsuarioId { get; set; }
+
+    public CompraModelo(Compra compra)
     {
-        public int Id { get; set; }
-        public int[] idProductos { get; set; }
+        Id = compra.Id;
+        Precio = compra.Precio;
+        NombrePromo = compra.NombrePromo;
+        FechaCompra = compra.FechaCompra;
+        UsuarioId = compra.UsuarioId;
+        Productos = compra.Productos.Select(p => p.Id).ToList();
     }
 }
