@@ -63,11 +63,9 @@ namespace Pruebas.PruebasPromociones
         }
 
         [TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
         public void AplicarPromocionError()
         {
             //Act
-            //mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3500);
             carrito!.Remove(producto!);
             Marca marcaNueva = new();
             Categoria categoria4 = new();
