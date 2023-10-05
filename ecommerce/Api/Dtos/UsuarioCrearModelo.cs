@@ -8,11 +8,11 @@ namespace Api.Dtos
         public string CorreoElectronico { get; set; }
         public string DireccionEntrega { get; set; }
         public CategoriaRol Rol { get; set; }
-        public string contrasena { get; set; }
+        public string Contrasena { get; set; }
 
         public Usuario ToEntity()
         {
-            return new Usuario(this.CorreoElectronico, this.DireccionEntrega, this.contrasena)
+            return new Usuario(this.CorreoElectronico, this.DireccionEntrega, this.Contrasena)
             {
                 Compras = new List<Compra>(),
                 Rol = this.Rol,

@@ -129,7 +129,7 @@ namespace Pruebas.PruebasUsuario
             mock!.Setup(x => x.ObtenerUsuario(u => u.Id == 1)).Returns(cliente!);
             mock!.Setup(x => x.ActualizarUsuario(cliente!));
             manejadorUsuario!.RegistrarUsuario(cliente!);
-            manejadorUsuario!.ActualizarUsuario(1, "Julio Cesar 1247");
+            manejadorUsuario!.ActualizarUsuario(1, cliente!);
             cliente!.DireccionEntrega = "Julio Cesar 1247";
             Usuario resultado = manejadorUsuario!.ObtenerUsuario(1);
 

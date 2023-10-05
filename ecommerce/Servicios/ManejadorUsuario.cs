@@ -94,7 +94,7 @@ namespace Servicios
 
                 foreach (IPromocionStrategy promo in promociones)
                 {
-                    promocionContext.promocionStrategy = promo;
+                    promocionContext.PromocionStrategy = promo;
                     int precioConDescuento = promocionContext.AplicarStrategy(compra.Productos);
                     if (precioConDescuento < precio)
                     {
