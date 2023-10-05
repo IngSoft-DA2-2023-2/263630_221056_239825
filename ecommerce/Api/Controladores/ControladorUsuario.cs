@@ -13,10 +13,12 @@ namespace Api.Controladores
     {
         private IManejadorUsuario _manejadorUsuario;
         private IServicioProducto _manejadorProducto;
-        public ControladorUsuario(IManejadorUsuario manejadorUsuario, IServicioProducto manejadorProducto)
+        private IServicioCompra _manejadorCompra;
+        public ControladorUsuario(IManejadorUsuario manejadorUsuario, IServicioProducto manejadorProducto, IServicioCompra manejadorCompra)
         {
             _manejadorUsuario = manejadorUsuario;
             _manejadorProducto = manejadorProducto;
+            _manejadorCompra = manejadorCompra;
         }
 
         [HttpPost]
@@ -78,7 +80,8 @@ namespace Api.Controladores
             Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
             if (usuario.Id == id)
             {
-                return Ok(_manejadorUsuario.ObtenerComprasDelUsuario(id));
+                List<Compra> listaCompras = _manejadorCompra.RetornarPorId(id);
+                return Ok(listaCompras.Select(c => new CompraModelo(c)));
             }
             return Unauthorized();
         }

@@ -16,5 +16,14 @@ public class RepositorioCompra : IRepositorioCompra
     public List<Compra> RetornarTodas() => _contexto.Compras
         .Include(c => c.Productos)
         .ToList();
+
+    public List<Compra> RetornarPorId(int id)
+    {
+        List<Compra> listaCompras = _contexto.Compras
+            .Include(c => c.Productos)
+            .Where(c => c.UsuarioId == id)
+            .ToList();
+        return listaCompras;
+    }
 }
 

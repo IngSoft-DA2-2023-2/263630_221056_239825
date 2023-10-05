@@ -55,11 +55,11 @@ namespace Servicios.Promociones
                 {
                     Producto productoMasCaro = productosMasCarosPorColor[colorNombre];
                     int prodMasCaro = productoMasCaro.Precio / 2;
-                    return costoTotal -= prodMasCaro;
+                    costoTotal -= prodMasCaro;
                 }
 
             }
-            return -1;
+            return costoTotal;
         }
 
         public bool AplicarPromo(List<Producto> carrito)

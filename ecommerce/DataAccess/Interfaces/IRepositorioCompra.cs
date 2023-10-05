@@ -5,4 +5,5 @@ namespace DataAccess.Interfaces;
 public interface IRepositorioCompra
 {
     List<Compra> RetornarTodas();
+    List<Compra> RetornarPorId(int id);
 }

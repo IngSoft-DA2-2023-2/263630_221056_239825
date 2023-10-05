@@ -14,5 +14,6 @@ public class ServicioCompra : IServicioCompra
     }
 
     public List<Compra> RetornarTodas() => _repositorio.RetornarTodas();
+    public List<Compra> RetornarPorId(int id) => _repositorio.RetornarPorId(id);
 }
 
