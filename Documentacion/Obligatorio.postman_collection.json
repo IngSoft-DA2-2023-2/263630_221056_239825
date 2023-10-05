@@ -1,0 +1,1632 @@
+{
+	"info": {
+		"_postman_id": "c1a10e35-8c15-4025-a75c-fe197de4a468",
+		"name": "Obligatorio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29334001"
+	},
+	"item": [
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "/productos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Sandalia\",\r\n    \"precio\": 300,\r\n    \"descripcion\": \"De algodón\",\r\n    \"marcaId\": 2,\r\n    \"categoriaId\": 3,\r\n    \"colores\": [\r\n        1\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto por su id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/productos",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Camisa\",\r\n  \"precio\": 2000,\r\n  \"descripcion\": \"Camisa con cuello\",\r\n  \"marcaId\": 1,\r\n  \"categoriaId\": 1,\r\n  \"colores\": [\r\n    3\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/productos",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints relacionados a los productos"
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "/usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"direccionEntrega\": \"string\",\r\n  \"contrasena\": \"12345678\",\r\n  \"rol\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogIn Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"authentication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjUxNTQzNDI3LWEzZDItNDEyNC1hNjQzLTJiY2EyOWM4ZDVmZiIsImlhdCI6IjUvMTAvMjMgNjozMzo1MiIsImVtYWlsIjoibWFydGluQGVkZWxtYW4uY29tLnV5IiwiaWQiOiIxIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImV4cCI6MTY5OTA3OTYzMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo3MDYxLyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8ifQ.mC0ZjqDwlDQEo5PKdM-JR5wKCPPICnBhfqa5VbFFO3s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImRlNTNmZjZmLTk5ZmMtNGU3OC04OWJiLTgwMmVjYjM5MmZiOCIsImlhdCI6IjUvMTAvMjMgMTU6MzQ6MDMiLCJlbWFpbCI6Im1hcnRpbi5hYXJvbi5lZGVsbWFuQGdtYWlsLmNvbSIsImlkIjoiMSIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMTIwNDMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.EsUhG_0wlDdpVW8g3jNtcPS0Mu6PwIJc8LGxw0YnbtY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImU0ZDhkNjI1LTc5NjYtNDg1MC04ODExLWM3ZWJiZDg4NjcwMSIsImlhdCI6IjUvMTAvMjMgMTU6MDc6NTkiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMSIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMTA0NzksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.-BPeaGwGDYarif8ykhDL4PCt6dRI8YTiAPMHs_wKr2I",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"direccionEntrega\": \"Julio Cesar 1247\",\r\n  \"rol\": 2,\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImQwMzM5OGUwLTk1ZTgtNDBhNy04NGE1LWZjNzk1ODFkM2JlMyIsImlhdCI6IjQvMTAvMjMgMTU6NTE6MjciLCJpZCI6IjEwMDIiLCJjb3JyZW9FbGVjdHJvbmljbyI6InNvZmlAZWRlbG1hbi5jb20udXkiLCJleHAiOjE2OTkwMjY2ODcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.I6LxwiqU_hilfKQ6M_ODRDPfZ3LGvg7_tm4sV18BMLo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras de un usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImRlNTNmZjZmLTk5ZmMtNGU3OC04OWJiLTgwMmVjYjM5MmZiOCIsImlhdCI6IjUvMTAvMjMgMTU6MzQ6MDMiLCJlbWFpbCI6Im1hcnRpbi5hYXJvbi5lZGVsbWFuQGdtYWlsLmNvbSIsImlkIjoiMSIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMTIwNDMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.EsUhG_0wlDdpVW8g3jNtcPS0Mu6PwIJc8LGxw0YnbtY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/1/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"1",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjUxNTQzNDI3LWEzZDItNDEyNC1hNjQzLTJiY2EyOWM4ZDVmZiIsImlhdCI6IjUvMTAvMjMgNjozMzo1MiIsImVtYWlsIjoibWFydGluQGVkZWxtYW4uY29tLnV5IiwiaWQiOiIxIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImV4cCI6MTY5OTA3OTYzMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo3MDYxLyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8ifQ.mC0ZjqDwlDQEo5PKdM-JR5wKCPPICnBhfqa5VbFFO3s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProductos\": [\r\n    1,2,4\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/1/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"1",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints relacionados a los usuarios"
+		},
+		{
+			"name": "Compras",
+			"item": [
+				{
+					"name": "Compras",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pruebas Video Api",
+			"item": [
+				{
+					"name": "Crear usuario mail incorrecto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martinedelman.com.uy\",\r\n  \"direccionEntrega\": \"string\",\r\n  \"contrasena\": \"12345678\",\r\n  \"rol\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario dirección incorrecta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"direccionEntrega\": \"\",\r\n  \"contrasena\": \"12345678\",\r\n  \"rol\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario contraseña incorrecta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"direccionEntrega\": \"string\",\r\n  \"contrasena\": \"12345\",\r\n  \"rol\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario Ok Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"direccionEntrega\": \"string\",\r\n  \"contrasena\": \"12345678\",\r\n  \"rol\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario Mail Repetido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"direccionEntrega\": \"string\",\r\n  \"contrasena\": \"87654321\",\r\n  \"rol\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogIn Usuario Mail Incorrecto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"authentication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogIn Usuario Contraseña Incorrecta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"contrasena\": \"87654321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"authentication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogIn Usuario Ok",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"authentication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario por su id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImU2OWRkYjcwLTRkZmEtNDM2OS04NzQ3LTEyZmE0MTQ4YjQzZCIsImlhdCI6IjUvMTAvMjMgMjA6NDA6NTQiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMiIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzA0NTQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.P1JBNCB1iRddma1mcg7gd6yksmRvAOjEU8d-_xXi5qk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario por id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImRlNTNmZjZmLTk5ZmMtNGU3OC04OWJiLTgwMmVjYjM5MmZiOCIsImlhdCI6IjUvMTAvMjMgMTU6MzQ6MDMiLCJlbWFpbCI6Im1hcnRpbi5hYXJvbi5lZGVsbWFuQGdtYWlsLmNvbSIsImlkIjoiMSIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMTIwNDMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.EsUhG_0wlDdpVW8g3jNtcPS0Mu6PwIJc8LGxw0YnbtY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lista de Productos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar Producto Ok",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImU2OWRkYjcwLTRkZmEtNDM2OS04NzQ3LTEyZmE0MTQ4YjQzZCIsImlhdCI6IjUvMTAvMjMgMjA6NDA6NTQiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMiIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzA0NTQsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.P1JBNCB1iRddma1mcg7gd6yksmRvAOjEU8d-_xXi5qk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"nombre\": \"Gorro\",\r\n      \"precio\": 150,\r\n      \"descripcion\": \"Gorro de algodón\",\r\n      \"marcaId\": 1,\r\n      \"categoriaId\": 3,\r\n      \"colores\": [4]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto por su id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/productos/24",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"productos",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario sin mail",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjgxZWU1ZDFiLWQxOGYtNGRkNS04MDVhLWVhNmE0ZmMxNzIxYSIsImlhdCI6IjUvMTAvMjMgMjI6Mzg6NTciLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzc1MzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.5LA0G-hKRxdwkWRRAf4PoUKBsQYofZoCN9n7nAej9ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.com\",\r\n  \"direccionEntrega\": \"Julio Cesar 1247\",\r\n  \"rol\": 2,\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario sin dirección",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjgxZWU1ZDFiLWQxOGYtNGRkNS04MDVhLWVhNmE0ZmMxNzIxYSIsImlhdCI6IjUvMTAvMjMgMjI6Mzg6NTciLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzc1MzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.5LA0G-hKRxdwkWRRAf4PoUKBsQYofZoCN9n7nAej9ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"direccionEntrega\": \"\",\r\n  \"rol\": 2,\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario sin contraseña",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjgxZWU1ZDFiLWQxOGYtNGRkNS04MDVhLWVhNmE0ZmMxNzIxYSIsImlhdCI6IjUvMTAvMjMgMjI6Mzg6NTciLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzc1MzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.5LA0G-hKRxdwkWRRAf4PoUKBsQYofZoCN9n7nAej9ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"direccionEntrega\": \"Julio Cesar 1247\",\r\n  \"rol\": 2,\r\n  \"contrasena\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Token Incorrecto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer TokenIncorrecto",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"direccionEntrega\": \"Julio Cesar 1247\",\r\n  \"rol\": 2,\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Ok",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjgxZWU1ZDFiLWQxOGYtNGRkNS04MDVhLWVhNmE0ZmMxNzIxYSIsImlhdCI6IjUvMTAvMjMgMjI6Mzg6NTciLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzc1MzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.5LA0G-hKRxdwkWRRAf4PoUKBsQYofZoCN9n7nAej9ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"direccionEntrega\": \"Julio Cesar 1247\",\r\n  \"rol\": 0,\r\n  \"contrasena\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogIn Usuario Ok Nuevo Mail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"contrasena\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/authentication",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"authentication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras Sin Productos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjgxZWU1ZDFiLWQxOGYtNGRkNS04MDVhLWVhNmE0ZmMxNzIxYSIsImlhdCI6IjUvMTAvMjMgMjI6Mzg6NTciLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzc1MzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.5LA0G-hKRxdwkWRRAf4PoUKBsQYofZoCN9n7nAej9ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProductos\": [\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/3/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"3",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras Token Incorrecto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer estoEsUnTokenInvalido",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProductos\": [\r\n    1,2,4\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/3/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"3",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras TotalLook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProductos\": [\r\n    8,9,10\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/3/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"3",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras 3x1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProductos\": [\r\n    21,22,23\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/3/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"3",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras 3x2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProductos\": [\r\n    14,18,19,20\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/3/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"3",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras 20% Off",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjgxZWU1ZDFiLWQxOGYtNGRkNS04MDVhLWVhNmE0ZmMxNzIxYSIsImlhdCI6IjUvMTAvMjMgMjI6Mzg6NTciLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzc1MzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.5LA0G-hKRxdwkWRRAf4PoUKBsQYofZoCN9n7nAej9ac",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idProductos\": [\r\n      11,12,13\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/3/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"3",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras de un usuario Token Incorrecto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImRlNTNmZjZmLTk5ZmMtNGU3OC04OWJiLTgwMmVjYjM5MmZiOCIsImlhdCI6IjUvMTAvMjMgMTU6MzQ6MDMiLCJlbWFpbCI6Im1hcnRpbi5hYXJvbi5lZGVsbWFuQGdtYWlsLmNvbSIsImlkIjoiMSIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMTIwNDMsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.EsUhG_0wlDdpVW8g3jNtcPS0Mu6PwIJc8LGxw0YnbtY",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/2/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras de un usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImI3M2IxZjk1LTE4MDEtNDFkNi1hY2Q2LWFjYzFlYWZkNjRlMCIsImlhdCI6IjUvMTAvMjMgMjA6NTA6NDkiLCJlbWFpbCI6Im1hcnRpbi5hYXJvbi5lZGVsbWFuQGdtYWlsLmNvbSIsImlkIjoiMiIsInJvbCI6IkNsaWVudGUiLCJleHAiOjE2OTkxMzEwNDksImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.kQWb1zkbFuJ36AeDgQjVKfsQhN9_VYSt1mFpHNI_O1k",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/2/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear usuario Ok Administrador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin@edelman.com.uy\",\r\n  \"direccionEntrega\": \"string\",\r\n  \"contrasena\": \"12345678\",\r\n  \"rol\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios sin token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjUxNTQzNDI3LWEzZDItNDEyNC1hNjQzLTJiY2EyOWM4ZDVmZiIsImlhdCI6IjUvMTAvMjMgNjozMzo1MiIsImVtYWlsIjoibWFydGluQGVkZWxtYW4uY29tLnV5IiwiaWQiOiIxIiwicm9sIjoiQWRtaW5pc3RyYWRvciIsImV4cCI6MTY5OTA3OTYzMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo3MDYxLyIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8ifQ.mC0ZjqDwlDQEo5PKdM-JR5wKCPPICnBhfqa5VbFFO3s",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios token invalido",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer estoEsUnTokenInvalido",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios Ok",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario siendo admin",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"correoElectronico\": \"martin.aaron.edelman@gmail.com\",\r\n  \"direccionEntrega\": \"Rivera 2312\",\r\n  \"rol\": 2,\r\n  \"contrasena\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Sin token",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6ImQwMzM5OGUwLTk1ZTgtNDBhNy04NGE1LWZjNzk1ODFkM2JlMyIsImlhdCI6IjQvMTAvMjMgMTU6NTE6MjciLCJpZCI6IjEwMDIiLCJjb3JyZW9FbGVjdHJvbmljbyI6InNvZmlAZWRlbG1hbi5jb20udXkiLCJleHAiOjE2OTkwMjY2ODcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.I6LxwiqU_hilfKQ6M_ODRDPfZ3LGvg7_tm4sV18BMLo",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Token Incorrecto",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer TokenIncorrecto",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario No existe",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/100000",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"100000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Ok",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjNiNzY2MDBiLTFlZjMtNDdkMS04YzI2LTYxZDU1ZTRiNDY2NCIsImlhdCI6IjUvMTAvMjMgMjA6NTU6NTEiLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzEzNTEsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.QGvrqO13Br7KEbnHJwxqArkpR311aLJI72igvlbP8nA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/usuarios/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras Ok",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYXNlV2ViQXBpU3ViamVjdCIsImp0aSI6IjgxZWU1ZDFiLWQxOGYtNGRkNS04MDVhLWVhNmE0ZmMxNzIxYSIsImlhdCI6IjUvMTAvMjMgMjI6Mzg6NTciLCJlbWFpbCI6Im1hcnRpbkBlZGVsbWFuLmNvbS51eSIsImlkIjoiMyIsInJvbCI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE2OTkxMzc1MzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NzA2MS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjcwNjEvIn0.5LA0G-hKRxdwkWRRAf4PoUKBsQYofZoCN9n7nAej9ac",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Compras Token Incorrecto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer estoEsUnTokenInvalido",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:7061/api/v1/compras",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7061",
+							"path": [
+								"api",
+								"v1",
+								"compras"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
