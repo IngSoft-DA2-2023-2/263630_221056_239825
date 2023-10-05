@@ -34,10 +34,7 @@ namespace Api.Controladores
         [HttpPost]
         public IActionResult AgregarProducto([FromBody] ProductoUpsertModelo productoNuevo)
         {
-            ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
-            string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
-            CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
-            if (rolUsuario != CategoriaRol.Administrador || rolUsuario != CategoriaRol.ClienteAdministrador)
+            if (!EsAdministrador(HttpContext.User.Identity as ClaimsIdentity))
             {
                 return Unauthorized();
             }
@@ -49,10 +46,7 @@ namespace Api.Controladores
         [HttpDelete("{id}")]
         public IActionResult EliminarProducto(int id)
         {
-            ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
-            string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
-            CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
-            if (rolUsuario != CategoriaRol.Administrador || rolUsuario != CategoriaRol.ClienteAdministrador)
+            if (!EsAdministrador(HttpContext.User.Identity as ClaimsIdentity))
             {
                 return Unauthorized();
             }
@@ -64,16 +58,30 @@ namespace Api.Controladores
         [HttpPut("{id}")]
         public IActionResult ModificarProducto(int id, [FromBody] ProductoUpsertModelo productoNuevo)
         {
-            ClaimsIdentity? identity = HttpContext.User.Identity as ClaimsIdentity;
-            string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
-            CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
-            if (rolUsuario != CategoriaRol.Administrador || rolUsuario != CategoriaRol.ClienteAdministrador)
+            if (!EsAdministrador(HttpContext.User.Identity as ClaimsIdentity))
             {
                 return Unauthorized();
             }
             _servicioProducto.ModificarProducto(id, productoNuevo.AEntidad());
             Producto productoActualizado = _servicioProducto.EncontrarPorId(id);
             return Ok(new ProductoModelo(productoActualizado));
+        }
+        private bool EsAdministrador(ClaimsIdentity identity)
+        {
+            try
+            {
+                string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
+                CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
+                if (rolUsuario != CategoriaRol.Administrador && rolUsuario != CategoriaRol.ClienteAdministrador)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new UnauthorizedAccessException();
+            }
         }
     }
 }
