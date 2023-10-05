@@ -16,13 +16,13 @@ namespace Servicios
 
         public Usuario RegistrarUsuario(Usuario usuario)
         {
-            if (ValidarUsuario(usuario)) {
+            if (ValidarUsuario(usuario, true)) {
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;
         }
 
-        private bool ValidarUsuario(Usuario usuario)
+        private bool ValidarUsuario(Usuario usuario, bool esNuevo)
         {
             if (usuario == null)
             {
@@ -32,7 +32,7 @@ namespace Servicios
             {
                 throw new ArgumentException("La direccion de entrega no puede ser nula o vacia");
             }
-            if (CheckearMail(usuario))
+            if (CheckearMail(usuario, esNuevo))
             {
                 throw new ArgumentException("El email es incorrecto");
             }
@@ -44,7 +44,7 @@ namespace Servicios
             return true;
         }
 
-        private bool CheckearMail(Usuario usuario)
+        private bool CheckearMail(Usuario usuario, bool esNuevo)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace Servicios
                 {
                     return true;
                 }
-                else if (repositorioUsuario.ObtenerUsuarios().FirstOrDefault(x => x.CorreoElectronico == usuario.CorreoElectronico) != null)
+                else if (esNuevo && repositorioUsuario.ObtenerUsuarios().FirstOrDefault(x => x.CorreoElectronico == usuario.CorreoElectronico) != null)
                 {
                     return true;
                 }
@@ -64,10 +64,16 @@ namespace Servicios
             return false;
         }
 
-        public void ActualizarUsuario(int id, string direccionEntrega)
+        public void ActualizarUsuario(int id, Usuario usuario)
         {
             Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
-            usuarioObtenido.DireccionEntrega = direccionEntrega;
+            if (ValidarUsuario(usuario, false))
+            {
+                usuarioObtenido.CorreoElectronico = usuario.CorreoElectronico;
+                usuarioObtenido.DireccionEntrega = usuario.DireccionEntrega;
+                usuarioObtenido.Contrasena = usuario.Contrasena;
+                usuarioObtenido.Rol = usuario.Rol;
+            }
             repositorioUsuario.ActualizarUsuario(usuarioObtenido);
         }
 

@@ -48,20 +48,16 @@ namespace Api.Controladores
             return Unauthorized();
         }
 
-        // Endpoint solo admin si id es distinta a la suya, si no, comprar token con su id y es necesario logearse
-        [HttpPatch("{id}")]
-        public IActionResult ModificarUsuario(int id, JsonPatchDocument<Usuario> usuarioModificado)
+        [HttpPut("{id}")]
+        public IActionResult ModificarUsuario(int id, [FromBody] UsuarioCrearModelo usuario)
         {
             Usuario usuarioLogeado = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
             if (usuarioLogeado.Rol == CategoriaRol.Administrador || usuarioLogeado.Rol == CategoriaRol.ClienteAdministrador || usuarioLogeado.Id==id)
             {
-                Usuario original = _manejadorUsuario.ObtenerUsuario(id);
-                Usuario usuarioAModificar = original;
-                usuarioModificado.ApplyTo(usuarioAModificar, (Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter) ModelState);
-                //Falta modificar el usuario en el manejador
+                _manejadorUsuario.ActualizarUsuario(id, usuario.ToEntity());
                 return Ok();
             }
-            return Ok(); // TODO Ver errores con manejador usuario
+            return Unauthorized();
         }
 
         [HttpDelete("{id}")]

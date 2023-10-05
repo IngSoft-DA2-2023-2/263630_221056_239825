@@ -8,7 +8,7 @@ namespace Servicios.Interfaces
         Usuario ObtenerUsuario(int id);
         Usuario RegistrarUsuario(Usuario usuario);
         List<Usuario> ObtenerUsuarios();
-        void ActualizarUsuario(int id, string direccionEntrega);
+        void ActualizarUsuario(int id, Usuario usuarioModificar);
         List<Compra> ObtenerComprasDelUsuario(int id);
         void AgregarCompraAlUsuario(int id, Compra compra);
         void EliminarUsuario(Usuario usuario);
