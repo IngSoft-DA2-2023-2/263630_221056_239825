@@ -12,6 +12,7 @@ namespace Pruebas.PruebasUsuario
     {
         private Mock<IManejadorUsuario> usuarioLogicMock = new Mock<IManejadorUsuario>();
         private Mock<IServicioProducto> productoLogicMock = new Mock<IServicioProducto>();
+        private Mock<IServicioCompra> compraLogicMock = new Mock<IServicioCompra>();
         private Usuario usuario = new("martin@edelman.com.uy", "Julio Cesar 123", "12345678")
         {
             Id = 1,
@@ -28,7 +29,7 @@ namespace Pruebas.PruebasUsuario
             };
             usuarioLogicMock.Setup(logic => logic.ObtenerUsuario(1)).Returns(usuario);
             usuarioLogicMock.Setup(logic => logic.ObtenerUsuarios()).Returns(usuarios);
-            controladorUsuario = new ControladorUsuario(usuarioLogicMock.Object, productoLogicMock.Object);
+            controladorUsuario = new ControladorUsuario(usuarioLogicMock.Object, productoLogicMock.Object, compraLogicMock.Object);
         }
 
         [TestMethod]
