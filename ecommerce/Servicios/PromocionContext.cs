@@ -12,21 +12,21 @@ namespace Servicios
         public PromocionContext()
         {
         }
-        public IPromocionStrategy promocionStrategy { get; set; }
+        public IPromocionStrategy PromocionStrategy { get; set; }
 
         public int AplicarStrategy(List<Producto> listaCompra)
         {
-            return promocionStrategy.AplicarPromocion(listaCompra);
+            return PromocionStrategy.AplicarPromocion(listaCompra);
         }
 
         public string NombrePromocion()
         {
-            return promocionStrategy.NombrePromocion;
+            return PromocionStrategy.NombrePromocion;
         }
 
         public bool AplicarStrategyPromo(List<Producto> carrito)
         {
-            return promocionStrategy.AplicarPromo(carrito);
+            return PromocionStrategy.AplicarPromo(carrito);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Pruebas.PruebasUsuario
                 { new UsuarioCrearModelo(){
                     CorreoElectronico = usuario.CorreoElectronico,
                     DireccionEntrega = usuario.DireccionEntrega,
-                    contrasena = usuario.Contrasena
+                    Contrasena = usuario.Contrasena
                 }});
             List<UsuarioCrearModelo>? ObjetoEsperado = expected.Value as List<UsuarioCrearModelo>;
             // Act
@@ -60,8 +60,7 @@ namespace Pruebas.PruebasUsuario
             {
                 CorreoElectronico = usuario.CorreoElectronico,
                 DireccionEntrega = usuario.DireccionEntrega,
-                contrasena = usuario.Contrasena,
-                Id = 0,
+                Contrasena = usuario.Contrasena,
                 Rol = CategoriaRol.Cliente
             });
             UsuarioCrearModelo? objetoEsperado = expected.Value as UsuarioCrearModelo;
@@ -82,8 +81,7 @@ namespace Pruebas.PruebasUsuario
             {
                 CorreoElectronico = "correo@example.com",
                 DireccionEntrega = "Dirección de entrega",
-                contrasena = "contrasena",
-                Id = 1
+                Contrasena = "contrasena"
             };
 
             usuarioLogicMock.Setup(logic => logic.RegistrarUsuario(usuario)).Returns(usuario);
@@ -94,7 +92,7 @@ namespace Pruebas.PruebasUsuario
             Assert.AreEqual(expected.StatusCode, resultado.StatusCode);
             Assert.AreEqual(usuarioEsperado.CorreoElectronico, objetoResultado!.CorreoElectronico);
             Assert.AreEqual(usuarioEsperado.DireccionEntrega, objetoResultado.DireccionEntrega);
-            Assert.AreEqual(usuarioEsperado.contrasena, objetoResultado.contrasena);
+            Assert.AreEqual(usuarioEsperado.Contrasena, objetoResultado.Contrasena);
         }
 
         [TestMethod]

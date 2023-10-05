@@ -21,7 +21,7 @@ namespace Pruebas.PruebasPromociones
         {
             promocionContext = new PromocionContext();
             promocion20 = new Promocion20Off();
-            promocionContext.promocionStrategy = promocion20;
+            promocionContext.PromocionStrategy = promocion20;
             Marca marca = new();
             Categoria categoria = new();
             List<Color> color = new();
