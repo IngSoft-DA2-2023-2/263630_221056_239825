@@ -63,7 +63,6 @@ public class PruebasPromociones3x2
     }
 
     [TestMethod]
-    //[ExpectedException(typeof(ArgumentException))]
     public void AplicarPromocionError()
     {
         carrito!.Remove(producto1!);

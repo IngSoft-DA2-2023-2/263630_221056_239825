@@ -74,7 +74,6 @@ namespace Pruebas.PruebasPromociones
         }
 
         [TestMethod]
-        //[ExpectedException(typeof(ArgumentException))]
         public void AplicarPromocionError()
         {
             //Act
