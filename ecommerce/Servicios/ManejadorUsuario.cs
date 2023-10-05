@@ -34,6 +34,10 @@ namespace Servicios
                     }
                 };
                 usuario.Compras = compras;
+                foreach (Compra c in compras)
+                {
+                    repositorioUsuario.AgregarCompra(c);
+                }
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;
@@ -118,6 +122,7 @@ namespace Servicios
 
                 Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
                 usuarioObtenido.Compras.Add(compra);
+                repositorioUsuario.AgregarCompra(compra);
                 repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
         }

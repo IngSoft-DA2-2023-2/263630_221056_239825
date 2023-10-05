@@ -93,7 +93,7 @@ namespace Api.Controladores
         {
             
             Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if(usuario.Id == id)
+            if(usuario.Id == id && usuario.Rol != CategoriaRol.Administrador)
             {
                 Compra compra = new Compra()
                 {

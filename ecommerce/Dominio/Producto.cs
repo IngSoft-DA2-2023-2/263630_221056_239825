@@ -13,6 +13,7 @@ namespace Dominio
         public int CategoriaId { get; set; }
         public Categoria Categoria { get; set; }
         public List<Color> Colores { get; set; }
+        public List<Compra> Compras { get; set; }
 
         public Producto()
         {

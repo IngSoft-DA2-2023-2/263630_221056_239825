@@ -57,8 +57,16 @@ public class RepositorioProducto : IRepositorioProducto
     {
         Contexto.Entry(productoAgregado).State = EntityState.Added;
         productoAgregado.Colores = ConseguirColores(productoAgregado.Colores);
+        productoAgregado.Compras = ConseguirCompras(productoAgregado.Compras);
     }
-    
+    private List<Compra> ConseguirCompras(List<Compra> listaIds)
+    {
+        return listaIds
+            .Select(compra => Contexto.Set<Compra>().FirstOrDefault(c => c.Id == compra.Id))
+            .Where(CompraDB => CompraDB is not null)
+            .ToList()!;
+    }
+
     public void EliminarProducto(Producto productoABorrar)
     {
         Contexto.Set<Producto>().Remove(productoABorrar);

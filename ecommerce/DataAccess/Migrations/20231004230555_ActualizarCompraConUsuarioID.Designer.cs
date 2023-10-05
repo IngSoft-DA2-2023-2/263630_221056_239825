@@ -4,6 +4,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    partial class ECommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20231004230555_ActualizarCompraConUsuarioID")]
+    partial class ActualizarCompraConUsuarioID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,21 +37,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("ProductosId");
 
                     b.ToTable("ColorProducto");
-                });
-
-            modelBuilder.Entity("CompraProducto", b =>
-                {
-                    b.Property<int>("ComprasId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ComprasId", "ProductosId");
-
-                    b.HasIndex("ProductosId");
-
-                    b.ToTable("CompraProducto");
                 });
 
             modelBuilder.Entity("Dominio.Categoria", b =>
@@ -101,7 +88,7 @@ namespace DataAccess.Migrations
                     b.Property<int>("Precio")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -139,6 +126,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CompraId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -156,6 +146,8 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
+
+                    b.HasIndex("CompraId");
 
                     b.HasIndex("MarcaId");
 
@@ -205,26 +197,13 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CompraProducto", b =>
-                {
-                    b.HasOne("Dominio.Compra", null)
-                        .WithMany()
-                        .HasForeignKey("ComprasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Producto", null)
-                        .WithMany()
-                        .HasForeignKey("ProductosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Dominio.Compra", b =>
                 {
                     b.HasOne("Dominio.Usuario.Usuario", null)
                         .WithMany("Compras")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Dominio.Producto", b =>
@@ -234,6 +213,10 @@ namespace DataAccess.Migrations
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Dominio.Compra", null)
+                        .WithMany("Productos")
+                        .HasForeignKey("CompraId");
 
                     b.HasOne("Dominio.Marca", "Marca")
                         .WithMany("Productos")
@@ -247,6 +230,11 @@ namespace DataAccess.Migrations
                 });
 
             modelBuilder.Entity("Dominio.Categoria", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Dominio.Compra", b =>
                 {
                     b.Navigation("Productos");
                 });
