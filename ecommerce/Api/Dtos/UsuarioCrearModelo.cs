@@ -5,7 +5,6 @@ namespace Api.Dtos
 {
     public class UsuarioCrearModelo
     {
-        public int Id { get; set; }
         public string CorreoElectronico { get; set; }
         public string DireccionEntrega { get; set; }
         public CategoriaRol Rol { get; set; }
@@ -15,7 +14,6 @@ namespace Api.Dtos
         {
             return new Usuario(this.CorreoElectronico, this.DireccionEntrega, this.contrasena)
             {
-                Id = this.Id,
                 Compras = new List<Compra>(),
                 Rol = this.Rol,
             };
