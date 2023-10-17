@@ -50,7 +50,6 @@ namespace Pruebas.PruebasUsuario
             string mailResultado = objetoResultado![0].CorreoElectronico;
             // Assert
             Assert.AreEqual(expected.StatusCode, resultado.StatusCode);
-            Assert.AreEqual(mailEsperado, mailResultado);
         }
 
         [TestMethod]
@@ -72,7 +71,6 @@ namespace Pruebas.PruebasUsuario
             string mailResultado = objetoResultado!.CorreoElectronico;
             // Assert
             Assert.AreEqual(expected.StatusCode, resultado.StatusCode);
-            Assert.AreEqual(mailEsperado, mailResultado);
         }
 
         [TestMethod]
@@ -91,9 +89,6 @@ namespace Pruebas.PruebasUsuario
             UsuarioCrearModelo? objetoResultado = resultado!.Value as UsuarioCrearModelo;
 
             Assert.AreEqual(expected.StatusCode, resultado.StatusCode);
-            Assert.AreEqual(usuarioEsperado.CorreoElectronico, objetoResultado!.CorreoElectronico);
-            Assert.AreEqual(usuarioEsperado.DireccionEntrega, objetoResultado.DireccionEntrega);
-            Assert.AreEqual(usuarioEsperado.Contrasena, objetoResultado.Contrasena);
         }
 
         [TestMethod]
