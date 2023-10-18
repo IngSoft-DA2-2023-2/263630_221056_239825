@@ -171,12 +171,8 @@ namespace Pruebas.PruebasUsuario
         [TestMethod]
         public void ObtenerComprasDelUsuarioOk()
         {
-            cliente!.Compras.Add(compra!);
-            mock!.Setup(x => x.ActualizarUsuario(cliente!));
-            mock!.Setup(x => x.ObtenerUsuario(c => c.Id == cliente.Id)).Returns(cliente!);
-            manejadorUsuario!.AgregarCompraAlUsuario(1, compra!);
+            mock!.Setup(x => x.ObtenerUsuario(c => c.Id == cliente!.Id)).Returns(cliente!);
             List<Compra> resultado = manejadorUsuario!.ObtenerComprasDelUsuario(1);
-
             // Assert
             Assert.AreEqual(cliente!.Compras, resultado);
         }

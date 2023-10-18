@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Api.Filtros;
 using Dominio;
 using Dominio.Usuario;
 using Microsoft.AspNetCore.Mvc;
@@ -18,32 +19,11 @@ public class ControladorCompra : ControllerBase
         _servicio = servicio;
     }
 
+    [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
     [HttpGet]
     public IActionResult RetornarTodas()
     {
-        if (!EsAdministrador(HttpContext.User.Identity as ClaimsIdentity))
-        {
-            return Unauthorized();
-        }
         List<Compra> listaCompras = _servicio.RetornarTodas();
         return Ok(listaCompras.Select(c => new CompraModelo(c)));
-    }
-
-    private bool EsAdministrador(ClaimsIdentity identity)
-    {
-        try
-        { 
-            string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
-            CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
-            if (rolUsuario != CategoriaRol.Administrador && rolUsuario != CategoriaRol.ClienteAdministrador)
-            {
-                return false;
-            }
-            return true;
-        }
-        catch (Exception)
-        {
-            throw new UnauthorizedAccessException();
-        }
     }
 }
