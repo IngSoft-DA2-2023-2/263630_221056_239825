@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
+import { SignupComponent } from './signup/signup.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MatCardModule} from '@angular/material/card';
     HttpClientModule,
     NavbarComponent,
     LoginComponent,
+    SignupComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

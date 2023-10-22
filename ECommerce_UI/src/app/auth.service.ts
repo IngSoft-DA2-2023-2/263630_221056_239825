@@ -11,7 +11,9 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private isLoggedIn: boolean;
-  private url: string = 'https://localhost:7061/api/v1/authentication';
+  private urlAuthentication: string =
+    'https://localhost:7061/api/v1/authentication';
+  private urlUsuario: string = 'https://localhost:7061/api/v1/usuarios';
 
   constructor(private http: HttpClient, private router: Router) {
     this.isLoggedIn = false;
@@ -33,7 +35,7 @@ export class AuthService {
     };
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http
-      .post(this.url, credenciales, {
+      .post(this.urlAuthentication, credenciales, {
         headers,
       })
       .subscribe(
@@ -42,6 +44,30 @@ export class AuthService {
           localStorage.setItem('token', 'Bearer ' + token);
           this.isLoggedIn = true;
           this.router.navigate(['/']);
+          return true;
+        },
+        (error) => {
+          return false;
+        }
+      );
+    return false;
+  }
+
+  signup(mail: string, password: string, direccion: string): boolean {
+    const credenciales : object = {
+      correoElectronico: mail,
+      direccionEntrega: direccion,
+      rol: 0,
+      contrasena: password,
+    };
+    const headers : HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
+    this.http
+      .post(this.urlUsuario, credenciales, {
+        headers,
+      })
+      .subscribe(
+        (response: any) => {
+          this.router.navigate(['/login']);
           return true;
         },
         (error) => {

@@ -44,10 +44,10 @@ export class LoginComponent {
     return this.email.hasError('email') ? 'Mail no valido' : '';
   }
 
-  login() {
+  login() : void {
       if (!this.email.hasError('email')) {
-        const emailValue = this.email.value ?? '';
-        const passwordValue = this.password.value ?? '';
+        const emailValue : string = this.email.value ?? '';
+        const passwordValue : string = this.password.value ?? '';
         if (emailValue == '' || passwordValue == '') {
           this.openSnackBar('Mail o contraseña invalida', 'OK');
         } else {
