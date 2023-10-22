@@ -63,6 +63,7 @@ export class AuthService {
 
   // Método para verificar si el usuario está logueado o no
   UserIsLoggedIn(): boolean {
+    this.checkLocalStorage();
     return this.isLoggedIn;
   }
 }
