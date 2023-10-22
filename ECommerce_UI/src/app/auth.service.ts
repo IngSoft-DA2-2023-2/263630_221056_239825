@@ -10,28 +10,27 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private isLoggedIn: boolean; // Variable para rastrear el estado de inicio de sesión
-  private url : string = 'https://localhost:7061/api/v1/authentication';
+  private isLoggedIn: boolean;
+  private url: string = 'https://localhost:7061/api/v1/authentication';
 
   constructor(private http: HttpClient, private router: Router) {
     this.isLoggedIn = false;
     this.checkLocalStorage();
   }
-  
+
   response = 'a response';
 
-  checkLocalStorage() : void {
+  checkLocalStorage(): void {
     if (localStorage.getItem('token') != null) {
       this.isLoggedIn = true;
     }
   }
 
-  login(mail:string, password:string) :void {
+  login(mail: string, password: string): boolean {
     const credenciales = {
-      "correoElectronico": mail,
-      "contrasena": password,
+      correoElectronico: mail,
+      contrasena: password,
     };
-    // const postData = JSON.stringify(credenciales);	
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     this.http
       .post(this.url, credenciales, {
@@ -39,29 +38,24 @@ export class AuthService {
       })
       .subscribe(
         (response: any) => {
-          console.log('POST Request Successful:', response);
-          var token : string = response.token;
-          localStorage.setItem('token', 'Bearer '+token);
+          var token: string = response.token;
+          localStorage.setItem('token', 'Bearer ' + token);
           this.isLoggedIn = true;
           this.router.navigate(['/']);
+          return true;
         },
         (error) => {
-          console.error('POST Request Error:', error);
-          if(error.status == 404){
-            // TODO: Manejar el error
-            console.log("Error 404")
-          }
+          return false;
         }
       );
+    return false;
   }
 
-  // Método para establecer el estado de inicio de sesión a false
-  logout() : void {
+  logout(): void {
     localStorage.removeItem('token');
     this.isLoggedIn = false;
   }
 
-  // Método para verificar si el usuario está logueado o no
   UserIsLoggedIn(): boolean {
     this.checkLocalStorage();
     return this.isLoggedIn;

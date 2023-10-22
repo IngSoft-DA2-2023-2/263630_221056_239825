@@ -22,7 +22,6 @@ export class NavbarComponent {
     this.router.events.subscribe((val : any) => {
       if(val.url){
         this.isLoggedIn = this.authService.UserIsLoggedIn();
-        console.log(this.isLoggedIn);
       }
     }
     )
