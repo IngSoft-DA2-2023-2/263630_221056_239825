@@ -13,12 +13,12 @@ import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { ProductosComponent } from './components/productos/productos.component';
 import { SignupComponent } from './signup/signup.component';
+import { ProductoComponent } from './components/producto/producto.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductosComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +32,8 @@ import { SignupComponent } from './signup/signup.component';
     NavbarComponent,
     LoginComponent,
     SignupComponent,
+    ProductoComponent,
+    ProductosComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
