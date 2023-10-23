@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import {Producto} from '../../dominio/producto.model';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @Component({
@@ -9,7 +10,7 @@ import {MatCardModule} from '@angular/material/card';
   selector: 'app-producto',
   templateUrl: './producto.component.html',
   styleUrls: ['./producto.component.css'],
-  imports: [MatButtonModule, MatCardModule]
+  imports: [MatButtonModule, MatCardModule, MatDividerModule]
 })
 export class ProductoComponent {
   @Input() producto: Producto = {
@@ -18,6 +19,8 @@ export class ProductoComponent {
     descripcion: '',
     precio: 0,
     stock: 0,
-    categoria: ''
+    categoria: [],
+    colores: [],
+    marca: []
   };
 }

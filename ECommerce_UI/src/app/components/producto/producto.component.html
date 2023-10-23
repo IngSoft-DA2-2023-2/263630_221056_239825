@@ -5,10 +5,18 @@
       <mat-card-subtitle>{{producto.categoria}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
+      <h4>${{producto.precio}}</h4>
       <p>
         {{producto.descripcion}}
       </p>
+      <p>
+        {{producto.colores}}
+      </p>
+      <p>
+        {{producto.marca}}
+      </p>
     </mat-card-content>
+    <mat-divider></mat-divider>
     <mat-card-actions>
       <button mat-raised-button class= "boton">Agregar al carrito</button>
     </mat-card-actions>

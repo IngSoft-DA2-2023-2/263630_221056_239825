@@ -17,7 +17,9 @@ export class ProductosComponent {
     descripcion: 'Molido',
     precio: 500,
     stock: 20,
-    categoria: 'Bebida'
+    categoria: ['Bebida'],
+    marca: ["Adidas"],
+    colores: ["Negro"]
   };
 
   private producto2: Producto = {
@@ -26,7 +28,9 @@ export class ProductosComponent {
     descripcion: 'Delicioso',
     precio: 1000,
     stock: 10,
-    categoria: 'Comida'
+    categoria: ['Comida'],
+    marca: ["Nike"],
+    colores: ["Azul"]
   };
 
   private producto3: Producto = {
@@ -35,7 +39,9 @@ export class ProductosComponent {
     descripcion: 'Gluten free',
     precio: 700,
     stock: 5,
-    categoria: 'Sin gluten'
+    categoria: ['Sin gluten'],
+    marca: ['Bimbo'],
+    colores: ['Azul']
   };
 
   private producto4: Producto = {
@@ -44,7 +50,9 @@ export class ProductosComponent {
     descripcion: 'Sin azucar',
     precio: 700,
     stock: 5,
-    categoria: 'Bebida'
+    categoria: ['Bebida'],
+    marca: ['Coca'],
+    colores: ['Roja']
   };
 
   protected ArrayProductos: Producto[] = [this.producto1, this.producto2, this.producto3, this.producto4];
