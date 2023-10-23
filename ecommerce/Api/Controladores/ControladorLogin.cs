@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Principal;
+using Newtonsoft.Json;
 
 namespace Api.Controladores
 {
@@ -46,7 +47,21 @@ namespace Api.Controladores
                 expires: DateTime.UtcNow.AddDays(30),
                 signingCredentials: signIn
             );
-            return Created("", new JwtSecurityTokenHandler().WriteToken(token));  
+            // Serializar el token a formato JSON
+            string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            // Crear un objeto anónimo para el resultado
+            var resultado = new
+            {
+                Token = tokenString,
+                Expira = token.ValidTo
+            };
+
+            // Convertir el objeto a JSON
+            string jsonResultado = JsonConvert.SerializeObject(resultado);
+
+            // Devolver la respuesta como JSON
+            return Created("", resultado);
         }
     }
 }

@@ -41,22 +41,24 @@ export class LoginComponent {
     if (this.password.hasError('required')) {
       return 'Tiene que ingresar un valor';
     }
-
     return this.email.hasError('email') ? 'Mail no valido' : '';
   }
 
-  login() {
-    if (!this.email.hasError('email')) {
-      const emailValue = this.email.value ?? '';
-      const passwordValue = this.password.value ?? '';
-      if (emailValue == '' || passwordValue == '') {
-        this.openSnackBar('Mail o contraseña invalida', 'OK');
+  login() : void {
+      if (!this.email.hasError('email')) {
+        const emailValue : string = this.email.value ?? '';
+        const passwordValue : string = this.password.value ?? '';
+        if (emailValue == '' || passwordValue == '') {
+          this.openSnackBar('Mail o contraseña invalida', 'OK');
+        } else {
+          const loggedIn : boolean = this.auth.login(emailValue, passwordValue);
+          if (!loggedIn) {
+            this.openSnackBar('Mail o contraseña invalida', 'OK');
+          }
+        }
       } else {
-        this.auth.login(emailValue, passwordValue);
+        this.openSnackBar('Mail o contraseña invalida', 'OK');
       }
-    } else {
-      this.openSnackBar('Mail o contraseña invalida', 'OK');
-    }
   }
   
   openSnackBar(message: string, action: string) {

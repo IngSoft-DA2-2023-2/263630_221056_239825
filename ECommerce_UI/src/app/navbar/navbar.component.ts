@@ -18,8 +18,18 @@ export class NavbarComponent {
   constructor(private authService: AuthService, private router: Router) {}
   protected isLoggedIn: boolean = this.authService.UserIsLoggedIn();
 
+  ngOnInit(): void {
+    this.router.events.subscribe((val : any) => {
+      if(val.url){
+        this.isLoggedIn = this.authService.UserIsLoggedIn();
+      }
+    }
+    )
+  }
+
   logout(): void {
     this.authService.logout();
     this.isLoggedIn = false;
+    this.router.navigate(['/']);
   }
 }

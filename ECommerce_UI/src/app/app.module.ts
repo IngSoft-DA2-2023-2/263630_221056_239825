@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { ProductosComponent } from './components/productos/productos.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ProductosComponent } from './components/productos/productos.component';
     HttpClientModule,
     NavbarComponent,
     LoginComponent,
+    SignupComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
