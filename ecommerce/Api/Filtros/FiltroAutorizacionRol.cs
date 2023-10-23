@@ -10,6 +10,7 @@ namespace Api.Filtros
     {
         public CategoriaRol RoleNeeded { get; set; }
         public CategoriaRol SecondaryRole { get; set; }
+        public int Id { get; set; }
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -27,16 +28,29 @@ namespace Api.Filtros
             {
                 IManejadorUsuario _manejadorUsuario = GetSessionService(context);
                 Usuario usuario = ValidarToken(user!, _manejadorUsuario);
-                if (!(RoleNeeded == usuario.Rol))
+                if (Id == 0)
                 {
-                    if (SecondaryRole.Equals(default(CategoriaRol)))
+                    if (!(RoleNeeded == usuario.Rol))
                     {
-                        context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                        if (SecondaryRole.Equals(default(CategoriaRol)))
                         {
-                            StatusCode = 403
-                        };
+                            context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                            {
+                                StatusCode = 403
+                            };
+                        }
+                        if (!(SecondaryRole == usuario.Rol))
+                        {
+                            context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                            {
+                                StatusCode = 403
+                            };
+                        }
                     }
-                    if(!(SecondaryRole == usuario.Rol))
+                }
+                else
+                {
+                    if (Id != usuario.Id)
                     {
                         context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
                         {
@@ -51,7 +65,7 @@ namespace Api.Filtros
                 {
                     StatusCode = 401
                 };
-            }   
+            }
         }
 
         private Usuario ValidarToken(ClaimsIdentity identity, IManejadorUsuario _manejadorUsuario)
