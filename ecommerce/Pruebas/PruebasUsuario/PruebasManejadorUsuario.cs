@@ -4,6 +4,8 @@ using Dominio.Usuario;
 using Dominio;
 using DataAccess.Interfaces;
 using DataAccess;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Pruebas.PruebasUsuario
 {
@@ -13,6 +15,7 @@ namespace Pruebas.PruebasUsuario
         private Mock<IRepositorioUsuario>? mock;
         private ManejadorUsuario? manejadorUsuario;
         private Usuario? cliente;
+        private Usuario? clienteHasheado;
         private List<Usuario>? listaClientes;
         private Usuario? clienteSinDireccion;
         private Usuario? clienteSinMail;
@@ -26,6 +29,8 @@ namespace Pruebas.PruebasUsuario
             manejadorUsuario = new ManejadorUsuario(mock.Object);
             cliente = new Usuario("martin@edelman.com.uy", "Zorrilla 124", "Password1");
             cliente.Id = 1;
+            clienteHasheado = cliente;
+            clienteHasheado.Contrasena = HashPasword(cliente.Contrasena, Salting(cliente.CorreoElectronico));
             listaClientes = new List<Usuario>();
             listaClientes.Add(cliente);
             clienteSinDireccion = new Usuario("Martin@Edelman", "", "Password1");
@@ -38,6 +43,22 @@ namespace Pruebas.PruebasUsuario
             compra.Productos.Add(new Producto("prod", 123, "", 1, 1, colorList));
         }
 
+        private byte[] Salting(string correoElectronico)
+        {
+            return new byte[correoElectronico.Length];
+        }
+
+        private string HashPasword(string password, byte[] salt)
+        {
+            var hash = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password),
+                salt,
+                350000,
+                HashAlgorithmName.SHA512,
+                64);
+            return Convert.ToHexString(hash);
+        }
+
         [TestMethod]
         public void RegistrarUsuarioOk()
         {
@@ -47,6 +68,24 @@ namespace Pruebas.PruebasUsuario
 
             //Assert
             Assert.AreEqual(cliente, resultado);
+        }
+
+        [TestMethod]
+        public void IniciarSesionOK()
+        {
+            mock!.Setup(x => x.ObtenerUsuario(u => u.CorreoElectronico == "martin@edelman.com.uy")).Returns(clienteHasheado!);
+            Usuario usuarioLoggeado = manejadorUsuario!.Login("martin@edelman.com.uy", "Password1");
+
+            Assert.AreEqual(cliente, usuarioLoggeado);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(KeyNotFoundException))]
+        public void IniciarSesionError()
+        {
+            mock!.Setup(x => x.ObtenerUsuario(u => u.CorreoElectronico == "martin@edelman.com.uy")).Returns(cliente!);
+            Usuario usuarioLoggeado = manejadorUsuario!.Login("martin@edelman.com.uy", "Password2");
+            Console.WriteLine(clienteHasheado!.Contrasena + " - " + usuarioLoggeado.Contrasena);
         }
 
         [TestMethod]
@@ -69,7 +108,7 @@ namespace Pruebas.PruebasUsuario
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void RegistrarUsuarioIncorrectoContrasena ()
+        public void RegistrarUsuarioIncorrectoContrasena()
         {
             clienteSinMail!.CorreoElectronico = "tati@gmail.com";
             clienteSinMail!.Contrasena = "abc";
@@ -108,7 +147,7 @@ namespace Pruebas.PruebasUsuario
             //Assert
             Assert.AreEqual(cliente, resultado);
         }
-        
+
         [TestMethod]
         public void ObtenerUsuariosOk()
         {
@@ -120,7 +159,7 @@ namespace Pruebas.PruebasUsuario
             Assert.AreEqual(listaClientes!.Count, resultado.Count);
             Assert.AreEqual(listaClientes[0], resultado[0]);
         }
-        
+
         [TestMethod]
         public void ActualizarUsuariosOk()
         {

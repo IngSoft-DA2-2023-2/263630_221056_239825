@@ -22,6 +22,7 @@ namespace Api.Controladores
             _manejadorUsuario = manejadorUsuario;
             _configuration = configuration;
         }
+
         [HttpPost]
         public IActionResult RegistrarSesion([FromBody] CredencialesControlador credenciales)
         {
@@ -47,21 +48,14 @@ namespace Api.Controladores
                 expires: DateTime.UtcNow.AddDays(30),
                 signingCredentials: signIn
             );
-            // Serializar el token a formato JSON
             string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-            // Crear un objeto anónimo para el resultado
-            var resultado = new
-            {
-                Token = tokenString,
-                Expira = token.ValidTo
-            };
-
-            // Convertir el objeto a JSON
-            string jsonResultado = JsonConvert.SerializeObject(resultado);
-
-            // Devolver la respuesta como JSON
-            return Created("", resultado);
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            usuarioDTO.Id = usuario.Id;
+            usuarioDTO.CorreoElectronico = usuario.CorreoElectronico;
+            usuarioDTO.Rol = usuario.Rol;
+            usuarioDTO.DireccionEntrega = usuario.DireccionEntrega;
+            usuarioDTO.Token = tokenString;
+            return Created("", usuarioDTO);
         }
     }
 }
