@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { CreditNamePipe } from 'src/app/pipes/credit-name.pipe';
 import { CreditNumberPipe } from 'src/app/pipes/credit-number.pipe';
 
@@ -11,7 +12,7 @@ import { CreditNumberPipe } from 'src/app/pipes/credit-number.pipe';
   selector: 'app-tarjeta',
   templateUrl: './tarjeta.component.html',
   styleUrls: ['./tarjeta.component.css'],
-  imports: [CreditNamePipe, CreditNumberPipe, CommonModule, FormsModule]
+  imports: [CreditNamePipe, CreditNumberPipe, CommonModule, FormsModule, MatIconModule]
 })
 
 export class TarjetaComponent {
@@ -20,7 +21,7 @@ export class TarjetaComponent {
 
   mesesYear = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
-  years = [22, 23, 24, 25, 26, 27, 28]
+  years = [23, 24, 25, 26, 27, 28, 29]
 
   cardNumber    : string              = ''
   cardName      : string              = ''
@@ -33,13 +34,11 @@ export class TarjetaComponent {
     document.getElementById('selectMes')?.innerText!= 'Month'
   }
   
-  // Agregando clase que rota la tarjeta
   rotate(tarjeta: HTMLElement) {
     tarjeta.classList.toggle('active')
     
   }
 
-  // Mostrar formulario con boton giratorio
   displayForm() {
     document.getElementById('formulario-tarjeta')?.classList.toggle('active')
     document.getElementById('btn-abrir-formulario')?.classList.toggle('active')
@@ -56,13 +55,6 @@ export class TarjetaComponent {
       .replace(/([0-9]{4})/g, '$1 ')
       // Eliminando últimos espaciados
       .trim()
-    
-
-    // document.getElementById('numero')?.textContent!=''
-
-    // Desarrollando para cambiar imagen dinamicamente segun codigo verificador
-
-    // Imagen Front
 
      switch (form.value.cardNumber.slice(0, 1)) {
 
@@ -151,8 +143,6 @@ export class TarjetaComponent {
     this.voltearTarjeta()
   }
 
-  // crear una funcion en vez del 2do switch y la variable de entrada sea logo marca trasera y logo marca y luego llamar ambas funciones
-
   voltearTarjeta(){
     if( document.getElementById('tarjeta')?.classList.contains('active') ){
       document.getElementById('tarjeta')?.classList.remove('active')
@@ -164,19 +154,6 @@ export class TarjetaComponent {
       document.getElementById('tarjeta')?.classList.add('active')
     }
   }
-
-/* 
-  teclaPresionada(){
-    this.debouncer
-      .next( this.cardNumber)
-      .subscribe( valor => {
-      
-    })
-    
-  } */
-
-
-
 }
 
 
