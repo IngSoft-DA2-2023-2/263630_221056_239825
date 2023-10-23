@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductoComponent } from '../producto/producto.component';
-import { NgForOf, NgFor } from '@angular/common';
+import { NgForOf, NgFor} from '@angular/common';
 import { Producto } from 'src/app/dominio/producto.model';
 
 @Component({
@@ -29,6 +29,24 @@ export class ProductosComponent {
     categoria: 'Comida'
   };
 
-  protected ArrayProductos: Producto[] = [this.producto1, this.producto2];
+  private producto3: Producto = {
+    id: 2,
+    nombre: 'Pan',
+    descripcion: 'Gluten free',
+    precio: 700,
+    stock: 5,
+    categoria: 'Sin gluten'
+  };
+
+  private producto4: Producto = {
+    id: 7,
+    nombre: 'Coca cola',
+    descripcion: 'Sin azucar',
+    precio: 700,
+    stock: 5,
+    categoria: 'Bebida'
+  };
+
+  protected ArrayProductos: Producto[] = [this.producto1, this.producto2, this.producto3, this.producto4];
   
 }

@@ -1,2 +1,5 @@
 <h1>Productos</h1>
-<app-producto [producto]="a" *ngFor="let a of ArrayProductos" ></app-producto>
+<div>
+  <h3>Bebidas</h3>
+  <app-producto *ngFor="let a of ArrayProductos" [producto]="a"></app-producto>
+</div>
