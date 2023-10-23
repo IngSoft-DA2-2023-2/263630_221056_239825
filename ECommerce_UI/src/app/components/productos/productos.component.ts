@@ -18,7 +18,7 @@ export class ProductosComponent {
     precio: 500,
     stock: 20,
     categoria: ['Bebida'],
-    marca: ["Adidas"],
+    marca: ["Nescafe"],
     colores: ["Negro"]
   };
 
@@ -29,7 +29,7 @@ export class ProductosComponent {
     precio: 1000,
     stock: 10,
     categoria: ['Comida'],
-    marca: ["Nike"],
+    marca: ["Fabric"],
     colores: ["Azul"]
   };
 
