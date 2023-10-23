@@ -13,10 +13,11 @@ import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { SignupComponent } from './signup/signup.component';
 
-
+import { TarjetaComponent } from './card/tarjeta/tarjeta.component';
 @NgModule({
   declarations: [
     AppComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -30,6 +31,7 @@ import { SignupComponent } from './signup/signup.component';
     NavbarComponent,
     LoginComponent,
     SignupComponent,
+    TarjetaComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
