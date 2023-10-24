@@ -54,6 +54,7 @@ namespace Api.Controladores
             usuarioDTO.CorreoElectronico = usuario.CorreoElectronico;
             usuarioDTO.Rol = usuario.Rol;
             usuarioDTO.DireccionEntrega = usuario.DireccionEntrega;
+            usuarioDTO.Compras = usuario.Compras;
             usuarioDTO.Token = tokenString;
             return Created("", usuarioDTO);
         }
