@@ -1,0 +1,9 @@
+<h1>¡Hola {{usuario!.correoElectronico}}!</h1>
+<h3>Tu dirección de entrega está configurada como: {{usuario!.direccionEntrega}}</h3>
+<h2>Estas son tus compras</h2>
+<ng-container *ngIf="compras">
+    <app-compra *ngFor="let compra of compras" [compra]="compra"></app-compra>
+</ng-container>
+<ng-container *ngIf="compras">
+    <h3>No has realizado ninguna compra aún</h3>
+</ng-container>

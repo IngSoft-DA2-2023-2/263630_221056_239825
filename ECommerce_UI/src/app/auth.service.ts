@@ -61,6 +61,7 @@ export class AuthService {
       correoElectronico: response.correoElectronico,
       direccionEntrega: response.direccionEntrega,
       rol: response.rol,
+      compras: response.compras,
     }
     return usuario;
   }
@@ -91,6 +92,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
     this.isLoggedIn = false;
   }
 
