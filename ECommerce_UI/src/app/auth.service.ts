@@ -5,6 +5,7 @@ import {
   HttpParamsOptions,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Usuario } from './dominio/usuario.model';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,8 @@ export class AuthService {
           var token: string = response.token;
           localStorage.setItem('token', 'Bearer ' + token);
           this.isLoggedIn = true;
+          const usuario = this.createUser(response);
+          localStorage.setItem('usuario', JSON.stringify(usuario));
           this.router.navigate(['/']);
           return true;
         },
@@ -51,6 +54,15 @@ export class AuthService {
         }
       );
     return false;
+  }
+
+  createUser(response : any){
+    const usuario : Usuario = {
+      correoElectronico: response.correoElectronico,
+      direccionEntrega: response.direccionEntrega,
+      rol: response.rol,
+    }
+    return usuario;
   }
 
   signup(mail: string, password: string, direccion: string): boolean {
