@@ -14,10 +14,5 @@ namespace Dominio
         public string NombrePromo { get; set; }
         public DateTime FechaCompra { get; set; } = DateTime.Now;
         public int UsuarioId { get; set; }
-
-        public Compra()
-        {
-            Productos = new List<Producto>();
-        }
     }
 }
