@@ -16,7 +16,7 @@ namespace Api.Controladores
         private IManejadorUsuario _manejadorUsuario;
         private IServicioProducto _manejadorProducto;
         private IServicioCompra _manejadorCompra;
-        
+
         public ControladorUsuario(IManejadorUsuario manejadorUsuario, IServicioProducto manejadorProducto, IServicioCompra manejadorCompra)
         {
             _manejadorUsuario = manejadorUsuario;
@@ -33,8 +33,8 @@ namespace Api.Controladores
         [ServiceFilter(typeof(JwtAuthorizationFilter))]
         // Ver con ALEX
         [FiltroAutorizacionId]
-        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         [HttpGet("{id}")]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_manejadorUsuario.ObtenerUsuario(id));

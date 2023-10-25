@@ -1,0 +1,22 @@
+<div class="container">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>Inicie sesión</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="contenidoCard">
+            <mat-form-field class="inputs">
+                <mat-label>Ingrese su email</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="inputs">
+                <mat-label>Ingrese su contraseña</mat-label>
+                <input matInput type="password" placeholder="contraseña" [formControl]="password" required>
+                <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-card-actions>
+                <button mat-raised-button class="inicio" (click)="login()">Iniciar sesión</button>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>

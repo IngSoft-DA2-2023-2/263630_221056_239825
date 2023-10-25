@@ -3,6 +3,8 @@ using Dominio.Usuario;
 using DataAccess.Interfaces;
 using Servicios.Interfaces;
 using Servicios.Promociones;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Servicios
 {
@@ -18,9 +20,27 @@ namespace Servicios
         public Usuario RegistrarUsuario(Usuario usuario)
         {
             if (ValidarUsuario(usuario, true)) {
+                string contrasenaHasheada = HashPasword(usuario.Contrasena, Salting(usuario.CorreoElectronico));
+                usuario.Contrasena = contrasenaHasheada;
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;
+        }
+
+        private byte[] Salting(string correoElectronico)
+        {
+            return new byte[correoElectronico.Length];
+        }
+
+        private string HashPasword(string password, byte[] salt)
+        {
+            var hash = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password),
+                salt,
+                350000,
+                HashAlgorithmName.SHA512,
+                64);
+            return Convert.ToHexString(hash);
         }
 
         private bool ValidarUsuario(Usuario usuario, bool esNuevo)
@@ -136,12 +156,25 @@ namespace Servicios
         {
             try
             {
-                Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico && u.Contrasena == contrasena);
-                return usuario;
+                Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico);
+                if(VerifyPassword(contrasena, usuario.Contrasena, Salting(correoElectronico)))
+                {
+                    return usuario;
+                }
+                else
+                {
+                    throw new KeyNotFoundException();
+                }
             } catch (Exception)
             {
                 throw new KeyNotFoundException("Credenciales incorrectas");
             }
+        }
+
+        private bool VerifyPassword(string password, string hash, byte[] salt)
+        {
+            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, 350000, HashAlgorithmName.SHA512, 64);
+            return CryptographicOperations.FixedTimeEquals(hashToCompare, Convert.FromHexString(hash));
         }
     }
 }

@@ -1,0 +1,14 @@
+<mat-toolbar class="nav">
+    <button mat-button routerLink="/">Inicio</button>
+    <button mat-button routerLink="/productos">Productos</button>
+    <button mat-button routerLink="/carrito">Carrito</button>
+    <span class="example-spacer"></span>
+    <div *ngIf="!isLoggedIn">
+        <button routerLink="/login" mat-button>Login</button>
+        <button mat-button routerLink="/signup">Register</button>
+    </div>
+    <div *ngIf="isLoggedIn">
+        <button mat-button routerLink="/perfil">Perfil</button>
+        <button mat-button (click)="logout()">Cerrar Sesión</button>
+    </div>
+</mat-toolbar>
