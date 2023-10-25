@@ -5,48 +5,35 @@ namespace Servicios.Promociones
 {
     public class Promocion20Off : IPromocionStrategy
     {
-        public string NombrePromocion { get; } = "Se aplico un 20% de descuento en el producto de mayor valor";
+        public string NombrePromocion { get; set; }
+        public int costoTotal { get; set; }
 
-        public Promocion20Off()
+        public int AplicarPromocion(int cantidadgratis, List<Producto> listaCompra)
         {
+            NombrePromocion = $"Promocion de Fidelidad {cantidadgratis}% Off";
+            costoTotal = 9999999;
+            if (listaCompra.Count >= 2)
+            {
+                costoTotal = CalcularPrecioFinal(listaCompra);
+            }
+            return costoTotal;
         }
-
-        public int AplicarPromocion(List<Producto> listaCompra)
+        
+        private int CalcularPrecioFinal(List<Producto> listaCompra)
         {
-            if (listaCompra == null || listaCompra.Count < 2)
+            int precioTotal = 0;
+            List<Producto> listaPorPrecio = listaCompra.OrderBy(p => p.Precio).ToList();
+            Producto productoMasCaro = listaPorPrecio.Last();
+            int precioReducido = (80 * productoMasCaro.Precio) / 100;
+            listaPorPrecio.Remove(productoMasCaro);
+            foreach (Producto producto in listaPorPrecio)
             {
-                throw new InvalidOperationException("La promocion se aplica si hay, al menos, 2 productos en el carrito");
+                precioTotal += producto.Precio;
             }
-            else
-            {
-                int costoTotal = 0;
-                Producto productoMayorValor = listaCompra.OrderByDescending(p => p.Precio).First();
-                int productoConDescuento = (int)(productoMayorValor.Precio * 0.20);
-                foreach (Producto p in listaCompra)
-                {
-                    if (p == productoMayorValor)
-                    {
-                        costoTotal += p.Precio - productoConDescuento;
-                    }
-                    else
-                    {
-                        costoTotal += p.Precio;
-                    }
 
-                }
-                return costoTotal;
-            }
+            precioTotal += precioReducido;
+            return precioTotal;
         }
-
-        public bool AplicarPromo(List<Producto> carrito)
-        {
-            if (carrito == null || carrito.Count < 2 || carrito.Any(p => p == null))
-            {
-                return false;
-            }
-            return true;
-        }
-
     }
 }
 

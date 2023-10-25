@@ -9,6 +9,7 @@ namespace Servicios
     public class ManejadorUsuario : IManejadorUsuario
     {
         private readonly IRepositorioUsuario repositorioUsuario;
+        private readonly IServicioCompra servicioCompra;
         public ManejadorUsuario(IRepositorioUsuario repositorioUsuario)
         {
             this.repositorioUsuario = repositorioUsuario;
@@ -81,45 +82,15 @@ namespace Servicios
         {
             if (ValidarCompra(compra))
             {
-                int precio = PrecioTotal(compra.Productos);
-                string nombrePromo = "";
-                PromocionContext promocionContext = new();
-                List<IPromocionStrategy> promociones = new()
-                {
-                    new Promocion20Off(),
-                    new Promocion3x1(),
-                    new Promocion3x2(),
-                    new PromocionTotalLook()
-                };
-
-                foreach (IPromocionStrategy promo in promociones)
-                {
-                    promocionContext.PromocionStrategy = promo;
-                    int precioConDescuento = promocionContext.AplicarStrategy(compra.Productos);
-                    if (precioConDescuento < precio)
-                    {
-                        precio = precioConDescuento;
-                        nombrePromo = promo.NombrePromocion;
-                    }
-                }
-                compra.Precio = precio;
-                compra.NombrePromo = nombrePromo;
-
+                servicioCompra.DefinirMejorPrecio(compra.Productos);
+                compra.Precio = servicioCompra.PrecioFinal;
+                compra.NombrePromo = servicioCompra.NombrePromocion;
                 Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
                 usuarioObtenido.Compras.Add(compra);
                 repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
         }
-
-        private int PrecioTotal(List<Producto> listaProductos)
-        {
-            int precio = 0;
-            foreach (Producto p in listaProductos)
-            {
-                precio += p.Precio;
-            }
-            return precio;
-        }
+        
 
         private bool ValidarCompra(Compra compra)
         {
