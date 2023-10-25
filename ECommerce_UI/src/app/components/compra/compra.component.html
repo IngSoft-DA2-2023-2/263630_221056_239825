@@ -1,7 +1,12 @@
-<mat-card>
+<mat-card class="card-compra">
     <mat-card-title>{{compra?.Fecha}}</mat-card-title>
-    <mat-card-subtitle>{{compra?.NombrePromocion}}</mat-card-subtitle>
+    <mat-divider></mat-divider>
     <mat-card-content>
+        <mat-card-subtitle>{{compra?.NombrePromocion}}</mat-card-subtitle>
         <p>{{compra?.Precio}}</p>
+        <!-- <app-producto *ngFor="let producto of compra?.productos" [producto]="producto"></app-producto> -->
+        <div class="container-productos">
+            <app-producto *ngFor="let producto of compra?.Productos" [producto]="producto"></app-producto>
+        </div>
     </mat-card-content>
 </mat-card>

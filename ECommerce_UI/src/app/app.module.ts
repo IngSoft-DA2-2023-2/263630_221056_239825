@@ -22,7 +22,6 @@ import { CompraComponent } from './components/compra/compra.component';
   declarations: [
     AppComponent,
     PerfilComponent,
-    CompraComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +37,8 @@ import { CompraComponent } from './components/compra/compra.component';
     SignupComponent,
     TarjetaComponent,
     ProductoComponent,
-    ProductosComponent
+    ProductosComponent,
+    CompraComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
