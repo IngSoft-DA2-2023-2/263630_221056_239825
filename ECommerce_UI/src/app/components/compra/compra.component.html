@@ -3,8 +3,7 @@
     <mat-divider></mat-divider>
     <mat-card-content>
         <mat-card-subtitle>{{compra?.NombrePromocion}}</mat-card-subtitle>
-        <p>{{compra?.Precio}}</p>
-        <!-- <app-producto *ngFor="let producto of compra?.productos" [producto]="producto"></app-producto> -->
+        <p>Precio total: ${{compra?.Precio}}</p>
         <div class="container-productos">
             <app-producto *ngFor="let producto of compra?.Productos" [producto]="producto"></app-producto>
         </div>

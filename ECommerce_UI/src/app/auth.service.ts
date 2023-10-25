@@ -24,7 +24,7 @@ export class AuthService {
   response = 'a response';
 
   checkLocalStorage(): void {
-    if (localStorage.getItem('token') != null) {
+    if (sessionStorage.getItem('token') != null) {
       this.isLoggedIn = true;
     }
   }
@@ -42,10 +42,10 @@ export class AuthService {
       .subscribe(
         (response: any) => {
           var token: string = response.token;
-          localStorage.setItem('token', 'Bearer ' + token);
+          sessionStorage.setItem('token', 'Bearer ' + token);
           this.isLoggedIn = true;
           const usuario = this.createUser(response);
-          localStorage.setItem('usuario', JSON.stringify(usuario));
+          sessionStorage.setItem('usuario', JSON.stringify(usuario));
           this.router.navigate(['/']);
           return true;
         },
@@ -91,8 +91,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('usuario');
     this.isLoggedIn = false;
   }
 

@@ -57,7 +57,7 @@ export class PerfilComponent {
   };
 
   ngOnInit(): void {
-    this.usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    this.usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
     const compra1 : Compra = {
       Id: 1,
       Productos: [this.producto1, this.producto2, this.producto3],
