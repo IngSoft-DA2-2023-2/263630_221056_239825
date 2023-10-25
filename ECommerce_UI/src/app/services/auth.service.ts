@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
-  HttpParamsOptions,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Usuario } from './dominio/usuario.model';
+import { Usuario } from '../dominio/usuario.model';
 
 @Injectable({
   providedIn: 'root',
