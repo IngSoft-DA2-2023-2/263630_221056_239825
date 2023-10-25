@@ -22,9 +22,16 @@ public class RepositorioProducto : IRepositorioProducto
             query = query.Where(p => p.Nombre.Contains(filtro.Nombre));
         }
         
-        if (filtro.Precio is not null)
+        if (filtro.PrecioEspecifico is not null)
         {
-            query = query.Where(p => p.Precio == filtro.Precio);
+            if (filtro.RangoPrecio is not null)
+            {
+                query = query.Where(p => p.Precio >= filtro.PrecioEspecifico - filtro.RangoPrecio && p.Precio <= filtro.PrecioEspecifico + filtro.RangoPrecio);
+            }
+            else
+            {
+                query = query.Where(p => p.Precio == filtro.PrecioEspecifico);
+            }
         }
         
         if (filtro.MarcaId is not null)
@@ -37,10 +44,15 @@ public class RepositorioProducto : IRepositorioProducto
             query = query.Where(p => p.CategoriaId == filtro.CategoriaId);
         }
 
+        if (filtro.TienePromociones is not null)
+        {
+            query = query.Where(p => p.AplicaParaPromociones == filtro.TienePromociones);
+        }
+        
         return query
             .Include(p => p.Categoria)
             .Include(p => p.Marca)
-            .Include(p => p.Colores)
+            .Include(p => p.Color)
             .ToList();
     }
 
@@ -49,14 +61,13 @@ public class RepositorioProducto : IRepositorioProducto
         return Contexto.Set<Producto>()
             .Include(p => p.Categoria)
             .Include(p => p.Marca)
-            .Include(p => p.Colores)
+            .Include(p => p.Color)
             .FirstOrDefault(p => p.Id == id);
     }
     
     public void AgregarProducto(Producto productoAgregado)
     {
         Contexto.Entry(productoAgregado).State = EntityState.Added;
-        productoAgregado.Colores = ConseguirColores(productoAgregado.Colores);
     }
     
     public void EliminarProducto(Producto productoABorrar)
@@ -72,15 +83,5 @@ public class RepositorioProducto : IRepositorioProducto
     public void ModificarProducto(Producto productoNuevo)
     {
         Contexto.Set<Producto>().Update(productoNuevo);
-        productoNuevo.Colores = ConseguirColores(productoNuevo.Colores);
     }
-
-    private List<Color> ConseguirColores(List<Color> listaIds)
-    {
-        return listaIds
-            .Select(color => Contexto.Set<Color>().FirstOrDefault(c => c.Id == color.Id))
-            .Where(colorDB => colorDB is not null)
-            .ToList();
-    }
-
 }
