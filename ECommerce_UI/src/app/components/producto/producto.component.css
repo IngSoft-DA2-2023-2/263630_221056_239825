@@ -16,3 +16,9 @@
 .seMuestraBoton{
   display: block;
 }
+
+@media (max-width: 520px) {
+  .example-card {
+    min-width: 90vw;
+  }
+}
