@@ -6,6 +6,6 @@
         <app-compra *ngFor="let compra of compras" [compra]="compra"></app-compra>
     </div>
 </ng-container>
-<ng-container *ngIf="compras">
+<ng-container *ngIf="!compras">
     <h3>No has realizado ninguna compra aún</h3>
 </ng-container>
