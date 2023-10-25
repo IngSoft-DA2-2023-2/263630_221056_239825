@@ -16,9 +16,12 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProductoComponent } from './components/producto/producto.component';
 
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { CompraComponent } from './components/compra/compra.component';
 @NgModule({
   declarations: [
     AppComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
     SignupComponent,
     TarjetaComponent,
     ProductoComponent,
-    ProductosComponent
+    ProductosComponent,
+    CompraComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

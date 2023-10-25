@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
-  HttpParamsOptions,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Usuario } from '../dominio/usuario.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class AuthService {
   response = 'a response';
 
   checkLocalStorage(): void {
-    if (localStorage.getItem('token') != null) {
+    if (sessionStorage.getItem('token') != null) {
       this.isLoggedIn = true;
     }
   }
@@ -41,8 +41,10 @@ export class AuthService {
       .subscribe(
         (response: any) => {
           var token: string = response.token;
-          localStorage.setItem('token', 'Bearer ' + token);
+          sessionStorage.setItem('token', 'Bearer ' + token);
           this.isLoggedIn = true;
+          const usuario = this.createUser(response);
+          sessionStorage.setItem('usuario', JSON.stringify(usuario));
           this.router.navigate(['/']);
           return true;
         },
@@ -51,6 +53,16 @@ export class AuthService {
         }
       );
     return false;
+  }
+
+  createUser(response : any){
+    const usuario : Usuario = {
+      correoElectronico: response.correoElectronico,
+      direccionEntrega: response.direccionEntrega,
+      rol: response.rol,
+      compras: response.compras,
+    }
+    return usuario;
   }
 
   signup(mail: string, password: string, direccion: string): boolean {
@@ -78,7 +90,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('usuario');
     this.isLoggedIn = false;
   }
 

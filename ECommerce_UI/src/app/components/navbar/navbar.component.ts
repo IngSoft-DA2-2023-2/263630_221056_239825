@@ -3,7 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
