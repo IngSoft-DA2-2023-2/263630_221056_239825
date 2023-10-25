@@ -1,7 +1,7 @@
 .example-card {
   max-width: 400px;
   min-width: 250px;
-  margin: 30px;
+  margin: 20px 0;
   background-color:gainsboro;
 }
 
