@@ -1,16 +1,15 @@
 import { Component, Input } from '@angular/core';
-import {Producto} from '../../dominio/producto.model';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatDividerModule} from '@angular/material/divider';
-
+import { Producto } from '../../dominio/producto.model';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   standalone: true,
   selector: 'app-producto',
   templateUrl: './producto.component.html',
   styleUrls: ['./producto.component.css'],
-  imports: [MatButtonModule, MatCardModule, MatDividerModule]
+  imports: [MatButtonModule, MatCardModule, MatDividerModule],
 })
 export class ProductoComponent {
   @Input() producto: Producto = {
@@ -21,6 +20,7 @@ export class ProductoComponent {
     stock: 0,
     categoria: [],
     colores: [],
-    marca: []
+    marca: [],
   };
+  @Input() seMuestraBoton: boolean = true;
 }

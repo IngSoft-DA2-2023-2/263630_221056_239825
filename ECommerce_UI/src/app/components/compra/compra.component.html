@@ -5,7 +5,7 @@
         <mat-card-subtitle>{{compra?.NombrePromocion}}</mat-card-subtitle>
         <p>Precio total: ${{compra?.Precio}}</p>
         <div class="container-productos">
-            <app-producto *ngFor="let producto of compra?.Productos" [producto]="producto"></app-producto>
+            <app-producto *ngFor="let producto of compra?.Productos" [producto]="producto" [seMuestraBoton]="false"></app-producto>
         </div>
     </mat-card-content>
 </mat-card>

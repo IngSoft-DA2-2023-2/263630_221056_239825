@@ -5,7 +5,14 @@
   background-color:gainsboro;
 }
 
+.card-content {
+  padding: 16px;
+}
+
 .boton{
   background-color:lightblue;
 }
 
+.seMuestraBoton{
+  display: block;
+}
