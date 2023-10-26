@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import {
   FormControl,
   Validators,
-  FormsModule,
-  ReactiveFormsModule,
+  ReactiveFormsModule
 } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
@@ -14,25 +13,24 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  standalone: true,
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
     NgIf,
+    ReactiveFormsModule
   ],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  standalone: true,
 })
 export class LoginComponent {
   constructor(private auth: AuthService, private _snackBar: MatSnackBar) {}
   email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]); 
 
   getErrorMessage() {
     if (this.email.hasError('required')) {

@@ -24,12 +24,11 @@ import {
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
     NgIf, 
+    ReactiveFormsModule
   ],
 })
 export class SignupComponent {

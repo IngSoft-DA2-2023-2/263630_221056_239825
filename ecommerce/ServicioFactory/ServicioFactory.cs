@@ -21,6 +21,18 @@ namespace ServicioFactory
             serviceCollection.AddScoped<IManejadorUsuario, ManejadorUsuario>();
             serviceCollection.AddScoped<IServicioProducto, ServicioProducto>();
             serviceCollection.AddScoped<IServicioCompra, ServicioCompra>();
+
+            serviceCollection.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder
+                        //.WithOrigins("https://ecommerceui-a5663.web.app/")
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
         }
     }
 }
