@@ -11,108 +11,71 @@ namespace Pruebas.PruebasPromociones
     [TestClass]
     public class PruebasPromocionesTotalLook
     {
-        private IPromocionStrategy? promocionTotalLook;
-        private Producto? producto0;
-        private Producto? producto;
-        private Producto? productoVacio;
-        private Producto? producto2;
-        private Producto? producto3;
-        private List<Producto>? carrito;
+        private PromocionTotalLook _promocionTotalLook;
+        private Producto? productoColor1;
+        private Producto? productoColor2;
+        private Producto? productoColor3;
+        private Producto? productoNoAplica;
+        private List<Producto> carrito;
 
         [TestInitialize]
         public void InitTest()
         {
-            promocionTotalLook = new PromocionTotalLook();
-            Marca marca = new();
-            Categoria categoria = new();
-            Color rojo = new Color()
-            {
-                Id = 0,
-                Nombre = "Rojo"
-            };
-            Color azul = new Color()
-            {
-                Id = 1,
-                Nombre = "Azul"
-            };
-            Color verde = new Color()
-            {
-                Id = 2,
-                Nombre = "Verde"
-            };
-            List<Color> coloresProducto1 = new() { rojo };
-            List<Color> coloresProducto2 = new() { azul, rojo };
-            List<Color> coloresProducto3 = new() { azul, rojo, verde };
-            List<Color> coloresProducto0 = new List<Color>() { verde };
+            _promocionTotalLook = new PromocionTotalLook();
 
-            producto0 = new Producto("aaa", 22, "vvv", 1, 1, coloresProducto0) { Marca = marca, Categoria = categoria };
-            producto = new Producto("Camisa", 1000, "Larga", 1, 1, coloresProducto1) { Marca = marca, Categoria = categoria };
+            Marca marca1 = new();
             Marca marca2 = new();
+            Marca marca3 = new();
+            
+            Categoria categoria1 = new();
             Categoria categoria2 = new();
-            producto2 = new Producto("Botas", 2000, "Con taco", 2, 2, coloresProducto2) { Marca = marca2, Categoria = categoria2 };
-            producto3 = new Producto("Campera", 3500, "Impermeable", 1, 1, coloresProducto3) { Marca = marca, Categoria = categoria };
-            productoVacio = null;
-            carrito = new List<Producto> { producto, producto2, producto3 };
+            Categoria categoria3 = new();
+            
+            Color color2 = new();
+            
+            productoColor1 = new Producto("Blusa", 100, "Manga larga", 1, 1, 6, true, 1) { Marca = marca1, Categoria = categoria1, Color = color2};
+            productoColor2 = new Producto("Blusa", 200, "Manga larga", 2, 2, 6, true, 1) { Marca = marca2, Categoria = categoria2, Color = color2};
+            productoColor3 = new Producto("Blusa", 300, "Manga larga", 3, 3, 6, true, 1) { Marca = marca3, Categoria = categoria3, Color = color2};
+            productoNoAplica = new Producto("Blusa", 400, "Manga larga", 3, 3, 6, false, 1) { Marca = marca3, Categoria = categoria3, Color = color2};
         }
 
         [TestMethod]
-        public void AplicarPromocionOk()
+        public void AplicarPromocionTotalLookExitosa()
         {
+            //Arrange
+            carrito = new List<Producto> {productoColor1, productoColor2, productoColor3};
+
             //Act
-            int costoTotal = promocionTotalLook!.AplicarPromocion(carrito!);
+            int costoTotal = _promocionTotalLook.AplicarPromocion(1, carrito);
+            
             // Assert
-            Assert.AreEqual(4750, costoTotal);
+            Assert.AreEqual(450, costoTotal);
         }
-
+        
         [TestMethod]
-        public void AplicaPromoOk()
+        public void AplicarPromocionTotalLookPocosItems()
         {
+            //Arrange
+            carrito = new List<Producto> {productoColor1};
+
             //Act
-            bool aplica = promocionTotalLook!.AplicarPromo(carrito!);
-            //Assert
-            Assert.AreEqual(true, aplica);
+            int costoTotal = _promocionTotalLook.AplicarPromocion(1, carrito);
+            
+            // Assert
+            Assert.AreEqual(9999999, costoTotal);
         }
-
+        
         [TestMethod]
-        public void AplicarPromocionError()
+        public void AplicarPromocionTotalLookNoAplica()
         {
-            //Act
-            carrito!.Remove(producto2!);
-            Marca marca = new();
-            Categoria categoria = new();
-            List<Color> colorNuevo = new();
-            Producto? productoDistintaCat = new("Cartera", 5000, "Bandolera", 1, 1, colorNuevo) { Marca = marca, Categoria = categoria };
-            carrito!.Add(productoDistintaCat);
-            int costoTotal = promocionTotalLook!.AplicarPromocion(carrito!);
-        }
+            //Arrange
+            carrito = new List<Producto> {productoColor1, productoNoAplica, productoNoAplica};
 
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void AplicarPromocionErrorNulo()
-        {
             //Act
-            carrito!.Remove(producto2!);
-            carrito!.Add(productoVacio!);
-            int costoTotal = promocionTotalLook!.AplicarPromocion(carrito!);
-        }
-
-        [TestMethod]
-        public void AplicaPromoErrorNulo()
-        {
-            //Act
-            carrito!.Remove(producto2!);
-            carrito.Remove(productoVacio!);
-            bool aplica = promocionTotalLook!.AplicarPromo(carrito);
-        }
-
-        [TestMethod]
-        public void AplicaPromoError()
-        {
-            //Act
-            carrito!.Remove(producto2!);
-            bool aplica = promocionTotalLook!.AplicarPromo(carrito);
-            //Assert
-            Assert.AreEqual(false, aplica);
+            int costoTotal = _promocionTotalLook.AplicarPromocion(1, carrito);
+            
+            // Assert
+            Assert.AreEqual(100, costoTotal);
         }
     }
 }

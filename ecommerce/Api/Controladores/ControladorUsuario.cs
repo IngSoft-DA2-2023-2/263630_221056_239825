@@ -100,7 +100,10 @@ namespace Api.Controladores
             foreach (int id in compraCrear.idProductos)
             {
                 Producto producto = _manejadorProducto.EncontrarPorId(id);
-                resultado.Add(producto);
+                if (producto.Stock > 0)
+                {
+                    resultado.Add(producto);
+                }
             }
             return resultado;
         }

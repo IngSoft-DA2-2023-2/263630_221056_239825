@@ -13,7 +13,7 @@ public class ProductoModelo
     
     public CategoriaModelo Categoria { get; set; }
     
-    public List<ColorModelo> Colores { get; set; }
+    public ColorModelo Color { get; set; }
 
     public ProductoModelo(Producto producto)
     {
@@ -23,7 +23,7 @@ public class ProductoModelo
         Descripcion = producto.Descripcion;
         Marca = new MarcaModelo(producto.Marca);
         Categoria = new CategoriaModelo(producto.Categoria);
-        Colores = producto.Colores.Select(c => new ColorModelo(c)).ToList();
+        Color = new ColorModelo(producto.Color);
     }
 
 }
