@@ -14,12 +14,6 @@ builder.Services.AddScoped<JwtAuthorizationFilter>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//services cors
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
-{
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
-
 ServiciosFactory servicesFactory = new ServiciosFactory();
 servicesFactory.RegistrateServices(builder.Services);
 
@@ -50,7 +44,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors("corsapp");
+app.UseCors();
 
 app.UseAuthentication();
 

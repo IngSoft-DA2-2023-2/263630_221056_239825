@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ecommerceui-a5663": {
+      "hosting": {
+        "ECommerce_UI": [
+          "ecommerceui-a5663"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ecommerceui-a5663"
+  }
+}

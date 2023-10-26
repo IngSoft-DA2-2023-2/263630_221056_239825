@@ -11,9 +11,9 @@ import { Usuario } from '../dominio/usuario.model';
 })
 export class AuthService {
   private isLoggedIn: boolean;
-  private urlAuthentication: string =
-    'https://localhost:7061/api/v1/authentication';
-  private urlUsuario: string = 'https://localhost:7061/api/v1/usuarios';
+  private urlAuthentication: string = 'https://9637-167-57-190-8.ngrok-free.app/api/v1/authentication';
+  private urlUsuario: string = 'https://9637-167-57-190-8.ngrok-free.app/api/v1/usuarios';
+  private urlProducto: string = 'https://9637-167-57-190-8.ngrok-free.app/api/v1/productos';
 
   constructor(private http: HttpClient, private router: Router) {
     this.isLoggedIn = false;
@@ -49,9 +49,11 @@ export class AuthService {
           return true;
         },
         (error) => {
+          alert(error.message);
           return false;
         }
       );
+      
     return false;
   }
 
