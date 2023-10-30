@@ -22,21 +22,6 @@ namespace DataAccess.Migrations.ECommerceTesting
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ColorProducto", b =>
-                {
-                    b.Property<int>("ColoresId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ColoresId", "ProductosId");
-
-                    b.HasIndex("ProductosId");
-
-                    b.ToTable("ColorProducto");
-                });
-
             modelBuilder.Entity("CompraProducto", b =>
                 {
                     b.Property<int>("ComprasId")
@@ -139,7 +124,13 @@ namespace DataAccess.Migrations.ECommerceTesting
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("AplicaParaPromociones")
+                        .HasColumnType("bit");
+
                     b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
@@ -156,9 +147,14 @@ namespace DataAccess.Migrations.ECommerceTesting
                     b.Property<int>("Precio")
                         .HasColumnType("int");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
+
+                    b.HasIndex("ColorId");
 
                     b.HasIndex("MarcaId");
 
@@ -193,21 +189,6 @@ namespace DataAccess.Migrations.ECommerceTesting
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("ColorProducto", b =>
-                {
-                    b.HasOne("Dominio.Color", null)
-                        .WithMany()
-                        .HasForeignKey("ColoresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Producto", null)
-                        .WithMany()
-                        .HasForeignKey("ProductosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CompraProducto", b =>
                 {
                     b.HasOne("Dominio.Compra", null)
@@ -240,6 +221,12 @@ namespace DataAccess.Migrations.ECommerceTesting
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Dominio.Color", "Color")
+                        .WithMany("Productos")
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Dominio.Marca", "Marca")
                         .WithMany("Productos")
                         .HasForeignKey("MarcaId")
@@ -248,10 +235,17 @@ namespace DataAccess.Migrations.ECommerceTesting
 
                     b.Navigation("Categoria");
 
+                    b.Navigation("Color");
+
                     b.Navigation("Marca");
                 });
 
             modelBuilder.Entity("Dominio.Categoria", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Dominio.Color", b =>
                 {
                     b.Navigation("Productos");
                 });

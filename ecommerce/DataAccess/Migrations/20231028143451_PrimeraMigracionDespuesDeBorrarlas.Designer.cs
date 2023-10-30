@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20231005054438_ArregloVinculoProductoCompra")]
-    partial class ArregloVinculoProductoCompra
+    [Migration("20231028143451_PrimeraMigracionDespuesDeBorrarlas")]
+    partial class PrimeraMigracionDespuesDeBorrarlas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ColorProducto", b =>
-                {
-                    b.Property<int>("ColoresId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductosId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ColoresId", "ProductosId");
-
-                    b.HasIndex("ProductosId");
-
-                    b.ToTable("ColorProducto");
-                });
 
             modelBuilder.Entity("CompraProducto", b =>
                 {
@@ -141,7 +126,13 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("AplicaParaPromociones")
+                        .HasColumnType("bit");
+
                     b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
@@ -158,9 +149,14 @@ namespace DataAccess.Migrations
                     b.Property<int>("Precio")
                         .HasColumnType("int");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
+
+                    b.HasIndex("ColorId");
 
                     b.HasIndex("MarcaId");
 
@@ -195,21 +191,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("ColorProducto", b =>
-                {
-                    b.HasOne("Dominio.Color", null)
-                        .WithMany()
-                        .HasForeignKey("ColoresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Producto", null)
-                        .WithMany()
-                        .HasForeignKey("ProductosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CompraProducto", b =>
                 {
                     b.HasOne("Dominio.Compra", null)
@@ -242,6 +223,12 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Dominio.Color", "Color")
+                        .WithMany("Productos")
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Dominio.Marca", "Marca")
                         .WithMany("Productos")
                         .HasForeignKey("MarcaId")
@@ -250,10 +237,17 @@ namespace DataAccess.Migrations
 
                     b.Navigation("Categoria");
 
+                    b.Navigation("Color");
+
                     b.Navigation("Marca");
                 });
 
             modelBuilder.Entity("Dominio.Categoria", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Dominio.Color", b =>
                 {
                     b.Navigation("Productos");
                 });
