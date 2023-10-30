@@ -60,7 +60,7 @@ export class ProductsService {
       'placeHolderValue'
     );
     this.http
-      .get<Producto[]>(this.url + '/' + id, {headers})
+      .get<Producto[]>(this.url + '/' + id, { headers })
       .subscribe((response: any) => {
         return this.createSingleProduct(response);
       });
@@ -76,6 +76,8 @@ export class ProductsService {
   }
 
   deleteProduct(id: number): void {
-    throw new ErrorEvent('Not implemented');
+    const token = sessionStorage.getItem('token')!;
+    const headers: HttpHeaders = new HttpHeaders().set('Authorization', token);
+    this.http.delete(this.url+'/'+id, {headers})
   }
 }
