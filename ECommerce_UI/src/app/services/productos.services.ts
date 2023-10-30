@@ -1,32 +1,81 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Producto } from '../dominio/producto.model';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { ProductoModelo } from '../dominio/productoModelo.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-    url:string = 'https://localhost:7061/api/v1/productos';
+  private urlGeneral: string =
+    'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+  private url: string = this.urlGeneral + '/productos';
+  private _productosBehavior: BehaviorSubject<Producto[] | undefined>;
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this._productosBehavior = new BehaviorSubject<Producto[] | undefined>(
+      undefined
+    );
+  }
 
-    getProducts() : Producto[] {
-        throw new ErrorEvent("Not implemented");
-    }
+  public get characters$(): Observable<Producto[] | undefined> {
+    return this._productosBehavior.asObservable();
+  }
 
-    getProduct(id: number) : Producto {
-        throw new ErrorEvent("Not implemented");
-    }
+  getProducts(): Producto[] {
+    let productos: Producto[] = [];
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'ngrok-skip-browser-warning',
+      'placeHolderValue'
+    );
+    this.http
+      .get<Producto[]>(this.url, { headers })
+      .subscribe((response: any) => {
+        response.forEach((element: ProductoModelo) => {
+          productos.push(this.createSingleProduct(element));
+        });
+        productos = response;
+      });
+    return productos;
+  }
 
-    createProduct(producto: Producto) : Producto {
-        throw new ErrorEvent("Not implemented");
-    }
+  private createSingleProduct(element: ProductoModelo): Producto {
+    let producto: Producto = {
+      id: element.id,
+      descripcion: element.descripcion,
+      precio: element.precio,
+      stock: element.stock,
+      nombre: element.nombre,
+      marca: element.marca.nombre,
+      categoria: element.categoria.nombre,
+      colores: element.color.nombre,
+    };
+    return producto;
+  }
 
-    updateProduct(producto: Producto) : Producto {
-        throw new ErrorEvent("Not implemented");
-    }
+  getProduct(id: number): Producto | null {
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'ngrok-skip-browser-warning',
+      'placeHolderValue'
+    );
+    this.http
+      .get<Producto[]>(this.url + '/' + id, {headers})
+      .subscribe((response: any) => {
+        return this.createSingleProduct(response);
+      });
+    return null;
+  }
 
-    deleteProduct(id: number) : void {
-        throw new ErrorEvent("Not implemented");
-    }
+  createProduct(producto: Producto): Producto {
+    throw new ErrorEvent('Not implemented');
+  }
+
+  updateProduct(producto: Producto): Producto {
+    throw new ErrorEvent('Not implemented');
+  }
+
+  deleteProduct(id: number): void {
+    throw new ErrorEvent('Not implemented');
+  }
 }

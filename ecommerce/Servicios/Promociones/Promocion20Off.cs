@@ -23,6 +23,12 @@ namespace Servicios.Promociones
         {
             int precioTotal = 0;
             List<Producto> listaPorPrecio = listaCompra.OrderBy(p => p.Precio).ToList();
+
+            listaPorPrecio = ExcluirProductosNoHabilitados(listaPorPrecio);
+            if (listaPorPrecio.Count == 0)
+            {
+                return 9999999;
+            }
             Producto productoMasCaro = listaPorPrecio.Last();
             int precioReducido = (80 * productoMasCaro.Precio) / 100;
             listaPorPrecio.Remove(productoMasCaro);
@@ -33,6 +39,19 @@ namespace Servicios.Promociones
 
             precioTotal += precioReducido;
             return precioTotal;
+        }
+        
+        private List<Producto> ExcluirProductosNoHabilitados(List<Producto> listaProcesada)
+        {
+            List<Producto> listaFinal = new List<Producto>();
+            foreach (Producto productoEnLista in listaProcesada)
+            {
+                if (productoEnLista.AplicaParaPromociones)
+                {
+                    listaFinal.Add(productoEnLista);
+                }
+            }
+            return listaFinal;
         }
     }
 }

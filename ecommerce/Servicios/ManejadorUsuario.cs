@@ -102,9 +102,7 @@ namespace Servicios
         {
             if (ValidarCompra(compra))
             {
-                servicioCompra.DefinirMejorPrecio(compra.Productos);
-                compra.Precio = servicioCompra.PrecioFinal;
-                compra.NombrePromo = servicioCompra.NombrePromocion;
+                servicioCompra.DefinirMejorPrecio(compra);
                 Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
                 usuarioObtenido.Compras.Add(compra);
                 repositorioUsuario.ActualizarUsuario(usuarioObtenido);

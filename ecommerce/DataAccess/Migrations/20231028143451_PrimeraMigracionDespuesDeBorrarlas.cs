@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace DataAccess.Migrations
 {
-    public partial class AfterErrorMigration : Migration
+    public partial class PrimeraMigracionDespuesDeBorrarlas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,24 +65,6 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Compras",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Compras", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Compras_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
@@ -91,8 +74,10 @@ namespace DataAccess.Migrations
                     Precio = table.Column<int>(type: "int", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MarcaId = table.Column<int>(type: "int", nullable: false),
+                    ColorId = table.Column<int>(type: "int", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
-                    CompraId = table.Column<int>(type: "int", nullable: true)
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    AplicaParaPromociones = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,10 +89,11 @@ namespace DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Productos_Compras_CompraId",
-                        column: x => x.CompraId,
-                        principalTable: "Compras",
-                        principalColumn: "Id");
+                        name: "FK_Productos_Colores_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "Colores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Productos_Marcas_MarcaId",
                         column: x => x.MarcaId,
@@ -117,23 +103,45 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ColorProducto",
+                name: "Compras",
                 columns: table => new
                 {
-                    ColoresId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Precio = table.Column<int>(type: "int", nullable: false),
+                    NombrePromo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Compras", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Compras_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CompraProducto",
+                columns: table => new
+                {
+                    ComprasId = table.Column<int>(type: "int", nullable: false),
                     ProductosId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ColorProducto", x => new { x.ColoresId, x.ProductosId });
+                    table.PrimaryKey("PK_CompraProducto", x => new { x.ComprasId, x.ProductosId });
                     table.ForeignKey(
-                        name: "FK_ColorProducto_Colores_ColoresId",
-                        column: x => x.ColoresId,
-                        principalTable: "Colores",
+                        name: "FK_CompraProducto_Compras_ComprasId",
+                        column: x => x.ComprasId,
+                        principalTable: "Compras",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ColorProducto_Productos_ProductosId",
+                        name: "FK_CompraProducto_Productos_ProductosId",
                         column: x => x.ProductosId,
                         principalTable: "Productos",
                         principalColumn: "Id",
@@ -141,8 +149,8 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ColorProducto_ProductosId",
-                table: "ColorProducto",
+                name: "IX_CompraProducto_ProductosId",
+                table: "CompraProducto",
                 column: "ProductosId");
 
             migrationBuilder.CreateIndex(
@@ -156,9 +164,9 @@ namespace DataAccess.Migrations
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Productos_CompraId",
+                name: "IX_Productos_ColorId",
                 table: "Productos",
-                column: "CompraId");
+                column: "ColorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_MarcaId",
@@ -169,25 +177,25 @@ namespace DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ColorProducto");
-
-            migrationBuilder.DropTable(
-                name: "Colores");
-
-            migrationBuilder.DropTable(
-                name: "Productos");
-
-            migrationBuilder.DropTable(
-                name: "Categorias");
+                name: "CompraProducto");
 
             migrationBuilder.DropTable(
                 name: "Compras");
 
             migrationBuilder.DropTable(
-                name: "Marcas");
+                name: "Productos");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "Categorias");
+
+            migrationBuilder.DropTable(
+                name: "Colores");
+
+            migrationBuilder.DropTable(
+                name: "Marcas");
         }
     }
 }

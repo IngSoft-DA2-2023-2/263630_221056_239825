@@ -8,6 +8,7 @@ public class ProductoModelo
     public string Nombre { get; set; }
     public int Precio { get; set; }
     public string Descripcion { get; set; }
+    public int Stock { get; set; }
 
     public MarcaModelo Marca { get; set; }
     
@@ -21,6 +22,7 @@ public class ProductoModelo
         Nombre = producto.Nombre;
         Precio = producto.Precio;
         Descripcion = producto.Descripcion;
+        Stock = producto.Stock;
         Marca = new MarcaModelo(producto.Marca);
         Categoria = new CategoriaModelo(producto.Categoria);
         Color = new ColorModelo(producto.Color);

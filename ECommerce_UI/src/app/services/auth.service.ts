@@ -11,9 +11,10 @@ import { Usuario } from '../dominio/usuario.model';
 })
 export class AuthService {
   private isLoggedIn: boolean;
-  private urlAuthentication: string = 'https://9637-167-57-190-8.ngrok-free.app/api/v1/authentication';
-  private urlUsuario: string = 'https://9637-167-57-190-8.ngrok-free.app/api/v1/usuarios';
-  private urlProducto: string = 'https://9637-167-57-190-8.ngrok-free.app/api/v1/productos';
+  private urlGeneral : string = 'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+  private urlAuthentication: string = this.urlGeneral + '/authentication';
+  private urlUsuario: string = this.urlGeneral + '/usuarios';
+  private urlProducto: string = this.urlGeneral + '/productos';
 
   constructor(private http: HttpClient, private router: Router) {
     this.isLoggedIn = false;

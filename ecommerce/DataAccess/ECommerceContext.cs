@@ -7,7 +7,13 @@ namespace DataAccess
 {
     public class ECommerceContext: DbContext
     {
-        public ECommerceContext() : base() { }
+        public ECommerceContext(DbContextOptions<ECommerceContext> optionsBuilderOptions) : base(optionsBuilderOptions)
+        {
+        }
+
+        public ECommerceContext() 
+        {
+        }
 
         public virtual DbSet<Producto> Productos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
@@ -16,6 +22,7 @@ namespace DataAccess
         public virtual DbSet<Color> Colores { get; set; }
         public virtual DbSet<Compra> Compras { get; set; }
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }
