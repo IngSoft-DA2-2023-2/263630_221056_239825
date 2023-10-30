@@ -18,9 +18,9 @@ export class ProductoComponent {
     descripcion: '',
     precio: 0,
     stock: 0,
-    categoria: [],
-    colores: [],
-    marca: [],
+    categoria: '',
+    colores: '',
+    marca: '',
   };
   @Input() seMuestraBoton: boolean = true;
 }
