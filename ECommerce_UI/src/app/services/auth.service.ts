@@ -11,7 +11,7 @@ import { Usuario } from '../dominio/usuario.model';
 })
 export class AuthService {
   private isLoggedIn: boolean;
-  private urlGeneral : string = 'https://9637-167-57-190-8.ngrok-free.app/api/v1';
+  private urlGeneral : string = 'https://merely-loved-gibbon.ngrok-free.app/api/v1';
   private urlAuthentication: string = this.urlGeneral + '/authentication';
   private urlUsuario: string = this.urlGeneral + '/usuarios';
   private urlProducto: string = this.urlGeneral + '/productos';

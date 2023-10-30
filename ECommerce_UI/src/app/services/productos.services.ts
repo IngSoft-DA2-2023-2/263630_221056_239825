@@ -8,7 +8,8 @@ import { ProductoModelo } from '../dominio/productoModelo.model';
   providedIn: 'root',
 })
 export class ProductsService {
-  private urlGeneral: string = 'https://localhost:7061/api/v1';
+  private urlGeneral: string =
+    'https://merely-loved-gibbon.ngrok-free.app/api/v1';
   private url: string = this.urlGeneral + '/productos';
   private _productosBehavior: BehaviorSubject<Producto[] | undefined>;
 
@@ -24,33 +25,46 @@ export class ProductsService {
 
   getProducts(): Producto[] {
     let productos: Producto[] = [];
-    this.http.get<Producto[]>(this.url).subscribe((response: any) => {
-      response.forEach((element: ProductoModelo) => {
-        productos.push(this.createSingleProduct(element));
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'ngrok-skip-browser-warning',
+      'placeHolderValue'
+    );
+    this.http
+      .get<Producto[]>(this.url, { headers })
+      .subscribe((response: any) => {
+        response.forEach((element: ProductoModelo) => {
+          productos.push(this.createSingleProduct(element));
+        });
+        productos = response;
       });
-      productos = response;
-      console.log(response);
-    });
-
     return productos;
   }
 
-  createSingleProduct(element : ProductoModelo) : Producto {
-    let producto : Producto = {
-        id: element.id,
-        descripcion: element.descripcion,
-        precio: element.precio,
-        stock: element.stock,
-        nombre: element.nombre,
-        marca: element.marca.nombre,
-        categoria: element.categoria.nombre,
-        colores: element.color.nombre
-    }
+  private createSingleProduct(element: ProductoModelo): Producto {
+    let producto: Producto = {
+      id: element.id,
+      descripcion: element.descripcion,
+      precio: element.precio,
+      stock: element.stock,
+      nombre: element.nombre,
+      marca: element.marca.nombre,
+      categoria: element.categoria.nombre,
+      colores: element.color.nombre,
+    };
     return producto;
   }
 
-  getProduct(id: number): Producto {
-    throw new ErrorEvent('Not implemented');
+  getProduct(id: number): Producto | null {
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'ngrok-skip-browser-warning',
+      'placeHolderValue'
+    );
+    this.http
+      .get<Producto[]>(this.url + '/' + id, {headers})
+      .subscribe((response: any) => {
+        return this.createSingleProduct(response);
+      });
+    return null;
   }
 
   createProduct(producto: Producto): Producto {
