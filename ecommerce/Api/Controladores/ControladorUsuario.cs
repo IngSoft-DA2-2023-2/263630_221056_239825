@@ -88,6 +88,7 @@ namespace Api.Controladores
             {
                 UsuarioId = id,
                 Productos = crearListaProductos(compraCrearModelo),
+                MetodoDePago = Enum.Parse<MetodoDePago>(compraCrearModelo.MetodoDePago)
             };
 
             _manejadorUsuario.AgregarCompraAlUsuario(id, compra);
@@ -103,6 +104,7 @@ namespace Api.Controladores
                 if (producto.Stock > 0)
                 {
                     resultado.Add(producto);
+                    producto.Stock--;
                 }
             }
             return resultado;
