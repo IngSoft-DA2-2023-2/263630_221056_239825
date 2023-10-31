@@ -14,7 +14,6 @@ export class AuthService {
   private urlGeneral : string = 'https://merely-loved-gibbon.ngrok-free.app/api/v1';
   private urlAuthentication: string = this.urlGeneral + '/authentication';
   private urlUsuario: string = this.urlGeneral + '/usuarios';
-  private urlProducto: string = this.urlGeneral + '/productos';
 
   constructor(private http: HttpClient, private router: Router) {
     this.isLoggedIn = false;
@@ -42,7 +41,9 @@ export class AuthService {
       .subscribe(
         (response: any) => {
           var token: string = response.token;
+          var id : string = response.id;
           sessionStorage.setItem('token', 'Bearer ' + token);
+          sessionStorage.setItem('idUsuario', id);
           this.isLoggedIn = true;
           const usuario = this.createUser(response);
           sessionStorage.setItem('usuario', JSON.stringify(usuario));
