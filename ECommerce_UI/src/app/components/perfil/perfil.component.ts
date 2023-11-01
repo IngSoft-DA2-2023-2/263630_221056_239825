@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Compra } from 'src/app/dominio/compra.model';
 import { Producto } from 'src/app/dominio/producto.model';
 import { Usuario } from 'src/app/dominio/usuario.model';
+import { TokenUserService } from 'src/app/services/token-user.service';
 
 @Component({
   selector: 'app-perfil',
@@ -9,6 +10,8 @@ import { Usuario } from 'src/app/dominio/usuario.model';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent {
+  constructor(private compraService : TokenUserService){}
+
   @Input() usuario?: Usuario; 
   compras?: Compra[];
 
@@ -58,21 +61,24 @@ export class PerfilComponent {
 
   ngOnInit(): void {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+    let listaDeCompras : Compra[] = this.compraService.getCompraDelUsuario()
     const compra1 : Compra = {
       Id: 1,
       Productos: [this.producto1, this.producto2, this.producto3],
-      Fecha: new Date(),
+      FechaCompra: new Date(),
       Precio: 100,
-      NombrePromocion: 'Promo 1',
+      NombrePromo: 'Promo 1',
+      UsuarioId: 1
     };
     const compra2 : Compra = {
       Id: 2,
-      Productos: [],
-      Fecha: new Date(),
+      Productos: [this.producto3],
+      FechaCompra: new Date(),
       Precio: 200,
-      NombrePromocion: '',
+      NombrePromo: '',
+      UsuarioId: 1
     };
-    const listaDeCompras : Compra[] = [compra1, compra2];
+    // listaDeCompras = [compra1, compra2];
     this.compras = listaDeCompras;
   }
 }
