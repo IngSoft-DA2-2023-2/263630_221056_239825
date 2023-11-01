@@ -16,8 +16,9 @@ export class CompraService {
     const token: string = sessionStorage.getItem('token')!;
     const newUrl: string = this.urlGeneral + this.url + '/' + id + '/compras';
     const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'placeHolderValue',
+      Authorization: token,
       'Content-Type': 'application/json',
-      'Authorization': token,
     });
     this.http.get(newUrl, {headers}).subscribe((response : any)=> {
       console.log(response);
@@ -29,6 +30,7 @@ export class CompraService {
     const token: string = sessionStorage.getItem('token')!;
     const newUrl: string = this.urlGeneral + this.url + '/' + id + '/compras';
     const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       'Authorization': token,
     });

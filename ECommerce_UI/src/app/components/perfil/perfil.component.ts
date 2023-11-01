@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CompraService } from 'src/app/services/compra.service';
 import { Compra } from 'src/app/dominio/compra.model';
 import { Producto } from 'src/app/dominio/producto.model';
 import { Usuario } from 'src/app/dominio/usuario.model';
@@ -9,6 +10,8 @@ import { Usuario } from 'src/app/dominio/usuario.model';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent {
+  constructor(private compraService : CompraService){}
+
   @Input() usuario?: Usuario; 
   compras?: Compra[];
 
@@ -58,6 +61,7 @@ export class PerfilComponent {
 
   ngOnInit(): void {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+    this.compraService.getCompraDelUsuario()
     const compra1 : Compra = {
       Id: 1,
       Productos: [this.producto1, this.producto2, this.producto3],
