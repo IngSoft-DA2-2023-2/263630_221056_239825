@@ -61,22 +61,24 @@ export class PerfilComponent {
 
   ngOnInit(): void {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
-    this.compraService.getCompraDelUsuario()
+    let listaDeCompras : Compra[] = this.compraService.getCompraDelUsuario()
     const compra1 : Compra = {
       Id: 1,
       Productos: [this.producto1, this.producto2, this.producto3],
-      Fecha: new Date(),
+      FechaCompra: new Date(),
       Precio: 100,
-      NombrePromocion: 'Promo 1',
+      NombrePromo: 'Promo 1',
+      UsuarioId: 1
     };
     const compra2 : Compra = {
       Id: 2,
-      Productos: [],
-      Fecha: new Date(),
+      Productos: [this.producto3],
+      FechaCompra: new Date(),
       Precio: 200,
-      NombrePromocion: '',
+      NombrePromo: '',
+      UsuarioId: 1
     };
-    const listaDeCompras : Compra[] = [compra1, compra2];
+    // listaDeCompras = [compra1, compra2];
     this.compras = listaDeCompras;
   }
 }

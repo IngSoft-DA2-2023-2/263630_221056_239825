@@ -1,8 +1,8 @@
 <mat-card class="card-compra">
-    <mat-card-title>{{compra?.Fecha}}</mat-card-title>
+    <mat-card-title>{{compra?.FechaCompra}}</mat-card-title>
     <mat-divider></mat-divider>
     <mat-card-content>
-        <mat-card-subtitle>{{compra?.NombrePromocion}}</mat-card-subtitle>
+        <mat-card-subtitle>{{compra?.NombrePromo}}</mat-card-subtitle>
         <p>Precio total: ${{compra?.Precio}}</p>
         <div class="container-productos">
             <app-producto *ngFor="let producto of compra?.Productos" [producto]="producto" [seMuestraBoton]="false"></app-producto>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { compraCreateModelo } from '../dominio/compraCreateModelo.model';
+import { Compra } from '../dominio/compra.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class CompraService {
   private url: string = '/usuarios';
   constructor(private http: HttpClient) {}
 
-  getCompraDelUsuario() : void {
+  getCompraDelUsuario() : Compra[] {
     const id: string = sessionStorage.getItem('idUsuario')!;
     const token: string = sessionStorage.getItem('token')!;
     const newUrl: string = this.urlGeneral + this.url + '/' + id + '/compras';
@@ -20,9 +21,11 @@ export class CompraService {
       Authorization: token,
       'Content-Type': 'application/json',
     });
+    let compras : Compra[] = []
     this.http.get(newUrl, {headers}).subscribe((response : any)=> {
-      console.log(response);
+      compras = response
     })
+    return compras;
   }
 
   postCompraDelUsuario(compraPorHacer : compraCreateModelo) : void {
