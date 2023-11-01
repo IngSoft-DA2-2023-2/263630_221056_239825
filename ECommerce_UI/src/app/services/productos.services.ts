@@ -66,18 +66,4 @@ export class ProductsService {
       });
     return null;
   }
-
-  createProduct(producto: Producto): Producto {
-    throw new ErrorEvent('Not implemented');
-  }
-
-  updateProduct(producto: Producto): Producto {
-    throw new ErrorEvent('Not implemented');
-  }
-
-  deleteProduct(id: number): void {
-    const token = sessionStorage.getItem('token')!;
-    const headers: HttpHeaders = new HttpHeaders().set('Authorization', token);
-    this.http.delete(this.url+'/'+id, {headers})
-  }
 }
