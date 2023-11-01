@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { CompraService } from 'src/app/services/compra.service';
 import { Compra } from 'src/app/dominio/compra.model';
 import { Producto } from 'src/app/dominio/producto.model';
 import { Usuario } from 'src/app/dominio/usuario.model';
+import { TokenUserService } from 'src/app/services/token-user.service';
 
 @Component({
   selector: 'app-perfil',
@@ -10,7 +10,7 @@ import { Usuario } from 'src/app/dominio/usuario.model';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent {
-  constructor(private compraService : CompraService){}
+  constructor(private compraService : TokenUserService){}
 
   @Input() usuario?: Usuario; 
   compras?: Compra[];
