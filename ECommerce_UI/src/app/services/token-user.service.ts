@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Compra } from '../dominio/compra.model';
 import { compraCreateModelo } from '../dominio/compraCreateModelo.model';
+import { Usuario } from '../dominio/usuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +43,11 @@ export class TokenUserService {
     })
   }
 
+  putUsuario(usuario : Usuario){
+    throw new ErrorEvent("No implementado")
+  }
+
+  deleteUsuario(id : Usuario){
+    throw new ErrorEvent("No implementado")
+  }
 }
