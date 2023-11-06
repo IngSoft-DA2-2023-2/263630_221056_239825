@@ -70,7 +70,7 @@ export class AdminService {
       Authorization: token,
     });
     this.http
-      .get<Usuario>(this.urlUsuarios, { headers })
+      .get<Usuario>(this.urlUsuarios+'/'+id, { headers })
       .subscribe((response: any) => {
         const usuario: Usuario = this.crearUsuario(response);
         return usuario;
