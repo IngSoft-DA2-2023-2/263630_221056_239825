@@ -17,16 +17,16 @@ export class ProductosComponent {
   constructor(private productsServices : ProductsService){ }
   protected ArrayProductos: Producto[] = [];
   
-  // private producto1: Producto = {
-  //   id: 1,
-  //   nombre: 'Cafe',
-  //   descripcion: 'Molido',
-  //   precio: 500,
-  //   stock: 20,
-  //   categoria: ['Bebida'],
-  //   marca: ["Nescafe"],
-  //   colores: ["Negro"]
-  // };
+  private producto1: Producto = {
+     id: 1,
+     nombre: 'Cafe',
+     descripcion: 'Molido',
+     precio: 500,
+     stock: 20,
+     marca: "Nescafe",
+     categoria: 'Bebida',
+     colores: "Negro"
+  };
 
   // private producto2: Producto = {
   //   id: 3,
@@ -62,6 +62,17 @@ export class ProductosComponent {
   // };
 
   ngOnInit(){
-    this.ArrayProductos = this.productsServices.getProducts();
+    // this.ArrayProductos = this.productsServices.getProducts();
+    this.ArrayProductos.push(this.producto1);
   }
 }
+
+// addToCart(producto: Producto): void {
+//   if (producto.stock > 0) {
+//     // Agrega la lógica para agregar al carrito aquí
+//     console.log(`Agregado al carrito: ${producto.nombre}`);
+//     producto.stock--;
+//   } else {
+//     console.log('No hay suficiente stock disponible para ' + producto.nombre);
+//   }
+// }

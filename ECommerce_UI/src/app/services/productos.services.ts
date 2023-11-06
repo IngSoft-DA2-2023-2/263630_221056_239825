@@ -9,7 +9,7 @@ import { ProductoModelo } from '../dominio/productoModelo.model';
 })
 export class ProductsService {
   private urlGeneral: string =
-    'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+    'https://localhost:7061/api/v1';
   private url: string = this.urlGeneral + '/productos';
   private _productosBehavior: BehaviorSubject<Producto[] | undefined>;
 
