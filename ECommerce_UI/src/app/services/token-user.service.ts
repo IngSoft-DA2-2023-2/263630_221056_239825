@@ -48,6 +48,12 @@ export class TokenUserService {
   }
 
   deleteUsuario(id : Usuario){
-    throw new ErrorEvent("No implementado")
+    const token: string = sessionStorage.getItem('token')!;
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'placeHolderValue',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    });
+    this.http.delete(this.urlUsuarios + '/' + id, { headers });
   }
 }
