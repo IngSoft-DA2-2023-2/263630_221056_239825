@@ -19,7 +19,6 @@ export class PerfilComponent {
   ngOnInit(): void {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
     let listaDeCompras : Compra[] = this.compraService.getCompraDelUsuario()
-    let listaDeUsuarios : Usuario[] = this.adminService.getUsuarios();
     this.compras = listaDeCompras;
   }
 }

@@ -17,11 +17,25 @@ export class AdminService {
   constructor(private http: HttpClient) {}
 
   createProduct(producto: Producto): Producto {
-    throw new ErrorEvent('Not implemented');
+    const token: string = sessionStorage.getItem('token')!;
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'placeHolderValue',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    });
+    this.http.post(this.urlProductos, producto, { headers });
+    return producto;
   }
 
   updateProduct(producto: Producto): Producto {
-    throw new ErrorEvent('Not implemented');
+    const token: string = sessionStorage.getItem('token')!;
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'placeHolderValue',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    });
+    this.http.put(this.urlProductos + '/' + producto.id, producto, { headers });
+    return producto;
   }
 
   deleteProduct(id: number): void {
