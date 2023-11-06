@@ -44,7 +44,17 @@ export class TokenUserService {
   }
 
   putUsuario(usuario : Usuario){
-    throw new ErrorEvent("No implementado")
+    const id : string = sessionStorage.getItem('idUsuario')!;
+    const token: string = sessionStorage.getItem('token')!;
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': 'placeHolderValue',
+      'Content-Type': 'application/json',
+      Authorization: token,
+    });
+    this.http.put(this.urlUsuarios + '/' + id, usuario, { headers }).subscribe((response: any) => {
+      const usuarioCambiado: Usuario = response;
+      sessionStorage.setItem('usuario', JSON.stringify(usuarioCambiado));
+    });
   }
 
   deleteUsuario(id : Usuario){
