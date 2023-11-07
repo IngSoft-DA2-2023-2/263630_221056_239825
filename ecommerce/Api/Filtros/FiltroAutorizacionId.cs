@@ -15,22 +15,22 @@ namespace Api.Filtros
 
             if (user is null)
             {
-                context.Result = new ObjectResult(new { Message = "Authorization header is missing" })
+                context.Result = new ObjectResult(new { Message = "Authorization header is missing, user is null" })
                 {
                     StatusCode = 401
                 };
             }
-            if (!context.HttpContext.Request.Headers.ContainsKey("id"))
+            if (!context.RouteData.Values.ContainsKey("id"))
             {
-                context.Result = new ObjectResult(new { Message = "Authorization header is missing" })
+                context.Result = new ObjectResult(new { Message = "Authorization header is missing, header doesnt contain id" })
                 {
                     StatusCode = 401
                 };
                 return;
             }
-            if (!int.TryParse(context.HttpContext.Request.Headers["id"], out int id))
+            if (!int.TryParse((string?)context.RouteData.Values["id"], out int id))
             {
-                context.Result = new ObjectResult(new { Message = "Authorization header is missing" })
+                context.Result = new ObjectResult(new { Message = "Authorization header is missing, cantParse id" })
                 {
                     StatusCode = 401
                 };

@@ -69,7 +69,6 @@ export class ProductosComponent {
 
 // addToCart(producto: Producto): void {
 //   if (producto.stock > 0) {
-//     // Agrega la lógica para agregar al carrito aquí
 //     console.log(`Agregado al carrito: ${producto.nombre}`);
 //     producto.stock--;
 //   } else {

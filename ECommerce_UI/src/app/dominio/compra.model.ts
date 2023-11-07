@@ -3,7 +3,8 @@ import { Producto } from "./producto.model";
 export interface Compra {
     Id: number,
     Productos: Producto[],
-    Fecha: Date,
+    FechaCompra: Date,
     Precio: number,
-    NombrePromocion: string,
+    NombrePromo: string,
+    UsuarioId: number
 }

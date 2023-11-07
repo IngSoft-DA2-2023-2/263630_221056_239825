@@ -60,22 +60,10 @@ export class ProductsService {
       'placeHolderValue'
     );
     this.http
-      .get<Producto[]>(this.url + '/' + id, {headers})
+      .get<Producto[]>(this.url + '/' + id, { headers })
       .subscribe((response: any) => {
         return this.createSingleProduct(response);
       });
     return null;
-  }
-
-  createProduct(producto: Producto): Producto {
-    throw new ErrorEvent('Not implemented');
-  }
-
-  updateProduct(producto: Producto): Producto {
-    throw new ErrorEvent('Not implemented');
-  }
-
-  deleteProduct(id: number): void {
-    throw new ErrorEvent('Not implemented');
   }
 }

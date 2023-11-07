@@ -30,7 +30,7 @@ namespace Api.Controladores
             return Created("", _manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity()));
         }
 
-        [ServiceFilter(typeof(JwtAuthorizationFilter))]
+        //[ServiceFilter(typeof(JwtAuthorizationFilter))]
         // Ver con ALEX
         [FiltroAutorizacionId]
         [HttpGet("{id}")]
