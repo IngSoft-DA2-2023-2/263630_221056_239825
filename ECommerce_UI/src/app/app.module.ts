@@ -18,11 +18,11 @@ import { ProductoComponent } from './components/producto/producto.component';
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { CompraComponent } from './components/compra/compra.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
 @NgModule({
-  declarations: [
-    AppComponent,
-    PerfilComponent,
-  ],
+  declarations: [AppComponent, PerfilComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -39,8 +39,11 @@ import { CompraComponent } from './components/compra/compra.component';
     ProductoComponent,
     ProductosComponent,
     CompraComponent,
+    AdminComponent,
+    UsuarioComponent,
+    UsuariosComponent,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

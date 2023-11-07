@@ -6,12 +6,14 @@ import { ProductosComponent } from './components/productos/productos.component';
 
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { AdminComponent } from './components/admin/admin.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'productos', component: ProductosComponent },
   { path: 'carrito', component: TarjetaComponent }, // TODO: Falta agregarle el componente
   { path: 'signup', component: SignupComponent },
   { path: 'perfil', component: PerfilComponent },
+  { path: 'admin', component: AdminComponent }
 ]; 
 
 @NgModule({

@@ -5,3 +5,8 @@
 .nav{
     background-color: lightblue;
 }
+
+.navBarDerecha{
+    display: flex;
+    flex-direction: row;
+}
