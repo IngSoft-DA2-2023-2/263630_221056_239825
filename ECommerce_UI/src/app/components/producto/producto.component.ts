@@ -29,24 +29,6 @@ export class ProductoComponent {
   };
   @Input() seMuestraBoton: boolean = true;
 
-  agregarAlCarrito() {
-    const productoNuevo: Producto = this.productsServices.getProduct(this.producto.id)!;
-    if(productoNuevo.stock > 0){
-      if (localStorage.getItem('productosEnCarrito') == null) {
-        let carrito: Producto[] = [];
-        carrito.push(productoNuevo);
-        localStorage.setItem('productosEnCarrito', JSON.stringify(carrito));
-      } else {
-        let carrito: Producto[] = JSON.parse(localStorage.getItem('productosEnCarrito')!);
-        carrito.push(productoNuevo);
-        localStorage.setItem('productosEnCarrito', JSON.stringify(carrito));
-      }
-    }
-    else{
-      alert("no hay stock")
-    }
-  }
-
   getBotones(): { texto: string; accion: string }[] {
     const url = this.activatedRoute.snapshot.url.join('/');
     if (url === 'admin') {
@@ -67,6 +49,28 @@ export class ProductoComponent {
     } else if (accion === 'Agregar') {
       this.agregarAlCarrito();
     }
+  }
+
+  agregarAlCarrito() {
+    // const productoNuevo: Producto = this.productsServices.getProduct(this.producto.id)!;
+    // if(productoNuevo.stock > 0){
+    //   if (localStorage.getItem('productosEnCarrito') == null) {
+    //     let carrito: Producto[] = [];
+    //     carrito.push(productoNuevo);
+    //     localStorage.setItem('productosEnCarrito', JSON.stringify(carrito));
+    //   } else {
+    //     let carrito: Producto[] = JSON.parse(localStorage.getItem('productosEnCarrito')!);
+    //     carrito.push(productoNuevo);
+    //     localStorage.setItem('productosEnCarrito', JSON.stringify(carrito));
+    //   }
+    // }
+    // else{
+    //   alert("no hay stock")
+    // }
+    const carrito = localStorage.getItem('carrito');
+    let carritoArray: Producto[] = carrito ? JSON.parse(carrito) : [];
+    carritoArray.push(this.producto);
+    localStorage.setItem('carrito', JSON.stringify(carritoArray));
   }
 }
   
