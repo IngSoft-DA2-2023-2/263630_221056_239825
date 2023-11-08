@@ -1,0 +1,27 @@
+h1 {
+  text-align: center;
+}
+.encabezadoUsuarios {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+.filtros{
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+.input{
+  padding: 5px;
+}   
+.listaUsuarios {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
