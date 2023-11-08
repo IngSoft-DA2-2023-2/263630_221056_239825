@@ -16,10 +16,21 @@ import { catchError, of, take } from 'rxjs';
 export class ProductosComponent {
   constructor(private productsServices : ProductsService){ }
   protected ArrayProductos: Producto[] = [];
+
+  private producto1: Producto = {
+    id: 1,
+    nombre: 'Cafe',
+    descripcion: 'Molido',
+    precio: 500,
+    stock: 20,
+    categoria: 'Bebida',
+    marca: "Nescafe",
+    colores: "Negro"
+  };
   
   ngOnInit(){
-    this.ArrayProductos = this.productsServices.getProducts();
-    // this.ArrayProductos.push(this.producto1);
+    // this.ArrayProductos = this.productsServices.getProducts();
+    this.ArrayProductos.push(this.producto1);
   }
 }
 

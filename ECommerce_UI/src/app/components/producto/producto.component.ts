@@ -4,16 +4,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProductsService } from 'src/app/services/productos.services';
+import { ActivatedRoute } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-producto',
   templateUrl: './producto.component.html',
   styleUrls: ['./producto.component.css'],
-  imports: [MatButtonModule, MatCardModule, MatDividerModule],
+  imports: [MatButtonModule, MatCardModule, MatDividerModule, NgFor],
 })
+
 export class ProductoComponent {
-  constructor(private productsServices : ProductsService){ }
+  constructor(private activatedRoute: ActivatedRoute, private productsServices : ProductsService){ }
   @Input() producto: Producto = {
     id: 0,
     nombre: '',
@@ -43,5 +46,28 @@ export class ProductoComponent {
       alert("no hay stock")
     }
   }
+
+  getBotones(): { texto: string; accion: string }[] {
+    const url = this.activatedRoute.snapshot.url.join('/');
+    if (url === 'admin') {
+      return [
+        { texto: 'Modificar Producto', accion: 'Modificar' },
+        { texto: 'Eliminar Producto', accion: 'Eliminar' }
+      ]; 
+    } else {
+      return [{ texto: 'Agregar al Carrito', accion: 'Agregar' }]; 
+    }
+  }
+
+  realizarAccion(accion: string) {
+    if (accion === 'Modificar') {
+      alert('Modificar');
+    } else if (accion === 'Eliminar') {
+      alert('Eliminar');
+    } else if (accion === 'Agregar') {
+      this.agregarAlCarrito();
+    }
+  }
 }
+  
 
