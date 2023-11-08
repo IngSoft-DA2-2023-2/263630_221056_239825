@@ -16,9 +16,12 @@ export class CarritoComponent implements OnInit {
     const carrito = localStorage.getItem('carrito');
     this.productosEnCarrito = carrito ? JSON.parse(carrito) : [];
   }
-  borrarCarrito() {
-    this.productosEnCarrito = [];
 
+  borrarCarrito() {
+    // Eliminar todos los elementos del carrito
+    this.productosEnCarrito = [];
+    
+    // Actualizar el estado del carrito en el almacenamiento local
     localStorage.removeItem('carrito');
   }
 }

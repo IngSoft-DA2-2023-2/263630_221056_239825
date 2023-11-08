@@ -1,10 +1,15 @@
 <h1>Carrito de Compras</h1>
+<button (click)="borrarCarrito()">Vaciar Carrito</button>
 
-<app-carrito *ngIf="productosEnCarrito.length === 0">El carrito está vacío.</app-carrito>
+<!-- <ng-container *ngIf="productosEnCarrito.length === 0; else carritoVacio">
+  <p>El carrito está vacío.</p>
+</ng-container> -->
 
 <ul *ngIf="productosEnCarrito.length > 0">
   <app-producto *ngFor="let producto of productosEnCarrito" class="productos">{{ producto.nombre }} - {{ producto.precio }}</app-producto>
 </ul>
-<button (click)="borrarCarrito()">Borrar Carrito</button>
 
+<!-- <ng-template #carritoVacio>
+  <p>El carrito está vacío.</p>
+</ng-template> -->
 
