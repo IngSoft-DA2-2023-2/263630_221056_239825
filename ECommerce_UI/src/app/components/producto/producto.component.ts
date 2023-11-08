@@ -36,8 +36,10 @@ export class ProductoComponent {
         { texto: 'Modificar Producto', accion: 'Modificar' },
         { texto: 'Eliminar Producto', accion: 'Eliminar' }
       ]; 
-    } else {
-      return [{ texto: 'Agregar al Carrito', accion: 'Agregar' }]; 
+    } else if (url === 'carrito') {
+      return [{ texto: 'Eliminar del Carrito', accion: 'Eliminar' }]; 
+    }else{
+      return [{ texto: 'Agregar al Carrito', accion: 'Agregar' }];
     }
   }
 

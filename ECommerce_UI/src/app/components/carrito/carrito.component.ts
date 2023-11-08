@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Producto } from 'src/app/dominio/producto.model';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   // standalone: true,
@@ -9,15 +9,16 @@ import { NgFor } from '@angular/common';
   styleUrls: ['./carrito.component.css']
   // import: [ngFor]
 })
-export class CarritoComponent {
+export class CarritoComponent implements OnInit {
   productosEnCarrito: Producto[] = [];
 
-  constructor() {
+  ngOnInit() {
     const carrito = localStorage.getItem('carrito');
     this.productosEnCarrito = carrito ? JSON.parse(carrito) : [];
   }
+  borrarCarrito() {
+    this.productosEnCarrito = [];
 
-  ngOnInit() {
-
+    localStorage.removeItem('carrito');
   }
 }
