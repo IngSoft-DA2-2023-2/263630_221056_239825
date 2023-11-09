@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -14,9 +15,9 @@ import {
   FormsModule,
   ReactiveFormsModule,
   Form,
+  FormBuilder,
 } from '@angular/forms';
-import { Usuario } from 'src/app/dominio/usuario.model';
-import { Observable, catchError } from 'rxjs';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -31,13 +32,15 @@ import { Observable, catchError } from 'rxjs';
     MatSnackBarModule,
     NgIf,
     ReactiveFormsModule,
+    MatCheckboxModule,
   ],
 })
 export class SignupComponent {
   constructor(
     private auth: AuthService,
     private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private _formBuilder: FormBuilder
   ) {}
   email: FormControl = new FormControl('', [
     Validators.required,
@@ -46,6 +49,10 @@ export class SignupComponent {
   password: FormControl = new FormControl('', [Validators.required]);
   direccion: FormControl = new FormControl('', [Validators.required]);
   esPaginaAdmin: Boolean = this.router.url.includes('/admin');
+  roles = this._formBuilder.group({
+    cliente: false,
+    admin: false,
+  });
 
   getErrorMessage(): string {
     if (this.email.hasError('required')) {
@@ -77,15 +84,48 @@ export class SignupComponent {
       return;
     }
     if (!this.esPaginaAdmin) {
-      this.auth.signup(emailValue, passwordValue, direccionValue, 0)!
+      this.auth
+        .signup(emailValue, passwordValue, direccionValue, 0)!
         .pipe(
-          catchError((error : Error) => {
-            this.openSnackBar('Error en el formulario: '+error.message , 'Cerrar');
+          catchError((error: Error) => {
+            this.openSnackBar(
+              'Error en el formulario: ' + error.message,
+              'Cerrar'
+            );
             return [];
           })
         )
         .subscribe((response: any) => {
-          console.log(response);
+          this.router.navigate(['/login']);
+        });
+    } else {
+      let rol : number = 0;
+      if (this.roles.value.admin && this.roles.value.cliente){
+        rol = 2;
+      }
+      else if (this.roles.value.admin) {
+        rol = 1;
+      }
+      else if (!this.roles.value.admin && !this.roles.value.cliente) {
+        this.openSnackBar(
+          'Debe seleccionar al menos un rol',
+          'Cerrar'
+        );
+        return;
+      }
+      this.auth
+        .signup(emailValue, passwordValue, direccionValue, rol)!
+        .pipe(
+          catchError((error: Error) => {
+            this.openSnackBar(
+              error.message,
+              'Cerrar'
+            );
+            return [];
+          })
+        )
+        .subscribe((response: any) => {
+          this.openSnackBar('Usuario creado con éxito', 'Cerrar');
         });
     }
   }
