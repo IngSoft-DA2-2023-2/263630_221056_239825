@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'carrito', component: CarritoComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'perfil', component: PerfilComponent },
-  { path: 'admin', component: AdminComponent }
+  { path: 'admin', component: AdminComponent },
+  { path: 'admin/signup', component: SignupComponent },
 ]; 
 
 @NgModule({
