@@ -10,11 +10,14 @@ import { NgFor, NgIf } from '@angular/common';
   // import: [ngFor]
 })
 export class CarritoComponent implements OnInit {
+  tieneProductosEnCarrito: boolean = false;
+
   productosEnCarrito: Producto[] = [];
 
   ngOnInit() {
     const carrito = localStorage.getItem('carrito');
     this.productosEnCarrito = carrito ? JSON.parse(carrito) : [];
+    this.tieneProductosEnCarrito = this.productosEnCarrito.length > 0;
   }
 
   borrarCarrito() {
