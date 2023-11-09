@@ -12,9 +12,10 @@ namespace Servicios
     {
         private readonly IRepositorioUsuario repositorioUsuario;
         private readonly IServicioCompra servicioCompra;
-        public ManejadorUsuario(IRepositorioUsuario repositorioUsuario)
+        public ManejadorUsuario(IRepositorioUsuario repositorioUsuario, IServicioCompra servicioCompra)
         {
             this.repositorioUsuario = repositorioUsuario;
+            this.servicioCompra = servicioCompra;
         }
 
         public Usuario RegistrarUsuario(Usuario usuario)
