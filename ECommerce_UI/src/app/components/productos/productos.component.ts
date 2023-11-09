@@ -18,8 +18,8 @@ export class ProductosComponent {
   protected ArrayProductos: Producto[] = [];
   
   ngOnInit(){
-    this.ArrayProductos = this.productsServices.getProducts();
-    // this.ArrayProductos.push(this.producto1);
+    // this.ArrayProductos = this.productsServices.getProducts();
+    this.ArrayProductos.push(this.producto1);
   }
 
   private producto1: Producto = {

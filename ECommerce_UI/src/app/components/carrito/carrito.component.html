@@ -6,7 +6,7 @@
 </ng-container> -->
 
 <ul *ngIf="productosEnCarrito.length > 0">
-  <app-producto *ngFor="let producto of productosEnCarrito" class="productos">{{ producto.nombre }} - {{ producto.precio }}</app-producto>
+  <app-productos *ngFor="let producto of productosEnCarrito" class="productos">Nombre: {{ producto.nombre }} - {{ producto.precio }}</app-productos>
 </ul>
 
 <!-- <ng-template #carritoVacio>
