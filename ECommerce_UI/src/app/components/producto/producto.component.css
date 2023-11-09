@@ -14,11 +14,6 @@
   margin-right: 10px;
 }
 
-.boton-rojo {
-  background-color: red; 
-  color: white; 
-}
-
 .seMuestraBoton{
   display: block;
 }

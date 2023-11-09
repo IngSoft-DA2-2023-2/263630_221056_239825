@@ -1,6 +1,5 @@
 <ng-container>
-  <!-- <mat-grid-list cols="2" rowHeight="1:2"> -->
-    <mat-card class="example-card">
+  <mat-card class="example-card">
     <mat-card-header>
       <mat-card-title>{{producto.nombre}}</mat-card-title>
       <mat-card-subtitle>{{producto.categoria}}</mat-card-subtitle>
@@ -20,9 +19,11 @@
     <div [hidden]="!seMuestraBoton">
       <mat-divider></mat-divider>
       <mat-card-actions>
-        <button mat-raised-button class="boton" *ngFor="let boton of getBotones()" (click)="realizarAccion(boton.accion)" [class.boton-rojo]="boton.accion === 'Eliminar'">{{ boton.texto }}</button>
+        <button mat-raised-button *ngFor="let boton of getBotones()" (click)="realizarAccion(boton.accion)"
+          [class.mat-warn]="boton.accion === 'Eliminar'" [class.boton]="boton.accion !== 'Eliminar'">
+          {{ boton.texto }}
+        </button>
       </mat-card-actions>
     </div>
   </mat-card>
-  <!-- </mat-grid-list> -->
 </ng-container>

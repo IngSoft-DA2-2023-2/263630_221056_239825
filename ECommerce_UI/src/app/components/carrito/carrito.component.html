@@ -1,6 +1,8 @@
 <h1>Carrito de Compras</h1>
-<button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
-<button class="botonPago">Pagar</button>
+<mat-card-actions>
+<button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
+<button mat-raised-button class="botonPago">Pagar</button>
+</mat-card-actions>
 
 <div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
   <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
