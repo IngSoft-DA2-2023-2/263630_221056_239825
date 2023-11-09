@@ -1,12 +1,8 @@
-h1 {
+
+ h1 {
   text-align: center;
   margin: 20px;
-}
-.productos {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  font-weight: bold;
 }
 
 .example-card {
@@ -20,9 +16,14 @@ h1 {
   padding: 16px;
 }
 
-.botonVaciar{
-  background-color:darksalmon;
-  margin-right: 10px;
+.botonVaciar, .botonPago {
+  background-color:lightslategrey;
+  padding: 10px 20px;
+  margin-left: 40px;
+  color: white;
+  border:black 3px solid;
+  border-radius: 40px;
+  cursor: pointer;
 }
 
 .boton-rojo {
@@ -38,4 +39,13 @@ h1 {
   .example-card {
     min-width: 90vw;
   }
+} 
+
+.carrito-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px; 
+  justify-content: space-around;
+  max-width: 100%; 
+  padding: 20px 40px; 
 }

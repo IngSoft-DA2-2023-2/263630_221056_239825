@@ -21,10 +21,8 @@ export class CarritoComponent implements OnInit {
   }
 
   borrarCarrito() {
-    // Eliminar todos los elementos del carrito
     this.productosEnCarrito = [];
     
-    // Actualizar el estado del carrito en el almacenamiento local
     localStorage.removeItem('carrito');
   }
 }
