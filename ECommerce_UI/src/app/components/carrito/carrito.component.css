@@ -34,6 +34,13 @@ h1 {
   display: block;
 }
 
+.productosDelCarrito{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 @media (max-width: 520px) {
   .example-card {
     min-width: 90vw;
