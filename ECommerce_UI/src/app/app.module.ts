@@ -21,8 +21,9 @@ import { CompraComponent } from './components/compra/compra.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
 @NgModule({
-  declarations: [AppComponent, PerfilComponent],
+  declarations: [AppComponent, PerfilComponent, CarritoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

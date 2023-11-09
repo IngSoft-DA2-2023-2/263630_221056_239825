@@ -1,3 +1,14 @@
+h1 {
+  text-align: center;
+  margin: 20px;
+}
+.productos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
 .example-card {
   max-width: 400px;
   min-width: 330px;
@@ -9,8 +20,8 @@
   padding: 16px;
 }
 
-.boton{
-  background-color:lightblue;
+.botonVaciar{
+  background-color:darksalmon;
   margin-right: 10px;
 }
 

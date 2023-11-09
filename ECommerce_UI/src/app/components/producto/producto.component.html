@@ -20,7 +20,7 @@
     <div [hidden]="!seMuestraBoton">
       <mat-divider></mat-divider>
       <mat-card-actions>
-        <button mat-raised-button class="boton">Agregar al carrito</button>
+        <button mat-raised-button class="boton" *ngFor="let boton of getBotones()" (click)="realizarAccion(boton.accion)" [class.boton-rojo]="boton.accion === 'Eliminar'">{{ boton.texto }}</button>
       </mat-card-actions>
     </div>
   </mat-card>

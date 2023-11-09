@@ -1,0 +1,6 @@
+<h1>Carrito de Compras</h1>
+<button (click)="borrarCarrito()">Vaciar Carrito</button>
+
+<ul *ngIf="productosEnCarrito.length > 0">
+  <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
+</ul>
