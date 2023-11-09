@@ -1,7 +1,33 @@
-<h1>Carrito de Compras</h1>
-<button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
-<button class="botonPago">Pagar</button>
+<!-- <h1>Carrito de Compras</h1>
+<mat-card-actions>
+<button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
+<button mat-raised-button class="botonPago">Pagar</button>
+</mat-card-actions>
 
 <div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
   <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
+</div>
+
+<div *ngIf="mostrarOpcionesPago" class="opcionesPago">
+  <h2>Seleccione el método de pago:</h2>
+</div> -->
+
+<h1>Carrito de Compras</h1>
+<mat-card-actions>
+  <button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
+  <button mat-raised-button (click)="pagar()" class="botonPago">Pagar</button>
+</mat-card-actions>
+
+<div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
+  <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
+</div>
+
+<app-opciones-pago *ngIf="mostrarOpcionesPago"></app-opciones-pago>
+<div *ngIf="mostrarOpcionesPago" class="opcionesPago">
+  <h2>Seleccione el método de pago:</h2>
+  <mat-card-actions>
+    <button mat-raised-button>Transferencia</button>
+    <button mat-raised-button>Paganza</button>
+    <button mat-raised-button>Tarjeta</button>
+  </mat-card-actions>
 </div>

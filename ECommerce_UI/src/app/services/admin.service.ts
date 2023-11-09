@@ -8,8 +8,7 @@ import { Compra } from '../dominio/compra.model';
   providedIn: 'root',
 })
 export class AdminService {
-  private urlGeneral: string =
-  'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+  private urlGeneral: string = 'https://merely-loved-gibbon.ngrok-free.app/api/v1';
   private urlProductos: string = this.urlGeneral + '/productos';
   private urlUsuarios: string = this.urlGeneral + '/usuarios';
   private urlCompras: string = this.urlGeneral + '/compras';

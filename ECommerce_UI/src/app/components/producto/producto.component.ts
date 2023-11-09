@@ -54,21 +54,6 @@ export class ProductoComponent {
   }
 
   agregarAlCarrito() {
-    // const productoNuevo: Producto = this.productsServices.getProduct(this.producto.id)!;
-    // if(productoNuevo.stock > 0){
-    //   if (localStorage.getItem('productosEnCarrito') == null) {
-    //     let carrito: Producto[] = [];
-    //     carrito.push(productoNuevo);
-    //     localStorage.setItem('productosEnCarrito', JSON.stringify(carrito));
-    //   } else {
-    //     let carrito: Producto[] = JSON.parse(localStorage.getItem('productosEnCarrito')!);
-    //     carrito.push(productoNuevo);
-    //     localStorage.setItem('productosEnCarrito', JSON.stringify(carrito));
-    //   }
-    // }
-    // else{
-    //   alert("no hay stock")
-    // }
     const carrito = localStorage.getItem('carrito');
     let carritoArray: Producto[] = carrito ? JSON.parse(carrito) : [];
     carritoArray.push(this.producto);
