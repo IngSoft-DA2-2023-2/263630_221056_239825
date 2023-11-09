@@ -80,8 +80,7 @@ namespace Api.Controladores
 
         [ServiceFilter(typeof(JwtAuthorizationFilter))]
         [HttpPost("{id}/compras")]
-        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Cliente, SecondaryRole = CategoriaRol.ClienteAdministrador)]
-        [FiltroAutorizacionId]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Cliente, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId =true)]
         public IActionResult RealizarCompra(int id, [FromBody] CompraCrearModelo compraCrearModelo)
         {
             Compra compra = new Compra()
