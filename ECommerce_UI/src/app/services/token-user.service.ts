@@ -9,7 +9,7 @@ import { Usuario } from '../dominio/usuario.model';
 })
 export class TokenUserService {
   private urlGeneral: string =
-    'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+    'https://localhost:7061/api/v1';
   private urlUsuarios: string = this.urlGeneral + '/usuarios';
 
   constructor(private http : HttpClient) { }

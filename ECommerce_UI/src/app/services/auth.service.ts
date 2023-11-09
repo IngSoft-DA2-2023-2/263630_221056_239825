@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Usuario } from '../dominio/usuario.model';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private isLoggedIn: boolean;
-  private urlGeneral : string = 'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+  private urlGeneral: string = 'https://localhost:7061/api/v1';
   private urlAuthentication: string = this.urlGeneral + '/authentication';
   private urlUsuario: string = this.urlGeneral + '/usuarios';
 
@@ -41,7 +39,7 @@ export class AuthService {
       .subscribe(
         (response: any) => {
           var token: string = response.token;
-          var id : string = response.id;
+          var id: string = response.id;
           sessionStorage.setItem('token', 'Bearer ' + token);
           sessionStorage.setItem('idUsuario', id);
           this.isLoggedIn = true;
@@ -55,42 +53,43 @@ export class AuthService {
           return false;
         }
       );
-      
+
     return false;
   }
 
-  createUser(response : any){
-    const usuario : Usuario = {
+  createUser(response: any) {
+    const usuario: Usuario = {
       correoElectronico: response.correoElectronico,
       direccionEntrega: response.direccionEntrega,
       rol: response.rol,
       compras: response.compras,
-    }
+    };
     return usuario;
   }
 
-  signup(mail: string, password: string, direccion: string): boolean {
-    const credenciales : object = {
+  signup(
+    mail: string,
+    password: string,
+    direccion: string,
+    rol: number
+  ): Observable<Usuario> {
+    const credenciales: object = {
       correoElectronico: mail,
       direccionEntrega: direccion,
-      rol: 0,
+      rol: rol,
       contrasena: password,
     };
-    const headers : HttpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
-    this.http
-      .post(this.urlUsuario, credenciales, {
-        headers,
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'Content-Type',
+      'application/json'
+    );
+    return this.http.post<Usuario>(this.urlUsuario, credenciales, {
+      headers,
+    }).pipe(
+      catchError(error => {
+        return throwError(()=> new Error(error.error));
       })
-      .subscribe(
-        (response: any) => {
-          this.router.navigate(['/login']);
-          return true;
-        },
-        (error) => {
-          return false;
-        }
-      );
-    return false;
+    );
   }
 
   logout(): void {
