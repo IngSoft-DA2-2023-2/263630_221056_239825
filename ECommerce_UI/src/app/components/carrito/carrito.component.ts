@@ -26,12 +26,16 @@ export class CarritoComponent implements OnInit {
 
   borrarCarrito() {
     this.productosEnCarrito = [];
-
     localStorage.removeItem('carrito');
   }
 
   pagar() {
     this.mostrarOpcionesPago = true;
     this.mostrarProductos = false;
+  }
+
+  volverAProductos() {
+    this.mostrarProductos = true;
+    this.mostrarOpcionesPago = false;
   }
 }

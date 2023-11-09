@@ -1,21 +1,8 @@
-<!-- <h1>Carrito de Compras</h1>
-<mat-card-actions>
-<button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
-<button mat-raised-button class="botonPago">Pagar</button>
-</mat-card-actions>
-
-<div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
-  <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
-</div>
-
-<div *ngIf="mostrarOpcionesPago" class="opcionesPago">
-  <h2>Seleccione el método de pago:</h2>
-</div> -->
-
 <h1>Carrito de Compras</h1>
 <mat-card-actions>
   <button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
   <button mat-raised-button (click)="pagar()" class="botonPago">Pagar</button>
+  <button mat-raised-button class="botonVolver" *ngIf="!mostrarProductos" (click)="volverAProductos()">Volver a Productos</button>
 </mat-card-actions>
 
 <div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
