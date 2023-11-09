@@ -15,6 +15,8 @@ import {
   ReactiveFormsModule,
   Form,
 } from '@angular/forms';
+import { Usuario } from 'src/app/dominio/usuario.model';
+import { Observable, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -27,18 +29,25 @@ import {
     MatCardModule,
     MatButtonModule,
     MatSnackBarModule,
-    NgIf, 
-    ReactiveFormsModule
+    NgIf,
+    ReactiveFormsModule,
   ],
 })
 export class SignupComponent {
-  constructor(private auth: AuthService, private _snackBar: MatSnackBar, private router: Router) {}
-  email : FormControl = new FormControl('', [Validators.required, Validators.email]);
-  password : FormControl = new FormControl('', [Validators.required]);
-  direccion : FormControl = new FormControl('', [Validators.required]);
+  constructor(
+    private auth: AuthService,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {}
+  email: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  password: FormControl = new FormControl('', [Validators.required]);
+  direccion: FormControl = new FormControl('', [Validators.required]);
+  esPaginaAdmin: Boolean = this.router.url.includes('/admin');
 
-
-  getErrorMessage() : string{
+  getErrorMessage(): string {
     if (this.email.hasError('required')) {
       return 'Tiene que ingresar un valor';
     }
@@ -48,29 +57,40 @@ export class SignupComponent {
     return this.email.hasError('email') ? 'Mail no valido' : '';
   }
 
-  signup() : void{
-    if(this.email.invalid || this.password.invalid || this.direccion.invalid){
-      this.openSnackBar("Error en el formulario", "Cerrar");
+  signup(): void {
+    if (this.email.invalid || this.password.invalid || this.direccion.invalid) {
+      this.openSnackBar('Error en el formulario', 'Cerrar');
       return;
     }
-    const emailValue : string = this.email.value ?? '';
-    const passwordValue : string = this.password.value ?? '';
-    const direccionValue : string = this.direccion.value ?? '';
+    const emailValue: string = this.email.value ?? '';
+    const passwordValue: string = this.password.value ?? '';
+    const direccionValue: string = this.direccion.value ?? '';
     if (emailValue == '' || passwordValue == '' || direccionValue == '') {
-      this.openSnackBar("Error en el formulario", "Cerrar");
-      return;
-    } 
-    if (passwordValue.length < 8) {
-      this.openSnackBar("La contraseña debe tener al menos 8 caracteres", "Cerrar");
+      this.openSnackBar('Error en el formulario', 'Cerrar');
       return;
     }
-    const signupResult = this.auth.signup(emailValue, passwordValue, direccionValue);
-    if(!signupResult){
-      this.openSnackBar("Error al crear el usuario", "Cerrar");
+    if (passwordValue.length < 8) {
+      this.openSnackBar(
+        'La contraseña debe tener al menos 8 caracteres',
+        'Cerrar'
+      );
+      return;
+    }
+    if (!this.esPaginaAdmin) {
+      this.auth.signup(emailValue, passwordValue, direccionValue, 0)!
+        .pipe(
+          catchError((error : Error) => {
+            this.openSnackBar('Error en el formulario: '+error.message , 'Cerrar');
+            return [];
+          })
+        )
+        .subscribe((response: any) => {
+          console.log(response);
+        });
     }
   }
 
-  openSnackBar(message: string, action: string) : void{
+  openSnackBar(message: string, action: string): void {
     this._snackBar.open(message, action);
   }
 }

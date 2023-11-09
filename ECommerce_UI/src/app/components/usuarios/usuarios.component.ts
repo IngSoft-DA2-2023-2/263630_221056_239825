@@ -54,6 +54,16 @@ export class UsuariosComponent {
     const noEsAdmin = this.filtros?.value?.some((rol) => rol === 'Cliente');
     const tieneCompras = this.filtros?.value?.some((rol) => rol === 'Con Compras');
     const noTieneCompras = this.filtros?.value?.some((rol) => rol === 'Sin Compras');
+    if (
+      !esAdmin &&
+      !noEsAdmin &&
+      !tieneCompras &&
+      !noTieneCompras &&
+      correo == ''
+    ) {
+      this.usuarios = this.adminService.getUsuarios();
+      return;
+    }
     this.usuarios = this.usuarios.filter((usuario) => {
       let matchesUsername = true;
       let matchesAdminStatus = true;

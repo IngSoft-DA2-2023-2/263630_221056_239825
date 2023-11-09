@@ -2,6 +2,6 @@
 <button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
 <button class="botonPago">Pagar</button>
 
-<ul *ngIf="productosEnCarrito.length > 0" class="carrito-productos">
-  <app-producto *ngFor="let producto of productosEnCarrito" [producto]="producto"></app-producto>
-</ul>
+<div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
+  <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
+</div>

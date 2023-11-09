@@ -28,6 +28,8 @@ export class NavbarComponent {
           const usuario : Usuario = JSON.parse(sessionStorage.getItem('usuario')!);
           if(usuario.rol == 1 || usuario.rol == 2){
             this.isAdmin = true;
+          } else {
+            this.isAdmin = false;
           }
         }
       }

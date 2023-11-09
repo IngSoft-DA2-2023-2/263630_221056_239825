@@ -10,7 +10,7 @@ namespace Api.Filtros
     {
         public CategoriaRol RoleNeeded { get; set; }
         public CategoriaRol SecondaryRole { get; set; }
-        public int Id { get; set; }
+        public bool importaId { get; set; } = false;
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -28,7 +28,7 @@ namespace Api.Filtros
             {
                 IManejadorUsuario _manejadorUsuario = GetSessionService(context);
                 Usuario usuario = ValidarToken(user!, _manejadorUsuario);
-                if (Id == 0)
+                if (importaId == false)
                 {
                     if (!(RoleNeeded == usuario.Rol))
                     {
@@ -50,7 +50,10 @@ namespace Api.Filtros
                 }
                 else
                 {
-                    if (Id != usuario.Id)
+                    string? stringId = context.RouteData.Values["id"]! as string;
+                    int id = int.Parse(stringId!);
+
+                    if (id != usuario.Id)
                     {
                         context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
                         {
