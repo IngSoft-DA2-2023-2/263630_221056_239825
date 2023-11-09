@@ -7,11 +7,7 @@ namespace DataAccess
 {
     public class ECommerceContext: DbContext
     {
-        public ECommerceContext(DbContextOptions<ECommerceContext> optionsBuilderOptions) : base(optionsBuilderOptions)
-        {
-        }
-
-        public ECommerceContext() 
+        public ECommerceContext() : base()
         {
         }
 
@@ -25,6 +21,9 @@ namespace DataAccess
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Compra>()
+                .Property(c => c.MetodoDePago)
+                .HasConversion<string>();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,7 +39,10 @@ namespace DataAccess
 
                 String? connectionString = configuration.GetConnectionString("ECommerceDB");
 
-                optionsBuilder.UseSqlServer(connectionString);
+                if (connectionString is not null)
+                {
+                    optionsBuilder.UseSqlServer(connectionString);
+                }
             }
         }
     }

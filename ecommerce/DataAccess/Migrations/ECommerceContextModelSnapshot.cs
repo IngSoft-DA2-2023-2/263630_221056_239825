@@ -82,6 +82,10 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("MetodoDePago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NombrePromo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

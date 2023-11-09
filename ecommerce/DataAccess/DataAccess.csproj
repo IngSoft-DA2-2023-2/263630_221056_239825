@@ -30,4 +30,8 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Compile Remove="InMemoryECommerceContextFactory.cs" />
+  </ItemGroup>
+
 </Project>

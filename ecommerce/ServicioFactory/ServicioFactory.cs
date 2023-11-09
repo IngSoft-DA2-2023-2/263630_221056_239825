@@ -15,6 +15,7 @@ namespace ServicioFactory
         {
             serviceCollection.AddDbContext<DbContext, ECommerceContext>();
 
+
             serviceCollection.AddScoped<IRepositorioProducto, RepositorioProducto>();
             serviceCollection.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             serviceCollection.AddScoped<IRepositorioCompra, RepositorioCompra>();
@@ -22,6 +23,9 @@ namespace ServicioFactory
             serviceCollection.AddScoped<IManejadorUsuario, ManejadorUsuario>();
             serviceCollection.AddScoped<IServicioProducto, ServicioProducto>();
             serviceCollection.AddScoped<IServicioCompra, ServicioCompra>();
+            serviceCollection.AddScoped<IPromocionStrategy, PromocionTotalLook>();
+            serviceCollection.AddScoped<IPromocionStrategy, Promocion20Off>();
+            serviceCollection.AddScoped<IPromocionStrategy, Promocion3xModelable>();
 
             serviceCollection.AddCors(options =>
             {
@@ -35,9 +39,6 @@ namespace ServicioFactory
                 });
             });
           
-            serviceCollection.AddScoped<IPromocionStrategy, PromocionTotalLook>();
-            serviceCollection.AddScoped<IPromocionStrategy, Promocion20Off>();
-            serviceCollection.AddScoped<IPromocionStrategy, Promocion3xModelable>();
         }
     }
 }
