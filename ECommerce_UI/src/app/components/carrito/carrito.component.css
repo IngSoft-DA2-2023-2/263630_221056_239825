@@ -1,5 +1,4 @@
-
- h1 {
+h1 {
   text-align: center;
   margin: 20px;
   font-weight: bold;
@@ -9,38 +8,27 @@
   max-width: 400px;
   min-width: 330px;
   margin: 20px 0;
-  background-color:gainsboro;
+  background-color: gainsboro;
 }
 
 .card-content {
   padding: 16px;
 }
 
-/* .botonVaciar, .botonPago, .botonVolver { */
-  button{
-  background-color:lightslategrey;
-  padding: 10px 20px;
-  margin-left: 40px;
-  color: white;
-  border:black 3px solid;
-  border-radius: 40px;
-  cursor: pointer;
-}
-
-button.mat-button.matStepperPrevious {
-  margin-right: 20px; /* Puedes ajustar este valor según sea necesario */
+.botonAnterior, .botonSiguiente {
+  background-color: lightslategrey;
 }
 
 .boton-rojo {
-  background-color: red; 
-  color: white; 
+  background-color: red;
+  color: white;
 }
 
-.seMuestraBoton{
+.seMuestraBoton {
   display: block;
 }
 
-.productosDelCarrito{
+.productosDelCarrito {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -51,13 +39,13 @@ button.mat-button.matStepperPrevious {
   .example-card {
     min-width: 90vw;
   }
-} 
+}
 
 .carrito-productos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px; 
+  gap: 10px;
   justify-content: space-around;
-  max-width: 100%; 
-  padding: 20px 40px; 
+  max-width: 100%;
+  padding: 20px 40px;
 }

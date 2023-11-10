@@ -26,7 +26,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
 @NgModule({
-  declarations: [AppComponent, PerfilComponent, CarritoComponent, OpcionesPagoComponent],
+  declarations: [AppComponent, PerfilComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -46,8 +46,10 @@ import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.
     AdminComponent,
     UsuarioComponent,
     UsuariosComponent,
+    CarritoComponent,
     MatStepperModule,
     ReactiveFormsModule,
+    OpcionesPagoComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

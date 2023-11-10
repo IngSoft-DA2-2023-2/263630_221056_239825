@@ -23,21 +23,19 @@
   <mat-step [stepControl]="productos">
     <ng-template matStepLabel>Productos</ng-template>
     <mat-card-actions>
-      <button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
+      <button mat-raised-button color="warn" (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
     </mat-card-actions>
-    <div *ngIf="mostrarProductos && productosEnCarrito.length > 0" class="productosDelCarrito">
-      <app-producto *ngFor="let producto of productosEnCarrito; let i = index"
-                    class="productos"
-                    [producto]="producto"
-                    (eliminarProductoClick)="eliminarProductoDelCarrito(i)">
+    <div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
+      <app-producto *ngFor="let producto of productosEnCarrito; let i = index" class="productos" [producto]="producto"
+        (eliminarProductoClick)="eliminarProductoDelCarrito(i)">
       </app-producto>
     </div>
     <div>
-      <button mat-button matStepperNext (click)="pagar()">Ir al pago</button>
+      <button mat-raised-button matStepperNext class="botonSiguiente">Ir al pago</button>
     </div>
   </mat-step>
 
-  <mat-step *ngIf="mostrarOpcionesPago">
+  <mat-step [stepControl]="haPagado">
     <ng-template matStepLabel>Pago</ng-template>
     <app-opciones-pago>
       <h2>Seleccione el método de pago:</h2>
@@ -45,9 +43,20 @@
       <button mat-raised-button>Transferencia</button>
       <button mat-raised-button>Tarjeta</button>
     </app-opciones-pago>
+    <div class="botonesMetodoPago">
+      <div>
+        <button mat-raised-button matStepperPrevious class="botonAnterior">Anterior</button>
+      </div>
+      <div>
+        <button mat-raised-button matStepperNext class="botonSiguiente">PAGAR</button>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Confirmación</ng-template>
     <div>
-      <button mat-button matStepperPrevious>Anterior</button>
+      <button mat-button matStepperPrevious class="botonAnterior">Anterior</button>
     </div>
   </mat-step>
 </mat-stepper>
-
