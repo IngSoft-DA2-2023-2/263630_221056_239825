@@ -103,7 +103,12 @@ export class CarritoComponent implements OnInit {
       alert("El carrito está vacío. Agregue productos para continuar con el pago.");
       return;
     }
-    
+  }
+
+  eliminarProductoDelCarrito(index: number) {
+    // Elimina el producto del carrito al recibir el evento del componente hijo
+    this.productosEnCarrito.splice(index, 1);
+    localStorage.setItem('carrito', JSON.stringify(this.productosEnCarrito));
   }
 }
 

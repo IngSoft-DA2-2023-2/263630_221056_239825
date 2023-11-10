@@ -6,6 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ProductsService } from 'src/app/services/productos.services';
 import { ActivatedRoute } from '@angular/router';
 import { NgFor } from '@angular/common';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -16,6 +17,8 @@ import { NgFor } from '@angular/common';
 })
 
 export class ProductoComponent {
+  @Output() eliminarProductoClick: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(private activatedRoute: ActivatedRoute, private productsServices : ProductsService){ }
   @Input() producto: Producto = {
     id: 0,
@@ -47,7 +50,7 @@ export class ProductoComponent {
     if (accion === 'Modificar') {
       alert('Modificar');
     } else if (accion === 'Eliminar') {
-      alert('Eliminar');
+      this.eliminarProductoClick.emit();
     } else if (accion === 'Agregar') {
       this.agregarAlCarrito();
     }

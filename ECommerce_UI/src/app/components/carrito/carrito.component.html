@@ -25,8 +25,12 @@
     <mat-card-actions>
       <button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
     </mat-card-actions>
-    <div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
-      <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
+    <div *ngIf="mostrarProductos && productosEnCarrito.length > 0" class="productosDelCarrito">
+      <app-producto *ngFor="let producto of productosEnCarrito; let i = index"
+                    class="productos"
+                    [producto]="producto"
+                    (eliminarProductoClick)="eliminarProductoDelCarrito(i)">
+      </app-producto>
     </div>
     <div>
       <button mat-button matStepperNext (click)="pagar()">Ir al pago</button>
