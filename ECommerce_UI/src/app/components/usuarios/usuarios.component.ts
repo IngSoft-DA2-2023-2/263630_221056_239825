@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios',
@@ -36,7 +37,7 @@ export class UsuariosComponent {
     'Sin Compras',   
     'Con Compras',
   ];
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private router : Router) {
     this.filterForm = new FormBuilder().group({
       correoElectronico: [''],
     });
@@ -91,5 +92,9 @@ export class UsuariosComponent {
       }
       return matchesUsername && matchesAdminStatus && matchesCompras;
     });
+  }
+
+  crearUsuarioAdmin(){
+    this.router.navigate(['/admin/signup']);
   }
 }

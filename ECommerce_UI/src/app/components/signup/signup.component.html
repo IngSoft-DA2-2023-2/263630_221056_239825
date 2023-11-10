@@ -19,6 +19,10 @@
                 <input matInput type="password" placeholder="contraseña" [formControl]="password" required>
                 <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
+            <mat-card-content class="inputs checkbox" [formGroup]="roles" *ngIf="esPaginaAdmin">
+                <mat-checkbox formControlName="cliente" color="primary">Cliente</mat-checkbox>
+                <mat-checkbox formControlName="admin" color="primary">Administrador</mat-checkbox>
+            </mat-card-content>
             <mat-card-actions>
                 <button mat-raised-button class="registro" (click)="signup()">Registrarme</button>
             </mat-card-actions>

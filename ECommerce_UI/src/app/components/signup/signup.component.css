@@ -16,12 +16,21 @@
   min-width: 300px;
 }
 
+.checkbox{
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+}
+
 .contenidoCard {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.registro{
+.registro {
   background-color: lightskyblue;
 }

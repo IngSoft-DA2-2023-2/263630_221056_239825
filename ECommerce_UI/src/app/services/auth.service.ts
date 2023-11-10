@@ -26,35 +26,18 @@ export class AuthService {
     }
   }
 
-  login(mail: string, password: string): boolean {
+  login(mail: string, password: string) : Observable<Usuario> {
     const credenciales = {
       correoElectronico: mail,
       contrasena: password,
     };
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.http
-      .post(this.urlAuthentication, credenciales, {
+    return this.http
+      .post<Usuario>(this.urlAuthentication, credenciales, {
         headers,
-      })
-      .subscribe(
-        (response: any) => {
-          var token: string = response.token;
-          var id: string = response.id;
-          sessionStorage.setItem('token', 'Bearer ' + token);
-          sessionStorage.setItem('idUsuario', id);
-          this.isLoggedIn = true;
-          const usuario = this.createUser(response);
-          sessionStorage.setItem('usuario', JSON.stringify(usuario));
-          this.router.navigate(['/']);
-          return true;
-        },
-        (error) => {
-          alert(error.message);
-          return false;
-        }
-      );
-
-    return false;
+      }).pipe(catchError(error => {
+        return throwError(()=> new Error(error.error));
+      }))
   }
 
   createUser(response: any) {

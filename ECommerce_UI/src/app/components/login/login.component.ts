@@ -11,6 +11,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 @Component({
   imports: [
@@ -28,7 +30,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
 })
 export class LoginComponent {
-  constructor(private auth: AuthService, private _snackBar: MatSnackBar) {}
+  constructor(private router : Router, private auth: AuthService, private _snackBar: MatSnackBar) {}
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]); 
 
@@ -49,10 +51,21 @@ export class LoginComponent {
         if (emailValue == '' || passwordValue == '') {
           this.openSnackBar('Mail o contraseña invalida', 'OK');
         } else {
-          const loggedIn : boolean = this.auth.login(emailValue, passwordValue);
-          if (!loggedIn) {
-            this.openSnackBar('Mail o contraseña invalida', 'OK');
-          }
+          this.auth.login(emailValue, passwordValue).pipe(
+            catchError((error : Error) => {
+              this.openSnackBar('Error en el formulario: '+error.message , 'Cerrar');
+              return [];
+            })
+          ).subscribe(
+            (response: any) => {
+              var token: string = response.token;
+              var id: string = response.id;
+              sessionStorage.setItem('token', 'Bearer ' + token);
+              sessionStorage.setItem('idUsuario', id);
+              sessionStorage.setItem('usuario', JSON.stringify(response));
+              this.router.navigate(['/']);
+            }
+          );
         }
       } else {
         this.openSnackBar('Mail o contraseña invalida', 'OK');
