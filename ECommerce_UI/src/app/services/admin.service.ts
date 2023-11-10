@@ -67,6 +67,7 @@ export class AdminService {
 
   private crearUsuario(response: Usuario): Usuario {
     let usuario: Usuario = {
+      id: response.id,
       compras: response.compras,
       correoElectronico: response.correoElectronico,
       direccionEntrega: response.direccionEntrega,

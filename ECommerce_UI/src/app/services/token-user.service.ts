@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Compra } from '../dominio/compra.model';
 import { compraCreateModelo } from '../dominio/compraCreateModelo.model';
 import { Usuario } from '../dominio/usuario.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -57,13 +58,13 @@ export class TokenUserService {
     });
   }
 
-  deleteUsuario(id : Usuario){
+  deleteUsuario(id : number) : Observable<any>{
     const token: string = sessionStorage.getItem('token')!;
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       Authorization: token,
     });
-    this.http.delete(this.urlUsuarios + '/' + id, { headers });
+    return this.http.delete(this.urlUsuarios + '/' + id, { headers });
   }
 }

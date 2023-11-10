@@ -25,6 +25,7 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
+import { NotificationComponent } from './components/notification/notification.component';
 @NgModule({
   declarations: [AppComponent, PerfilComponent],
   imports: [
@@ -50,6 +51,7 @@ import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.
     MatStepperModule,
     ReactiveFormsModule,
     OpcionesPagoComponent,
+    NotificationComponent
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProductosComponent } from '../productos/productos.component';
 import { UsuariosComponent } from '../usuarios/usuarios.component';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -12,5 +13,5 @@ import { UsuariosComponent } from '../usuarios/usuarios.component';
   imports: [MatTabsModule, ProductosComponent, UsuariosComponent]
 })
 export class AdminComponent {
-
+  protected selected = 0;
 }

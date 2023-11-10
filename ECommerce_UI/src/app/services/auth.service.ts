@@ -42,6 +42,7 @@ export class AuthService {
 
   createUser(response: any) {
     const usuario: Usuario = {
+      id: response.id,
       correoElectronico: response.correoElectronico,
       direccionEntrega: response.direccionEntrega,
       rol: response.rol,
