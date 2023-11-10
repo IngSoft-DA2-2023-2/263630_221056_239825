@@ -19,7 +19,7 @@
 </div>
 <app-opciones-pago *ngIf="mostrarOpcionesPago"></app-opciones-pago> -->
 
-<mat-stepper linear #stepper>
+<mat-stepper linear #stepper color="accent">
   <mat-step [stepControl]="productos">
     <ng-template matStepLabel>Productos</ng-template>
     <mat-card-actions>
@@ -31,7 +31,7 @@
       </app-producto>
     </div>
     <div>
-      <button mat-raised-button matStepperNext class="botonSiguiente">Ir al pago</button>
+      <button mat-raised-button matStepperNext color="accent">Ir al pago</button>
     </div>
   </mat-step>
 
@@ -45,10 +45,10 @@
     </app-opciones-pago>
     <div class="botonesMetodoPago">
       <div>
-        <button mat-raised-button matStepperPrevious class="botonAnterior">Anterior</button>
+        <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
       </div>
       <div>
-        <button mat-raised-button matStepperNext class="botonSiguiente">PAGAR</button>
+        <button mat-raised-button matStepperNext color="accent">PAGAR</button>
       </div>
     </div>
   </mat-step>
@@ -56,7 +56,7 @@
   <mat-step>
     <ng-template matStepLabel>Confirmación</ng-template>
     <div>
-      <button mat-button matStepperPrevious class="botonAnterior">Anterior</button>
+      <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
     </div>
   </mat-step>
 </mat-stepper>

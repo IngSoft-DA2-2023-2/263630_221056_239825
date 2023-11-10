@@ -99,28 +99,20 @@ export class SignupComponent {
           this.router.navigate(['/login']);
         });
     } else {
-      let rol : number = 0;
-      if (this.roles.value.admin && this.roles.value.cliente){
+      let rol: number = 0;
+      if (this.roles.value.admin && this.roles.value.cliente) {
         rol = 2;
-      }
-      else if (this.roles.value.admin) {
+      } else if (this.roles.value.admin) {
         rol = 1;
-      }
-      else if (!this.roles.value.admin && !this.roles.value.cliente) {
-        this.openSnackBar(
-          'Debe seleccionar al menos un rol',
-          'Cerrar'
-        );
+      } else if (!this.roles.value.admin && !this.roles.value.cliente) {
+        this.openSnackBar('Debe seleccionar al menos un rol', 'Cerrar');
         return;
       }
       this.auth
         .signup(emailValue, passwordValue, direccionValue, rol)!
         .pipe(
           catchError((error: Error) => {
-            this.openSnackBar(
-              error.message,
-              'Cerrar'
-            );
+            this.openSnackBar(error.message, 'Cerrar');
             return [];
           })
         )
@@ -128,6 +120,10 @@ export class SignupComponent {
           this.openSnackBar('Usuario creado con éxito', 'Cerrar');
         });
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/admin']);
   }
 
   openSnackBar(message: string, action: string): void {

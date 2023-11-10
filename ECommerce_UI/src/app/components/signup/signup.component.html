@@ -4,27 +4,30 @@
             <mat-card-title>Cree su usuario</mat-card-title>
         </mat-card-header>
         <mat-card-content class="contenidoCard">
-            <mat-form-field class="inputs">
+            <mat-form-field class="inputs" color="accent">
                 <mat-label>Ingrese su email</mat-label>
                 <input matInput placeholder="mail@example.com" [formControl]="email" required>
                 <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
-            <mat-form-field class="inputs">
+            <mat-form-field class="inputs" color="accent">
                 <mat-label>Ingrese su dirección</mat-label>
                 <input matInput placeholder="Rivera 0000" [formControl]="direccion" required>
                 <mat-error *ngIf="direccion.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
-            <mat-form-field class="inputs">
+            <mat-form-field class="inputs" color="accent">
                 <mat-label>Ingrese su contraseña</mat-label>
                 <input matInput type="password" placeholder="contraseña" [formControl]="password" required>
                 <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
             <mat-card-content class="inputs checkbox" [formGroup]="roles" *ngIf="esPaginaAdmin">
-                <mat-checkbox formControlName="cliente" color="primary">Cliente</mat-checkbox>
-                <mat-checkbox formControlName="admin" color="primary">Administrador</mat-checkbox>
+                <mat-checkbox formControlName="cliente" color="accent">Cliente</mat-checkbox>
+                <mat-checkbox formControlName="admin" color="accent">Administrador</mat-checkbox>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-raised-button class="registro" (click)="signup()">Registrarme</button>
+                <div class="inputs botones">
+                    <button *ngIf="esPaginaAdmin" mat-raised-button color="accent" (click)="cancelar()">Volver</button>
+                    <button mat-raised-button color="accent" (click)="signup()">Registrarme</button>
+                </div>
             </mat-card-actions>
         </mat-card-content>
     </mat-card>

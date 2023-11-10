@@ -12,6 +12,14 @@ html {
   scroll-behavior: smooth;
 }
 
+.colorPrimario{
+  background-color: lightblue;
+}
+
+.colorSecundario{
+  background-color: lightgreen;
+}
+
 /* Estilos para el scrollbar personalizado */
 ::-webkit-scrollbar {
   width: 5px; /* Ancho del scrollbar */

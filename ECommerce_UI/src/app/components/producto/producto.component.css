@@ -2,19 +2,26 @@
   max-width: 400px;
   min-width: 330px;
   margin: 20px 0;
-  background-color:gainsboro;
+  background-color: gainsboro;
 }
 
 .card-content {
   padding: 16px;
 }
 
-.boton{
-  background-color:lightblue;
+.boton {
+  background-color: lightblue;
   margin-right: 10px;
 }
 
-.seMuestraBoton{
+.botones {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.seMuestraBoton {
   display: block;
 }
 

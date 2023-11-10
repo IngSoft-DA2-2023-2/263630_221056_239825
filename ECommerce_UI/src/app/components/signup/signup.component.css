@@ -31,6 +31,8 @@
   align-items: center;
 }
 
-.registro {
-  background-color: lightskyblue;
+.botones{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
