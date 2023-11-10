@@ -16,7 +16,8 @@
   padding: 16px;
 }
 
-.botonVaciar, .botonPago {
+/* .botonVaciar, .botonPago, .botonVolver { */
+  button{
   background-color:lightslategrey;
   padding: 10px 20px;
   margin-left: 40px;
