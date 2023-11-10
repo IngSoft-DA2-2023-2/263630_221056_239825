@@ -55,7 +55,7 @@
 // }
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Producto } from 'src/app/dominio/producto.model';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 
 @Component({
@@ -67,12 +67,10 @@ export class CarritoComponent implements OnInit {
   hayProductosEnCarrito: boolean = false;
   mostrarOpcionesPago: boolean = false;
   mostrarProductos: boolean = true;
+
   productos = this._formBuilder.group({
     firstCtrl: [],
   });
-  productosRequeridosValidator(control: FormControl) {
-    return this.hayProductosEnCarrito ? null : { productosRequeridos: true };
-  }
 
   @ViewChild('stepper') stepper!: MatStepper;
 
@@ -97,14 +95,16 @@ export class CarritoComponent implements OnInit {
   }
 
   pagar() {
-    if (this.productos.valid) {
+    if (this.hayProductosEnCarrito) {
       this.mostrarOpcionesPago = true;
       this.mostrarProductos = false;
       this.stepper.next();
     } else {
-      if (!this.hayProductosEnCarrito) {
-        alert("El carrito está vacío. Agregue productos para continuar con el pago.");
-      }
+      alert("El carrito está vacío. Agregue productos para continuar con el pago.");
+      return;
     }
+    
   }
 }
+
+

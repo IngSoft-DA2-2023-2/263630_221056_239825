@@ -29,13 +29,17 @@
       <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
     </div>
     <div>
-      <button mat-button matStepperNext>Ir al pago</button>
+      <button mat-button matStepperNext (click)="pagar()">Ir al pago</button>
     </div>
   </mat-step>
 
-  <mat-step>
+  <mat-step *ngIf="mostrarOpcionesPago">
     <ng-template matStepLabel>Pago</ng-template>
     <app-opciones-pago>
+      <h2>Seleccione el método de pago:</h2>
+      <button mat-raised-button>Paganza</button>
+      <button mat-raised-button>Transferencia</button>
+      <button mat-raised-button>Tarjeta</button>
     </app-opciones-pago>
     <div>
       <button mat-button matStepperPrevious>Anterior</button>

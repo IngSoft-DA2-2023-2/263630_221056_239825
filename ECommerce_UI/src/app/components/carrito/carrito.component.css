@@ -27,6 +27,10 @@
   cursor: pointer;
 }
 
+button.mat-button.matStepperPrevious {
+  margin-right: 20px; /* Puedes ajustar este valor según sea necesario */
+}
+
 .boton-rojo {
   background-color: red; 
   color: white; 

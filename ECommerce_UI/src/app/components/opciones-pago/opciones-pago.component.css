@@ -1,17 +1,16 @@
 button {
   background-color:lightblue;
-  padding: 15px 30px; /* Aumenta el padding para hacerlos más grandes */
+  padding: 15px 30px;
   margin-left: 40px;
   color: black;
   border: black 3px solid;
-  border-radius: 15px; /* Ajusta el valor para hacerlos más cuadrados */
+  border-radius: 15px; 
   cursor: pointer;
-  display: inline-block; /* Asegura que los botones tengan un tamaño fijo incluso si el contenido cambia */
-  text-align: center; /* Centra el texto horizontalmente dentro del botón */
-  text-decoration: none; /* Elimina el subrayado predeterminado en los botones */
+  display: inline-block; 
+  text-align: center;
+  text-decoration: none; 
 }
 
-/* Puedes agregar estilos adicionales para el hover o estados activos si lo deseas */
 button:hover {
   background-color: darkslategrey;
 }
