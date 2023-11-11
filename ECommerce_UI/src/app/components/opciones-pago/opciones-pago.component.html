@@ -2,7 +2,7 @@
   <h2>Seleccione el método de pago:</h2>
   <button mat-raised-button color="primary" (click)="mostrarComponenteTarjeta()">Tarjeta de crédito</button>
   <button mat-raised-button color="primary" (click)="mostrarInfoCuentaBancaria()">Cuenta bancaria</button>
-  <button mat-raised-button color="primary" >Paypal</button>
+  <button mat-raised-button color="primary" (click)="mostrarFormPaypal()">Paypal</button>
   <button mat-raised-button color="primary" (click)="mostrarInfoPaganza()">Paganza</button>
 </div>
 
@@ -23,3 +23,5 @@
   <img [src]="qrImageUrl" alt="QR Code">
   <button mat-raised-button color="primary">YA PAGUÉ</button>
 </div>
+
+<app-paypal *ngIf="mostrarPaypal"></app-paypal>
