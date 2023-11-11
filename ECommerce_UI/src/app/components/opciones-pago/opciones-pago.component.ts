@@ -13,9 +13,13 @@ import { NgIf, NgFor } from '@angular/common';
 export class OpcionesPagoComponent {
   mostrarTarjeta: boolean = false;
   mostrarCuentaBancaria: boolean = false;
+  mostrarPaganza: boolean = false;
+  qrImageUrl: string = '/assets/img/QR.png';
 
   mostrarComponenteTarjeta() {
     this.mostrarTarjeta = true;
+    this.mostrarCuentaBancaria = false;
+    this.mostrarPaganza = false;
   }
 
   cuentasBancarias: { banco: string; numero: string }[] = [
@@ -26,6 +30,14 @@ export class OpcionesPagoComponent {
 
   mostrarInfoCuentaBancaria() {
     this.mostrarCuentaBancaria = true;
-    this.mostrarTarjeta = false; 
+    this.mostrarTarjeta = false;
+    this.mostrarPaganza = false;
   }
+
+  mostrarInfoPaganza() {
+    this.mostrarPaganza = true;
+    this.mostrarTarjeta = false;
+    this.mostrarCuentaBancaria = false;
+  }
+
 }
