@@ -1,7 +1,9 @@
 <div>
   <h2>Seleccione el método de pago:</h2>
-  <button mat-raised-button color="primary">Tarjeta de crédito</button>
+  <button mat-raised-button color="primary" (click)="mostrarComponenteTarjeta()">Tarjeta de crédito</button>
   <button mat-raised-button color="primary">Débito bancario</button>
   <button mat-raised-button color="primary">Paypal</button>
   <button mat-raised-button color="primary">Paganza</button>
 </div>
+
+<app-tarjeta *ngIf="mostrarTarjeta"></app-tarjeta>
