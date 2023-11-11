@@ -10,6 +10,7 @@ import { UsuariosComponent } from '../usuarios/usuarios.component';
 import { NotificationComponent } from '../notification/notification.component';
 import { MatDialog } from '@angular/material/dialog';
 import { catchError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuario',
@@ -30,6 +31,7 @@ export class UsuarioComponent {
   constructor(
     private tokenUserService: TokenUserService,
     private usuariosComponent: UsuariosComponent,
+    private router : Router,
     private dialog: MatDialog
   ) {}
 
@@ -43,6 +45,10 @@ export class UsuarioComponent {
         this.openNotification('Usuario eliminado exitosamente');
         this.usuariosComponent.ngOnInit();
       });
+  }
+
+  modificarUsuario() : void {
+    this.router.navigate(['/admin/editar/usuario/', this.usuario.id]);
   }
 
   openNotification(mensaje: string): void {

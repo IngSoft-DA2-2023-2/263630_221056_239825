@@ -26,8 +26,9 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 @NgModule({
-  declarations: [AppComponent, PerfilComponent],
+  declarations: [AppComponent, PerfilComponent, ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,6 +38,8 @@ import { NotificationComponent } from './components/notification/notification.co
     MatInputModule,
     MatCardModule,
     HttpClientModule,
+    MatStepperModule,
+    ReactiveFormsModule,
     NavbarComponent,
     LoginComponent,
     SignupComponent,
@@ -48,10 +51,9 @@ import { NotificationComponent } from './components/notification/notification.co
     UsuarioComponent,
     UsuariosComponent,
     CarritoComponent,
-    MatStepperModule,
-    ReactiveFormsModule,
     OpcionesPagoComponent,
-    NotificationComponent
+    NotificationComponent,
+    ModificarUsuarioComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

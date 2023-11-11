@@ -5,10 +5,10 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 
-import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
+import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'productos', component: ProductosComponent },
@@ -17,7 +17,9 @@ const routes: Routes = [
   { path: 'perfil', component: PerfilComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'admin/signup', component: SignupComponent },
-  {path: 'opcionesPago', component: OpcionesPagoComponent}
+  { path: 'admin/editar/usuario/:id', component: ModificarUsuarioComponent },
+  { path: 'perfil/editar/:id', component: ModificarUsuarioComponent },
+  { path: 'opcionesPago', component: OpcionesPagoComponent}
 ]; 
 
 @NgModule({

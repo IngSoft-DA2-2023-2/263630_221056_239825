@@ -3,12 +3,14 @@ import { Producto } from '../dominio/producto.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../dominio/usuario.model';
 import { Compra } from '../dominio/compra.model';
+import { Observable, catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  private urlGeneral: string = 'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+  private urlGeneral: string =
+    'https://merely-loved-gibbon.ngrok-free.app/api/v1';
   private urlProductos: string = this.urlGeneral + '/productos';
   private urlUsuarios: string = this.urlGeneral + '/usuarios';
   private urlCompras: string = this.urlGeneral + '/compras';
@@ -76,20 +78,14 @@ export class AdminService {
     return usuario;
   }
 
-  getUsuario(id: Number): Usuario {
+  getUsuario(id: Number): Observable<Usuario> {
     const token: string = sessionStorage.getItem('token')!;
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       Authorization: token,
     });
-    this.http
-      .get<Usuario>(this.urlUsuarios+'/'+id, { headers })
-      .subscribe((response: any) => {
-        const usuario: Usuario = this.crearUsuario(response);
-        return usuario;
-      });
-    throw new Error('Usuario no encontrado');
+    return this.http.get<Usuario>(this.urlUsuarios + '/' + id, { headers });
   }
 
   getCompras(): Compra[] {
