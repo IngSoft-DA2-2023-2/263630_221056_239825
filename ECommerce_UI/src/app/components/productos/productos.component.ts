@@ -22,16 +22,16 @@ export class ProductosComponent {
     // this.ArrayProductos.push(this.producto1);
   }
 
-  private producto1: Producto = {
-    id: 1,
-    nombre: 'Cafe',
-    descripcion: 'Molido',
-    precio: 500,
-    stock: 20,
-    categoria: 'Bebida',
-    marca: "Nescafe",
-    colores: "Negro"
-  };
+  // private producto1: Producto = {
+  //   id: 1,
+  //   nombre: 'Cafe',
+  //   descripcion: 'Molido',
+  //   precio: 500,
+  //   stock: 20,
+  //   categoria: 'Bebida',
+  //   marca: "Nescafe",
+  //   colores: "Negro"
+  // };
 }
 
 
