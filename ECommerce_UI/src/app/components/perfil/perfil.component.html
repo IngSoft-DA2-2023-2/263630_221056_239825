@@ -1,6 +1,10 @@
 <div class="perfilInfo">
     <h1>¡Hola {{usuario!.correoElectronico}}!</h1>
     <h3>Tu dirección de entrega está configurada como: {{usuario!.direccionEntrega}}</h3>
+    <div class="botonesPerfil">
+        <button mat-raised-button class="botonesIndividual" color="primary" (click)="editarUsuario()">Editar mi perfil</button>
+        <button mat-raised-button class="botonesIndividual" color="warn" (click)="eliminarUsuario()">Eliminar mi perfil</button>
+    </div>
     <h2>Estas son tus compras</h2>
 </div>
 <ng-container *ngIf="compras!.length != 0">

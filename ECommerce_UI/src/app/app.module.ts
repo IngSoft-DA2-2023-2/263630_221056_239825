@@ -28,7 +28,7 @@ import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.
 import { NotificationComponent } from './components/notification/notification.component';
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 @NgModule({
-  declarations: [AppComponent, PerfilComponent, ],
+  declarations: [AppComponent, ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -54,6 +54,7 @@ import { ModificarUsuarioComponent } from './components/modificar-usuario/modifi
     OpcionesPagoComponent,
     NotificationComponent,
     ModificarUsuarioComponent,
+    PerfilComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

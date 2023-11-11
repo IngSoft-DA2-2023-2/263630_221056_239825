@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'admin/signup', component: SignupComponent },
   { path: 'admin/editar/usuario/:id', component: ModificarUsuarioComponent },
-  { path: 'perfil/editar/:id', component: ModificarUsuarioComponent },
+  { path: 'perfil/editar', component: ModificarUsuarioComponent },
   { path: 'opcionesPago', component: OpcionesPagoComponent}
 ]; 
 

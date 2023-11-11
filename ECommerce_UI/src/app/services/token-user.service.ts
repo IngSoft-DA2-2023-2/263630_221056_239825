@@ -14,7 +14,7 @@ export class TokenUserService {
   private urlUsuarios: string = this.urlGeneral + '/usuarios';
 
   constructor(private http : HttpClient) { }
-  getCompraDelUsuario() : Compra[] {
+  getCompraDelUsuario() : Observable<Compra[]> {
     const id: string = sessionStorage.getItem('idUsuario')!;
     const token: string = sessionStorage.getItem('token')!;
     const newUrl: string = this.urlUsuarios + '/' + id + '/compras';
@@ -23,11 +23,7 @@ export class TokenUserService {
       Authorization: token,
       'Content-Type': 'application/json',
     });
-    let compras : Compra[] = []
-    this.http.get(newUrl, {headers}).subscribe((response : any)=> {
-      compras = response
-    })
-    return compras;
+    return this.http.get<Compra[]>(newUrl, {headers});
   }
 
   postCompraDelUsuario(compraPorHacer : compraCreateModelo) : void {

@@ -77,7 +77,11 @@ export class ModificarUsuarioComponent {
         if (idDeLaUrl) {
           this.adminService.getUsuario(Number(idDeLaUrl)).pipe(
             catchError((error: HttpErrorResponse) => {
-              this.openNotification(error.error.message);
+              if(error.status == 404) {
+                this.openNotification('No se encontró el usuario');
+              } else {
+                this.openNotification(error.error.message);
+              }
               this.router.navigate(['/admin']);
               return [];
             })
@@ -112,6 +116,10 @@ export class ModificarUsuarioComponent {
       return;
     }
     if (!this.esPaginaAdmin) {
+      if(emailValue == '' && passwordValue == '' && direccionValue == '') {
+        this.openSnackBar('Error en el formulario', 'Cerrar');
+        return;
+      }
       this.auth
         .signup(emailValue, passwordValue, direccionValue, 0)!
         .pipe(
@@ -134,6 +142,10 @@ export class ModificarUsuarioComponent {
         rol = 1;
       } else if (this.roles.value.cliente) {
         rol = 0;
+      }
+      if (rol == -1 && emailValue == '' && passwordValue == '' && direccionValue == '') {
+        this.openSnackBar('Debe modificar al menos un elemento del usuario', 'Cerrar');
+        return;
       }
       this.auth
         .signup(emailValue, passwordValue, direccionValue, rol)!
