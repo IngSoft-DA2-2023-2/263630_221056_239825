@@ -31,7 +31,7 @@ namespace Api.Controladores
         }
 
         [HttpGet("{id}")]
-        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId = true)]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_manejadorUsuario.ObtenerUsuario(id));
