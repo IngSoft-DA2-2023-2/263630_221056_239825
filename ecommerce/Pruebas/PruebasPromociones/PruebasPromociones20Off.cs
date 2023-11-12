@@ -42,7 +42,7 @@ namespace Pruebas.PruebasPromociones
             carrito = new List<Producto> {productoCategoria1, productoColor1};
 
             //Act
-            int costoTotal = _promocion20Off.AplicarPromocion(20, carrito);
+            int costoTotal = _promocion20Off.AplicarPromocion(carrito);
             
             // Assert
             Assert.AreEqual(260, costoTotal);
@@ -55,7 +55,7 @@ namespace Pruebas.PruebasPromociones
             carrito = new List<Producto> {productoColor1};
 
             //Act
-            int costoTotal = _promocion20Off.AplicarPromocion(20, carrito);
+            int costoTotal = _promocion20Off.AplicarPromocion(carrito);
             
             // Assert
             Assert.AreEqual(9999999, costoTotal);

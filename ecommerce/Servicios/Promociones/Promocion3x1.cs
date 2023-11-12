@@ -3,38 +3,22 @@ using Dominio;
 
 namespace Servicios.Promociones
 {
-    public class Promocion3xModelable : IPromocionStrategy
+    public class Promocion3x1 : IPromocionStrategy
     {
         public string NombrePromocion { get; set; }
         public int costoTotal { get; set; }
 
-        public int AplicarPromocion(int cantidadGratis, List<Producto> listaCompra)
+        public int AplicarPromocion(List<Producto> listaCompra)
         {
-            NombrePromocion = $"Promocion de Fidelidad 3x{cantidadGratis}";
+            NombrePromocion = $"Promocion de Fidelidad 3x1";
             costoTotal = 9999999;
-            List<List<Producto>> listaPorCriterio = SepararEnListas(cantidadGratis, listaCompra);
-            string variante = DefinirVariante(cantidadGratis);
-            int cantidadGratisEspecifica = DefinirCantidadGratisEspecifica(cantidadGratis);
+            List<List<Producto>> listaPorCriterio = SepararEnListas(1, listaCompra);
+            int cantidadGratisEspecifica = 2;
             if (listaCompra.Count >= 3)
             {
-                costoTotal = CalcularPrecioFinal(cantidadGratisEspecifica, variante, listaPorCriterio);
+                costoTotal = CalcularPrecioFinal(cantidadGratisEspecifica, listaPorCriterio);
             }
             return costoTotal;
-        }
-
-        private string DefinirVariante(int cantidadGratis)
-        {
-            string variante = "";
-            if (cantidadGratis == 1)
-            {
-                variante = "3x2";
-            }
-            else
-            {
-                variante = "3x1";
-            }
-
-            return variante;
         }
         
         private List<List<Producto>> SepararEnListas(int cantidadGratis, List<Producto> listaCompra)
@@ -58,19 +42,6 @@ namespace Servicios.Promociones
             return listasPorCriterio;
         }
         
-        private int DefinirCantidadGratisEspecifica(int cantidadGratisBase)
-        {
-            int cantidadAjustada = cantidadGratisBase;
-            if (cantidadGratisBase == 1)
-            {
-                cantidadAjustada++;
-            } else if (cantidadGratisBase == 2)
-            {
-                cantidadAjustada--;
-            }
-
-            return cantidadAjustada;
-        }
         private List<Producto> CrearListaPorMarca(int marcaId, List<Producto> listaCompra)
         {
             List<Producto> productosMismaMarca = new List<Producto>();
@@ -153,12 +124,12 @@ namespace Servicios.Promociones
             return listaDeReferencia;
         }
         
-        private int CalcularPrecioFinal(int cantidadGratis, string variante, List<List<Producto>> listasPorCriterio)
+        private int CalcularPrecioFinal(int cantidadGratis, List<List<Producto>> listasPorCriterio)
         {
             int precioTotal = 0;
             int indiceSumaPrecios = 0;
 
-            listasPorCriterio = EliminarDuplicadosGeneral(variante, listasPorCriterio);
+            listasPorCriterio = EliminarDuplicadosGeneral(listasPorCriterio);
 
             for (int i = 0; i < listasPorCriterio.Count; i++)
             {
@@ -202,17 +173,9 @@ namespace Servicios.Promociones
             return listaFinal;
         }
 
-        private List<List<Producto>> EliminarDuplicadosGeneral(string variante, List<List<Producto>> listasPorCriterio)
+        private List<List<Producto>> EliminarDuplicadosGeneral(List<List<Producto>> listasPorCriterio)
         {
-            if (variante.Equals("3x2"))
-            {
-                listasPorCriterio = EliminarDuplicadosCategoria(listasPorCriterio);
-            }
-            else
-            {
-                listasPorCriterio = EliminarDuplicadosMarca(listasPorCriterio);
-            }
-
+            listasPorCriterio = EliminarDuplicadosMarca(listasPorCriterio);
             return listasPorCriterio;
         }
         

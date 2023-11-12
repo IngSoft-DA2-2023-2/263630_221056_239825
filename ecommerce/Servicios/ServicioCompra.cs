@@ -1,4 +1,5 @@
-﻿using DataAccess.Interfaces;
+﻿using System.Reflection;
+using DataAccess.Interfaces;
 using Dominio;
 using Servicios.Interfaces;
 using Servicios.Promociones;
@@ -8,9 +9,7 @@ namespace Servicios;
 public class ServicioCompra : IServicioCompra
 {
     private IRepositorioCompra _repositorio;
-    private Promocion3xModelable _promocion3XModelable;
-    private Promocion20Off _promocion20Off;
-    private PromocionTotalLook _promocionTotalLook;
+    private List<IPromocionStrategy> _promocionesEncontradas;
 
     private string _nombrePromocionAplicada;
     private int _precioCalculado;
@@ -18,15 +17,43 @@ public class ServicioCompra : IServicioCompra
     public ServicioCompra(IRepositorioCompra repositorio)
     {
         _repositorio = repositorio;
-        _promocion3XModelable = new Promocion3xModelable();
-        _promocion20Off = new Promocion20Off();
-        _promocionTotalLook = new PromocionTotalLook();
+        
     }
 
     public List<Compra> RetornarTodas() => _repositorio.RetornarTodas();
     public List<Compra> RetornarPorId(int id) => _repositorio.RetornarPorId(id);
-    
 
+    public void CargarPromociones()
+    {
+        if (!File.Exists("Promociones"))
+        {
+            throw new ArgumentException("The DLL file does not exist at the specified path.");
+        }
+        Assembly loadedAssembly;
+        try
+        {
+            loadedAssembly = Assembly.LoadFrom("Promociones");
+        }
+        catch (Exception ex)
+        {
+            throw new ArgumentException($"Error loading the assembly: {ex.Message}");
+        }
+        
+        Type[] types = loadedAssembly.GetTypes();
+
+        foreach (Type type in types)
+        {
+            if (type.IsClass && typeof(IPromocionStrategy).IsAssignableFrom(type))
+            {
+                object instance = Activator.CreateInstance(type);
+                IPromocionStrategy claseObtenida = (IPromocionStrategy)instance;
+                _promocionesEncontradas.Add(claseObtenida);
+                
+            }
+        }
+    }
+    
+    
     
     private void CalcularPrecioBase(List<Producto> listaProductos)
     {
@@ -48,10 +75,11 @@ public class ServicioCompra : IServicioCompra
         int cantidad20Off = 20;
         int cantidadTotalLook = 50;
         CalcularPrecioBase(compra.Productos);
-        CompararPrecio(_promocion3XModelable, compra.Productos, cantidad3x1);
-        CompararPrecio(_promocion3XModelable, compra.Productos, cantidad3x2);
-        CompararPrecio(_promocion20Off, compra.Productos, cantidad20Off);
-        CompararPrecio(_promocionTotalLook, compra.Productos, cantidadTotalLook);
+        CargarPromociones();
+        foreach (var clase in _promocionesEncontradas)
+        {
+            CompararPrecio(clase, compra.Productos);
+        }
         compra.Precio = _precioCalculado;
         compra.NombrePromo = _nombrePromocionAplicada;
         AplicarDescuentoPaganza(compra);
@@ -65,9 +93,9 @@ public class ServicioCompra : IServicioCompra
         }
     }
     
-    private void CompararPrecio(IPromocionStrategy promocionUsada, List<Producto> productos, int cantidadGratis)
+    private void CompararPrecio(IPromocionStrategy promocionUsada, List<Producto> productos)
     {
-        int precioNuevo = promocionUsada.AplicarPromocion(cantidadGratis, productos);
+        int precioNuevo = promocionUsada.AplicarPromocion(productos);
         if (precioNuevo < _precioCalculado)
         {
             _precioCalculado = precioNuevo;

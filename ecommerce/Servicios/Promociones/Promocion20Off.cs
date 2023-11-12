@@ -8,9 +8,9 @@ namespace Servicios.Promociones
         public string NombrePromocion { get; set; }
         public int costoTotal { get; set; }
 
-        public int AplicarPromocion(int cantidadgratis, List<Producto> listaCompra)
+        public int AplicarPromocion(List<Producto> listaCompra)
         {
-            NombrePromocion = $"Promocion de Fidelidad {cantidadgratis}% Off";
+            NombrePromocion = $"Promocion de Fidelidad 20% Off";
             costoTotal = 9999999;
             if (listaCompra.Count >= 2)
             {
