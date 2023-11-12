@@ -52,5 +52,12 @@ h1 {
 
 .precioTotal{
  font-weight: bold;
+ font-size: 14px;
  text-align: right;
+ position: absolute;
+ top: 140px; 
+ right: 60px; 
+ border: 3px solid hotpink; 
+ padding: 10px; 
+ border-radius: 2px;
 }
