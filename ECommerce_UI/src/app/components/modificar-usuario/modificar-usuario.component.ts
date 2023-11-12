@@ -24,6 +24,7 @@ import { TokenUserService } from 'src/app/services/token-user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationComponent } from '../notification/notification.component';
+import { UsuarioDTO } from 'src/app/dominio/usuario-dto';
 
 @Component({
   selector: 'app-modificar-usuario',
@@ -42,7 +43,7 @@ import { NotificationComponent } from '../notification/notification.component';
   ],
 })
 export class ModificarUsuarioComponent {
-  usuario : Usuario = {
+  usuario: Usuario = {
     id: 0,
     correoElectronico: 'unCorreo',
     compras: [],
@@ -52,16 +53,15 @@ export class ModificarUsuarioComponent {
 
   constructor(
     private auth: AuthService,
-    private adminService : AdminService,
+    private adminService: AdminService,
+    private tokenUserService: TokenUserService,
     private _snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private dialog: MatDialog
   ) {}
-  email: FormControl = new FormControl('', [
-    Validators.email,
-  ]);
+  email: FormControl = new FormControl('', [Validators.email]);
   password: FormControl = new FormControl('', [Validators.minLength(8)]);
   direccion: FormControl = new FormControl('');
   esPaginaAdmin: Boolean = this.router.url.includes('/admin');
@@ -72,20 +72,25 @@ export class ModificarUsuarioComponent {
 
   ngOnInit(): void {
     if (this.esPaginaAdmin) {
-      this.route.params.subscribe(params => {
-        const idDeLaUrl = params['id']; 
+      this.route.params.subscribe((params) => {
+        const idDeLaUrl = params['id'];
         if (idDeLaUrl) {
-          this.adminService.getUsuario(Number(idDeLaUrl)).pipe(
-            catchError((error: HttpErrorResponse) => {
-              if(error.status == 404) {
-                this.openNotification('No se encontró el usuario');
-              } else {
-                this.openNotification(error.error.message);
-              }
-              this.router.navigate(['/admin']);
-              return [];
-            })
-          ).subscribe((usuario: Usuario) => { this.usuario = usuario; });
+          this.adminService
+            .getUsuario(Number(idDeLaUrl))
+            .pipe(
+              catchError((error: HttpErrorResponse) => {
+                if (error.status == 404) {
+                  this.openNotification('No se encontró el usuario');
+                } else {
+                  this.openNotification(error.error.message);
+                }
+                this.router.navigate(['/admin']);
+                return [];
+              })
+            )
+            .subscribe((usuario: Usuario) => {
+              this.usuario = usuario;
+            });
         }
       });
     } else {
@@ -97,7 +102,9 @@ export class ModificarUsuarioComponent {
     if (this.email.hasError('email')) {
       return 'Debe ingresar un mail valido';
     }
-    return this.password.hasError('minLength') ? '' : 'La contraseña debe tener 8 caracteres';
+    return this.password.hasError('minLength')
+      ? ''
+      : 'La contraseña debe tener 8 caracteres';
   }
 
   signup(): void {
@@ -105,9 +112,11 @@ export class ModificarUsuarioComponent {
       this.openSnackBar('Error en el formulario', 'Cerrar');
       return;
     }
-    const emailValue: string = this.email.value ?? this.usuario.correoElectronico;
+    const emailValue: string =
+      this.email.value ?? this.usuario.correoElectronico;
     const passwordValue: string = this.password.value ?? '';
-    const direccionValue: string = this.direccion.value ?? this.usuario.direccionEntrega;
+    const direccionValue: string =
+      this.direccion.value ?? this.usuario.direccionEntrega;
     if (passwordValue.length < 8 && passwordValue.length > 0) {
       this.openSnackBar(
         'La contraseña debe tener al menos 8 caracteres',
@@ -116,12 +125,22 @@ export class ModificarUsuarioComponent {
       return;
     }
     if (!this.esPaginaAdmin) {
-      if(emailValue == '' && passwordValue == '' && direccionValue == '') {
+      if (emailValue == '' && passwordValue == '' && direccionValue == '') {
         this.openSnackBar('Error en el formulario', 'Cerrar');
         return;
       }
-      this.auth
-        .signup(emailValue, passwordValue, direccionValue, 0)!
+      let contrasena = '';
+      if (passwordValue != '') {
+        contrasena = passwordValue;
+      }
+      const usuarioNuevo: UsuarioDTO = this.crearUsuarioNuevo(
+        emailValue,
+        direccionValue,
+        passwordValue,
+        -1
+      );
+      this.tokenUserService
+        .putUsuario(usuarioNuevo)!
         .pipe(
           catchError((error: Error) => {
             this.openSnackBar(
@@ -132,6 +151,9 @@ export class ModificarUsuarioComponent {
           })
         )
         .subscribe((response: any) => {
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('usuario');
+          sessionStorage.removeItem('idUsuario');
           this.router.navigate(['/login']);
         });
     } else {
@@ -143,12 +165,26 @@ export class ModificarUsuarioComponent {
       } else if (this.roles.value.cliente) {
         rol = 0;
       }
-      if (rol == -1 && emailValue == '' && passwordValue == '' && direccionValue == '') {
-        this.openSnackBar('Debe modificar al menos un elemento del usuario', 'Cerrar');
+      if (
+        rol == -1 &&
+        emailValue == '' &&
+        passwordValue == '' &&
+        direccionValue == ''
+      ) {
+        this.openSnackBar(
+          'Debe modificar al menos un elemento del usuario',
+          'Cerrar'
+        );
         return;
       }
-      this.auth
-        .signup(emailValue, passwordValue, direccionValue, rol)!
+      const usuarioNuevo: UsuarioDTO = this.crearUsuarioNuevo(
+        emailValue,
+        direccionValue,
+        passwordValue,
+        rol
+      );
+      this.tokenUserService
+        .putUsuario(usuarioNuevo)!
         .pipe(
           catchError((error: Error) => {
             this.openSnackBar(error.message, 'Cerrar');
@@ -156,9 +192,41 @@ export class ModificarUsuarioComponent {
           })
         )
         .subscribe((response: any) => {
-          this.openSnackBar('Usuario creado con éxito', 'Cerrar');
+          this.openSnackBar('Usuario modificado con éxito', 'Cerrar');
+          if (usuarioNuevo.id == Number(sessionStorage.getItem('idUsuario'))) {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('usuario');
+            sessionStorage.removeItem('idUsuario');
+            this.router.navigate(['/login']);
+          }
         });
     }
+  }
+
+  crearUsuarioNuevo(
+    emailValue: string,
+    direccionValue: string,
+    contrasenaValue: string,
+    rol: number
+  ): UsuarioDTO {
+    const usuarioNuevo: UsuarioDTO = {
+      id: this.usuario.id,
+      correoElectronico: this.usuario.correoElectronico,
+      compras: this.usuario.compras,
+      direccionEntrega: this.usuario.direccionEntrega,
+      contrasena: contrasenaValue,
+      rol: this.usuario.rol,
+    };
+    if (emailValue != '') {
+      usuarioNuevo.correoElectronico = emailValue;
+    }
+    if (direccionValue != '') {
+      usuarioNuevo.direccionEntrega = direccionValue;
+    }
+    if (rol != -1) {
+      usuarioNuevo.rol = rol;
+    }
+    return usuarioNuevo;
   }
 
   cancelar(): void {
@@ -179,7 +247,3 @@ export class ModificarUsuarioComponent {
     });
   }
 }
-function ngOnInit(): (target: ModificarUsuarioComponent, propertyKey: "") => void {
-  throw new Error('Function not implemented.');
-}
-

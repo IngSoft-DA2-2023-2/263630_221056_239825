@@ -19,7 +19,7 @@ namespace Api.Filtros
 
             if (user is null)
             {
-                context.Result = new ObjectResult(new { Message = "Authorization header is missing" })
+                context.Result = new ObjectResult(new { Message = "Header de Autorización no incluido" })
                 {
                     StatusCode = 401
                 };
@@ -34,14 +34,14 @@ namespace Api.Filtros
                     {
                         if (SecondaryRole.Equals(default(CategoriaRol)))
                         {
-                            context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                            context.Result = new ObjectResult(new { Message = "No tenes el Rol necesario" })
                             {
                                 StatusCode = 403
                             };
                         }
                         if (!(SecondaryRole == usuario.Rol))
                         {
-                            context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                            context.Result = new ObjectResult(new { Message = "No tenes el Rol necesario" })
                             {
                                 StatusCode = 403
                             };
@@ -55,7 +55,7 @@ namespace Api.Filtros
 
                     if (id != usuario.Id)
                     {
-                        context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                        context.Result = new ObjectResult(new { Message = "No Autorizado" })
                         {
                             StatusCode = 403
                         };

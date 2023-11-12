@@ -4,6 +4,7 @@ import { Compra } from '../dominio/compra.model';
 import { compraCreateModelo } from '../dominio/compraCreateModelo.model';
 import { Usuario } from '../dominio/usuario.model';
 import { Observable } from 'rxjs';
+import { UsuarioDTO } from '../dominio/usuario-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -40,18 +41,15 @@ export class TokenUserService {
     })
   }
 
-  putUsuario(usuario : Usuario){
-    const id : string = sessionStorage.getItem('idUsuario')!;
+  putUsuario(usuario : UsuarioDTO) : Observable<Usuario> {
+    const id : string = usuario.id.toString();
     const token: string = sessionStorage.getItem('token')!;
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       Authorization: token,
     });
-    this.http.put(this.urlUsuarios + '/' + id, usuario, { headers }).subscribe((response: any) => {
-      const usuarioCambiado: Usuario = response;
-      sessionStorage.setItem('usuario', JSON.stringify(usuarioCambiado));
-    });
+    return this.http.put<Usuario>(this.urlUsuarios + '/' + id, usuario, { headers });
   }
 
   deleteUsuario(id : number) : Observable<any>{
