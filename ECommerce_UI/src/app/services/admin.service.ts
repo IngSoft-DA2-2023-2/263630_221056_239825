@@ -39,14 +39,14 @@ export class AdminService {
     return producto;
   }
 
-  deleteProduct(id: number): void {
+  deleteProduct(id: number): Observable<any> {
     const token: string = sessionStorage.getItem('token')!;
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       Authorization: token,
     });
-    this.http.delete(this.urlProductos + '/' + id, { headers });
+    return this.http.delete(this.urlProductos + '/' + id, { headers });
   }
 
   getUsuarios(): Usuario[] {
