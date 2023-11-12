@@ -7,16 +7,18 @@ import { MatCardModule } from '@angular/material/card';
 import { ProductoComponent } from '../producto/producto.component';
 import { OpcionesPagoComponent } from '../opciones-pago/opciones-pago.component';
 import { NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css'],
-  imports: [MatButtonModule, MatStepperModule, MatCardModule, ProductoComponent, OpcionesPagoComponent, NgIf, NgFor],
+  imports: [MatButtonModule, MatStepperModule, MatCardModule, ProductoComponent, OpcionesPagoComponent, NgIf, NgFor, CommonModule],
 })
 export class CarritoComponent implements OnInit {
   hayProductosEnCarrito: boolean = false;
+  costoTotal: number = 0;
 
   productos = this._formBuilder.group({
     firstCtrl: [''],
@@ -34,12 +36,17 @@ export class CarritoComponent implements OnInit {
 
   ngOnInit() {
     this.cargarCarrito();
+    this.sumaPrecios();
   }
 
   cargarCarrito() {
     const carrito = localStorage.getItem('carrito');
     this.productosEnCarrito = carrito ? JSON.parse(carrito) : [];
     this.hayProductosEnCarrito = this.productosEnCarrito.length > 0;
+  }
+
+  sumaPrecios() {
+    this.costoTotal = this.productosEnCarrito.reduce((total, producto) => total + producto.precio, 0);
   }
 
   borrarCarrito() {
@@ -49,9 +56,12 @@ export class CarritoComponent implements OnInit {
   }
 
   eliminarProductoDelCarrito(index: number) {
-    // Elimina el producto del carrito al recibir el evento del componente hijo
     this.productosEnCarrito.splice(index, 1);
     localStorage.setItem('carrito', JSON.stringify(this.productosEnCarrito));
+  }
+
+  calcularTotalCarrito(): number {
+    return this.productosEnCarrito.reduce((total, producto) => total + producto.precio, 0);
   }
 }
 

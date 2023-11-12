@@ -1,24 +1,3 @@
-<!-- <h1>Carrito de Compras</h1>
-<mat-card-actions>
-  <button mat-raised-button (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
-  <button mat-raised-button class="botonPago" *ngIf="mostrarProductos" (click)="pagar()">Pagar</button>
-  <button mat-raised-button class="botonVolver" *ngIf="!mostrarProductos" (click)="volverAProductos()">Volver a Productos</button>
-</mat-card-actions>
-
-<div *ngIf="mostrarProductos && productosEnCarrito.length > 0" class="productosDelCarrito">
-  <app-producto *ngFor="let producto of productosEnCarrito" class="productos" [producto]="producto"></app-producto>
-</div>
-
-<div *ngIf="mostrarOpcionesPago" class="opcionesPago">
-  <h2>Seleccione el método de pago:</h2>
-  <mat-card-actions>
-    <button mat-raised-button>Transferencia</button>
-    <button mat-raised-button>Paganza</button>
-    <button mat-raised-button>Tarjeta</button>
-  </mat-card-actions>
-</div>
-<app-opciones-pago *ngIf="mostrarOpcionesPago"></app-opciones-pago> -->
-
 <mat-stepper linear #stepper color="accent">
   <mat-step [stepControl]="productos">
     <ng-template matStepLabel>Productos</ng-template>
@@ -29,6 +8,10 @@
       <app-producto *ngFor="let producto of productosEnCarrito; let i = index" class="productos" [producto]="producto"
         (eliminarProductoClick)="eliminarProductoDelCarrito(i)">
       </app-producto>
+    </div>
+    
+    <div *ngIf="productosEnCarrito.length > 0" class="totalCarrito">
+      <p>Total del Carrito: {{ calcularTotalCarrito() | currency }}</p>
     </div>
     <div>
       <button mat-raised-button matStepperNext color="accent">Ir al pago</button>
