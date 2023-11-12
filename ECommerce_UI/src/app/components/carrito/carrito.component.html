@@ -11,7 +11,7 @@
     </div>
     
     <div *ngIf="productosEnCarrito.length > 0" class="totalCarrito">
-      <p>Total del Carrito: {{ calcularTotalCarrito() | currency }}</p>
+      <h2 class="precioTotal">Total del Carrito: {{ calcularTotalCarrito() | currency }}</h2>
     </div>
     <div>
       <button mat-raised-button matStepperNext color="accent">Ir al pago</button>

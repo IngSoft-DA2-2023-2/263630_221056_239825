@@ -49,3 +49,8 @@ h1 {
   max-width: 100%;
   padding: 20px 40px;
 }
+
+.precioTotal{
+ font-weight: bold;
+ text-align: right;
+}
