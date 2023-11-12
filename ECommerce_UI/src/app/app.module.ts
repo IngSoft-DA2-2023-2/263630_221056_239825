@@ -27,6 +27,7 @@ import { CarritoComponent } from './components/carrito/carrito.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
+import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';
 @NgModule({
   declarations: [AppComponent, ],
   imports: [
@@ -54,6 +55,7 @@ import { ModificarUsuarioComponent } from './components/modificar-usuario/modifi
     OpcionesPagoComponent,
     NotificationComponent,
     ModificarUsuarioComponent,
+    ModificarProductoComponent,
     PerfilComponent,
   ],
   providers: [],

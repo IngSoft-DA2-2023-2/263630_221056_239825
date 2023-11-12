@@ -9,6 +9,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
+import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'productos', component: ProductosComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'admin/signup', component: SignupComponent },
   { path: 'admin/editar/usuario/:id', component: ModificarUsuarioComponent },
+  { path: 'admin/editar/producto/:id', component: ModificarProductoComponent},
   { path: 'perfil/editar', component: ModificarUsuarioComponent },
   { path: 'opcionesPago', component: OpcionesPagoComponent}
 ]; 

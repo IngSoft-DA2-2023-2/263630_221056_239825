@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProductsService } from 'src/app/services/productos.services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { Output, EventEmitter } from '@angular/core';
 
@@ -19,7 +19,7 @@ import { Output, EventEmitter } from '@angular/core';
 export class ProductoComponent {
   @Output() eliminarProductoClick: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private activatedRoute: ActivatedRoute, private productsServices : ProductsService){ }
+  constructor(private activatedRoute: ActivatedRoute, private productsServices : ProductsService, private router : Router){ }
   @Input() producto: Producto = {
     id: 0,
     nombre: '',
@@ -48,7 +48,7 @@ export class ProductoComponent {
 
   realizarAccion(accion: string) {
     if (accion === 'Modificar') {
-      alert('Modificar');
+      this.router.navigate(['/admin/editar/producto', this.producto.id]);
     } else if (accion === 'Eliminar') {
       this.eliminarProductoClick.emit();
     } else if (accion === 'Agregar') {

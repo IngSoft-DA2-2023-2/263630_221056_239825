@@ -1,0 +1,35 @@
+<div class="container">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>Modifique el producto</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="contenidoCard">
+            <mat-form-field class="inputs" color="accent">
+                <mat-label>Nombre del producto</mat-label>
+                <input matInput placeholder='{{producto.nombre}}' [formControl]="nombre">
+                <mat-error *ngIf="nombre.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="inputs" color="accent">
+                <mat-label>Descripción del producto</mat-label>
+                <input matInput placeholder='{{producto.descripcion}}' [formControl]="descripcion">
+                <mat-error *ngIf="descripcion.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="inputs" color="accent">
+                <mat-label>Precio del producto</mat-label>
+                <input matInput type="number" placeholder="{{producto.precio}}" [formControl]="precio">
+                <mat-error *ngIf="precio.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="inputs" color="accent">
+                <mat-label>Stock del producto</mat-label>
+                <input matInput type="number" placeholder="{{producto.stock}}" [formControl]="stock">
+                <mat-error *ngIf="stock.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-card-actions>
+                <div class="inputs botones">
+                    <button mat-raised-button color="accent" (click)="cancelar()">Volver</button>
+                    <button mat-raised-button color="accent" (click)="actualizarProducto()">Aceptar</button>
+                </div>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>

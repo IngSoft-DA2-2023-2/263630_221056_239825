@@ -54,16 +54,11 @@ export class ProductsService {
     return producto;
   }
 
-  getProduct(id: number): Producto | null {
+  getProduct(id: number): Observable<Producto>  {
     const headers: HttpHeaders = new HttpHeaders().set(
       'ngrok-skip-browser-warning',
       'placeHolderValue'
     );
-    this.http
-      .get<Producto[]>(this.url + '/' + id, { headers })
-      .subscribe((response: any) => {
-        return this.createSingleProduct(response);
-      });
-    return null;
+    return this.http.get<Producto>(this.url + '/' + id, { headers });
   }
 }
