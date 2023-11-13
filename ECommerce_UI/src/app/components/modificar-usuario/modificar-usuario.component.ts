@@ -24,7 +24,7 @@ import { TokenUserService } from 'src/app/services/token-user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationComponent } from '../notification/notification.component';
-import { UsuarioDTO } from 'src/app/dominio/usuario-dto';
+import { UsuarioDTO } from 'src/app/dominio/usuario-dto.model';
 
 @Component({
   selector: 'app-modificar-usuario',

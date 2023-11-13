@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Producto } from '../dominio/producto.model';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ProductoModelo } from '../dominio/productoModelo.model';
+import { ColorDTO } from '../dominio/color-dto.model';
+import { MarcaDTO } from '../dominio/marca-dto.model';
+import { CategoriaDTO } from '../dominio/categoria-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -60,5 +63,29 @@ export class ProductsService {
       'placeHolderValue'
     );
     return this.http.get<Producto>(this.url + '/' + id, { headers });
+  }
+
+  getColores() : Observable<ColorDTO[]>{
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'ngrok-skip-browser-warning',
+      'placeHolderValue'
+    );
+    return this.http.get<ColorDTO[]>(this.url + '/colores', { headers });
+  }
+
+  getMarcas() : Observable<MarcaDTO[]>{
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'ngrok-skip-browser-warning',
+      'placeHolderValue'
+    );
+    return this.http.get<MarcaDTO[]>(this.url + '/marcas', { headers });
+  }
+
+  getCategorias() : Observable<CategoriaDTO[]> {
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'ngrok-skip-browser-warning',
+      'placeHolderValue'
+    );
+    return this.http.get<CategoriaDTO[]>(this.url + '/categorias', { headers });
   }
 }

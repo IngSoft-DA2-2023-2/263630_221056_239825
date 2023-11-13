@@ -4,7 +4,7 @@ import { Compra } from '../dominio/compra.model';
 import { compraCreateModelo } from '../dominio/compraCreateModelo.model';
 import { Usuario } from '../dominio/usuario.model';
 import { Observable } from 'rxjs';
-import { UsuarioDTO } from '../dominio/usuario-dto';
+import { UsuarioDTO } from '../dominio/usuario-dto.model';
 
 @Injectable({
   providedIn: 'root'
