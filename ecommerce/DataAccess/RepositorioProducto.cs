@@ -84,4 +84,19 @@ public class RepositorioProducto : IRepositorioProducto
     {
         Contexto.Set<Producto>().Update(productoNuevo);
     }
+
+    public List<Marca> RetornarMarcas()
+    {
+        return Contexto.Set<Marca>().ToList();
+    }
+
+    public List<Categoria> RetornarCategorias()
+    {
+        return Contexto.Set<Categoria>().ToList();
+    }
+
+    public List<Color> RetornarColores()
+    {
+        return Contexto.Set<Color>().ToList();
+    }
 }

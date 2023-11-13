@@ -58,5 +58,26 @@ namespace Api.Controladores
             Producto productoActualizado = _servicioProducto.EncontrarPorId(id);
             return Ok(new ProductoModelo(productoActualizado));
         }
+
+        [HttpGet("colores")]
+        public IActionResult ObtenerColores()
+        {
+            List<Color> colores = _servicioProducto.RetornarColores();
+            return Ok(colores.Select(c => new ColorModelo(c)));
+        }
+
+        [HttpGet("categorias")]
+        public IActionResult ObtenerCategorias()
+        {
+            List<Categoria> categorias = _servicioProducto.RetornarCategorias();
+            return Ok(categorias.Select(c => new CategoriaModelo(c)));
+        }
+
+        [HttpGet("marcas")]
+        public IActionResult ObtenerMarcas()
+        {
+            List<Marca> marcas = _servicioProducto.RetornarMarcas();
+            return Ok(marcas.Select(m => new MarcaModelo(m)));
+        }
     }
 }

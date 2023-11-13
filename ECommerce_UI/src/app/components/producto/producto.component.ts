@@ -4,9 +4,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { ProductsService } from 'src/app/services/productos.services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { Output, EventEmitter } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
+import { catchError } from 'rxjs';
+import { ProductosComponent } from '../productos/productos.component';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
   standalone: true,
@@ -15,11 +20,16 @@ import { Output, EventEmitter } from '@angular/core';
   styleUrls: ['./producto.component.css'],
   imports: [MatButtonModule, MatCardModule, MatDividerModule, NgFor],
 })
-
 export class ProductoComponent {
-  @Output() eliminarProductoClick: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private activatedRoute: ActivatedRoute, private productsServices : ProductsService){ }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private productsServices: ProductsService,
+    private adminService: AdminService,
+    private productosComponent: ProductosComponent,
+    private router: Router, 
+    private dialog: MatDialog
+  ) {}
   @Input() producto: Producto = {
     id: 0,
     nombre: '',
@@ -37,23 +47,44 @@ export class ProductoComponent {
     if (url === 'admin') {
       return [
         { texto: 'Modificar Producto', accion: 'Modificar' },
-        { texto: 'Eliminar Producto', accion: 'Eliminar' }
-      ]; 
+        { texto: 'Eliminar Producto', accion: 'Eliminar' },
+      ];
     } else if (url === 'carrito') {
-      return [{ texto: 'Eliminar del Carrito', accion: 'Eliminar' }]; 
-    }else{
+      return [{ texto: 'Eliminar del Carrito', accion: 'Eliminar' }];
+    } else {
       return [{ texto: 'Agregar al Carrito', accion: 'Agregar' }];
     }
   }
 
   realizarAccion(accion: string) {
     if (accion === 'Modificar') {
-      alert('Modificar');
+      this.router.navigate(['/admin/editar/producto', this.producto.id]);
     } else if (accion === 'Eliminar') {
-      this.eliminarProductoClick.emit();
+      this.eliminarUsuario();
     } else if (accion === 'Agregar') {
       this.agregarAlCarrito();
     }
+  }
+
+  eliminarUsuario(): void {
+    this.adminService
+      .deleteProduct(this.producto.id)
+      .pipe(
+        catchError((error: Error) => {
+          this.openNotification('No se pudo eliminar el producto');
+          return [];
+        })
+      )
+      .subscribe((response: any) => {
+        this.openNotification('Producto eliminado exitosamente');
+        this.productosComponent.ngOnInit();
+      });
+  }
+
+  openNotification(mensaje: string): void {
+    const dialogRef = this.dialog.open(NotificationComponent, {
+      data: { mensaje: mensaje },
+    });
   }
 
   agregarAlCarrito() {
@@ -63,5 +94,3 @@ export class ProductoComponent {
     localStorage.setItem('carrito', JSON.stringify(carritoArray));
   }
 }
-  
-

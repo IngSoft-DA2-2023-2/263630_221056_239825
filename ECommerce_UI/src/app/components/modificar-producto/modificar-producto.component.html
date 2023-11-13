@@ -1,0 +1,72 @@
+<div class="container">
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title *ngIf="editarProducto">Modifique el producto {{producto.nombre}}</mat-card-title>
+            <mat-card-title *ngIf="!editarProducto">Agregue un producto</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="contenidoCard">
+            <section class="texto">
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Nombre del producto</mat-label>
+                    <input matInput placeholder='{{producto.nombre}}' [formControl]="nombre">
+                    <mat-error *ngIf="nombre.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Descripción del producto</mat-label>
+                    <input matInput placeholder='{{producto.descripcion}}' [formControl]="descripcion">
+                    <mat-error *ngIf="descripcion.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </section>
+            <section class="numerico">
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Precio del producto</mat-label>
+                    <input matInput type="number" placeholder="{{producto.precio}}" [formControl]="precio">
+                    <mat-error *ngIf="precio.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Stock del producto</mat-label>
+                    <input matInput type="number" placeholder="{{producto.stock}}" [formControl]="stock">
+                    <mat-error *ngIf="stock.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </section>
+            <section class="selector">
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Colores</mat-label>
+                    <mat-select [formControl]="listaFormColores" multiple>
+                        <mat-select-trigger>
+                            {{listaFormColores.value?.[0] || ''}}
+                            <span *ngIf="(listaFormColores.value?.length || 0) > 1">
+                                (+{{(listaFormColores.value?.length || 0) - 1}} {{listaFormColores.value?.length === 2 ?
+                                'otro' : 'otros'}})
+                            </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let colores of listaColores"
+                            [value]="colores.nombre">{{colores.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Categoría</mat-label>
+                    <mat-select [(ngModel)]="selectedValueCategoria" name="Categoria">
+                        <mat-option *ngFor="let Categoria of listaCategorias" [value]="Categoria.id">
+                            {{Categoria.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Marca</mat-label>
+                    <mat-select [(ngModel)]="selectedValueMarca" name="Marca">
+                        <mat-option *ngFor="let marcas of listaMarcas" [value]="marcas.id">
+                            {{marcas.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </section>
+            <mat-card-actions>
+                <div class="inputs botones">
+                    <button mat-raised-button color="accent" (click)="cancelar()">Volver</button>
+                    <button mat-raised-button color="accent" (click)="accionAceptar()">Aceptar</button>
+                </div>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</div>
