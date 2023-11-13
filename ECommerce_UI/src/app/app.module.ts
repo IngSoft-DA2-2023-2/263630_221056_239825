@@ -28,6 +28,8 @@ import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.
 import { NotificationComponent } from './components/notification/notification.component';
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';
+import { PaypalComponent } from './components/paypal/paypal.component';
+
 @NgModule({
   declarations: [AppComponent, ],
   imports: [
@@ -57,6 +59,7 @@ import { ModificarProductoComponent } from './components/modificar-producto/modi
     ModificarUsuarioComponent,
     ModificarProductoComponent,
     PerfilComponent,
+    PaypalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

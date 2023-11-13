@@ -1,6 +1,27 @@
 <div>
   <h2>Seleccione el método de pago:</h2>
-  <button mat-raised-button color="primary">Paganza</button>
-  <button mat-raised-button color="primary">Transferencia</button>
-  <button mat-raised-button color="primary">Tarjeta</button>
+  <button mat-raised-button color="primary" (click)="mostrarComponenteTarjeta()">Tarjeta de crédito</button>
+  <button mat-raised-button color="primary" (click)="mostrarInfoCuentaBancaria()">Cuenta bancaria</button>
+  <button mat-raised-button color="primary" (click)="mostrarFormPaypal()">Paypal</button>
+  <button mat-raised-button color="primary" (click)="mostrarInfoPaganza()">Paganza</button>
 </div>
+
+<app-tarjeta *ngIf="mostrarTarjeta"></app-tarjeta>
+
+<div *ngIf="mostrarCuentaBancaria">
+  <h2>Seleccione una cuenta bancaria:</h2>
+  <ul>
+    <li *ngFor="let cuenta of cuentasBancarias">
+      {{ cuenta.banco }}: {{ cuenta.numero }}
+    </li>
+  </ul>
+  <button mat-raised-button color="primary">Ya pagué</button>
+</div>
+
+<div *ngIf="mostrarPaganza">
+  <h2>Escanea el siguiente QR para realizar el pago:</h2>
+  <img [src]="qrImageUrl" alt="QR Code">
+  <button mat-raised-button color="primary">YA PAGUÉ</button>
+</div>
+
+<app-paypal *ngIf="mostrarPaypal"></app-paypal>

@@ -1,0 +1,17 @@
+<div>
+<form (ngSubmit)="realizarPago()">
+  <label for="email">Correo electrónico:</label>
+  <input type="email" id="email" name="email" required>
+  <label for="password">Contraseña:</label>
+  <input type="password" id="password" name="password" required>
+  <label for="nombre">Nombre y apellido:</label>
+  <input type="text" id="nombre" name="nombre" required>
+  <label for="nroTarjeta">Número de tarjeta:</label>
+  <input type="text" id="nroTarjeta" name="nroTarjeta" required>
+  <label for="fechaVencimiento">Fecha de vencimiento:</label>
+  <input type="text" id="fechaVencimiento" name="fechaVencimiento" required>
+  <label for="codigoSeguridad">Código de seguridad:</label>
+  <input type="text" id="codigoSeguridad" name="codigoSeguridad" required>
+  <button type="submit">Pagar con PayPal</button>
+</form>
+</div>
