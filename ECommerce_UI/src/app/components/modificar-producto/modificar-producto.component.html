@@ -1,7 +1,8 @@
 <div class="container">
     <mat-card class="card">
         <mat-card-header>
-            <mat-card-title>Modifique el producto</mat-card-title>
+            <mat-card-title *ngIf="editarProducto">Modifique el producto {{producto.nombre}}</mat-card-title>
+            <mat-card-title *ngIf="!editarProducto">Agregue un producto</mat-card-title>
         </mat-card-header>
         <mat-card-content class="contenidoCard">
             <section class="texto">
@@ -45,7 +46,7 @@
                 </mat-form-field>
                 <mat-form-field class="inputs" color="accent">
                     <mat-label>Categoría</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="Categoria">
+                    <mat-select [(ngModel)]="selectedValueCategoria" name="Categoria">
                         <mat-option *ngFor="let Categoria of listaCategorias" [value]="Categoria.id">
                             {{Categoria.nombre}}
                         </mat-option>
@@ -53,7 +54,7 @@
                 </mat-form-field>
                 <mat-form-field class="inputs" color="accent">
                     <mat-label>Marca</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="Marca">
+                    <mat-select [(ngModel)]="selectedValueMarca" name="Marca">
                         <mat-option *ngFor="let marcas of listaMarcas" [value]="marcas.id">
                             {{marcas.nombre}}
                         </mat-option>

@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'admin/signup', component: SignupComponent },
   { path: 'admin/editar/usuario/:id', component: ModificarUsuarioComponent },
   { path: 'admin/editar/producto/:id', component: ModificarProductoComponent},
+  { path: 'admin/agregar/producto', component: ModificarProductoComponent},
   { path: 'perfil/editar', component: ModificarUsuarioComponent },
   { path: 'opcionesPago', component: OpcionesPagoComponent}
 ]; 

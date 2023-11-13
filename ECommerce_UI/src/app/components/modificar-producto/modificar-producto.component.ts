@@ -50,7 +50,8 @@ export class ModificarProductoComponent {
   listaMarcas: MarcaDTO[] = [];
   listaColores: ColorDTO[] = [];
   listaFormColores: FormControl = new FormControl([]);
-  selectedValue!: string;
+  selectedValueCategoria!: string;
+  selectedValueMarca!: string;
   listaCategorias: CategoriaDTO[] = [];
   editarProducto: Boolean = false;
 
@@ -74,6 +75,7 @@ export class ModificarProductoComponent {
 
   ngOnInit(): void {
     if (this.router.url.includes('editar')) {
+      this.editarProducto = true;
       this.route.params.subscribe((params) => {
         const idDeLaUrl = params['id'];
         if (idDeLaUrl) {
@@ -110,7 +112,7 @@ export class ModificarProductoComponent {
   }
 
   openNotification(arg0: string) {
-    throw new Error('Method not implemented.');
+    alert(arg0);
   }
 
   getErrorMessage(): string {
@@ -122,7 +124,29 @@ export class ModificarProductoComponent {
       : 'La contraseña debe tener 8 caracteres';
   }
 
-  accionAceptar(): void {}
+  accionAceptar(): void {
+    if(this.editarProducto){
+      this.modificarProducto();
+    } else {
+      this.crearProducto();
+    }
+  } 
+
+  modificarProducto(): void {
+    if (this.nombre.value || this.descripcion.value || this.precio.value !== null || this.stock.value !== null || this.listaFormColores.value || this.selectedValueCategoria || this.selectedValueMarca) {
+      this.openNotification('Se modificó el producto');
+    } else {
+      this.openNotification('Debe completar todos los campos');
+    }
+  }
+
+  crearProducto(): void {
+    if (this.nombre.value && this.descripcion.value && this.precio.value !== null && this.stock.value !== null && this.listaFormColores.value && this.selectedValueCategoria && this.selectedValueMarca) {
+      this.openNotification('Se agregó el producto');
+    } else {
+      this.openNotification('Debe completar todos los campos');
+    }
+  }
 
   cancelar(): void {
     this.router.navigate(['/admin']);
