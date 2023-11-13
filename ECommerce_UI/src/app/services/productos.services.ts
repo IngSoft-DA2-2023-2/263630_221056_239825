@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Producto } from '../dominio/producto.model';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ProductoModelo } from '../dominio/productoModelo.model';
@@ -11,15 +11,12 @@ import { CategoriaDTO } from '../dominio/categoria-dto.model';
   providedIn: 'root',
 })
 export class ProductsService {
-  private urlGeneral: string =
-  'https://merely-loved-gibbon.ngrok-free.app/api/v1';
+  private urlGeneral: string = 'https://merely-loved-gibbon.ngrok-free.app/api/v1';
   private url: string = this.urlGeneral + '/productos';
   private _productosBehavior: BehaviorSubject<Producto[] | undefined>;
 
   constructor(private http: HttpClient) {
-    this._productosBehavior = new BehaviorSubject<Producto[] | undefined>(
-      undefined
-    );
+    this._productosBehavior = new BehaviorSubject<Producto[] | undefined>(undefined);
   }
 
   public get characters$(): Observable<Producto[] | undefined> {
@@ -41,6 +38,11 @@ export class ProductsService {
         productos = response;
       });
     return productos;
+  }
+
+  getProductosPorFiltro(params: HttpParams): Observable<Producto[]> {
+    const headers: HttpHeaders = new HttpHeaders().set('ngrok-skip-browser-warning', 'placeHolderValue');
+    return this.http.get<Producto[]>(this.url, { headers, params });
   }
 
   private createSingleProduct(element: ProductoModelo): Producto {

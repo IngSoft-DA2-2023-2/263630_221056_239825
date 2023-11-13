@@ -21,12 +21,12 @@ import { NotificationComponent } from '../notification/notification.component';
   imports: [MatButtonModule, MatCardModule, MatDividerModule, NgFor],
 })
 export class ProductoComponent {
-
+  @Output() eliminarProductoClick: EventEmitter<void> = new EventEmitter<void>();
   constructor(
     private activatedRoute: ActivatedRoute,
     private productsServices: ProductsService,
     private adminService: AdminService,
-    private productosComponent: ProductosComponent,
+    // private productosComponent: ProductosComponent,
     private router: Router, 
     private dialog: MatDialog
   ) {}
@@ -60,13 +60,15 @@ export class ProductoComponent {
     if (accion === 'Modificar') {
       this.router.navigate(['/admin/editar/producto', this.producto.id]);
     } else if (accion === 'Eliminar') {
-      this.eliminarUsuario();
+      this.eliminarProducto();
     } else if (accion === 'Agregar') {
       this.agregarAlCarrito();
     }
   }
 
-  eliminarUsuario(): void {
+  eliminarProducto(): void {
+    this.eliminarProductoClick.emit();
+  
     this.adminService
       .deleteProduct(this.producto.id)
       .pipe(
@@ -77,7 +79,7 @@ export class ProductoComponent {
       )
       .subscribe((response: any) => {
         this.openNotification('Producto eliminado exitosamente');
-        this.productosComponent.ngOnInit();
+        // this.productosComponent.ngOnInit();
       });
   }
 

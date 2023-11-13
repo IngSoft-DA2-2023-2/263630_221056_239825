@@ -7,6 +7,7 @@ import { CarritoComponent } from './components/carrito/carrito.component';
 
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';

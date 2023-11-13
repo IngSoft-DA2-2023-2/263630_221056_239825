@@ -8,13 +8,14 @@ import { ProductoComponent } from '../producto/producto.component';
 import { OpcionesPagoComponent } from '../opciones-pago/opciones-pago.component';
 import { NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { ProductosComponent } from '../productos/productos.component';
 
 @Component({
   standalone: true,
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css'],
-  imports: [MatButtonModule, MatStepperModule, MatCardModule, ProductoComponent, OpcionesPagoComponent, NgIf, NgFor, CommonModule],
+  imports: [MatButtonModule, MatStepperModule, MatCardModule, ProductoComponent, OpcionesPagoComponent, NgIf, NgFor, CommonModule, ProductosComponent],
 })
 export class CarritoComponent implements OnInit {
   hayProductosEnCarrito: boolean = false;
