@@ -11,7 +11,7 @@ namespace Pruebas.PruebasPromociones
     [TestClass]
     public class PruebasPromocion3x1
     {
-        private Promocion3x1 _promocion3x1;
+        private Promocion3x1Prueba _promocion3x1;
         private Producto productoMarca1;
         private Producto productoMarca2;
         private Producto productoMarca3;
@@ -20,7 +20,7 @@ namespace Pruebas.PruebasPromociones
         [TestInitialize]
         public void InitTest()
         {
-            _promocion3x1 = new Promocion3x1();
+            _promocion3x1 = new Promocion3x1Prueba();
 
             Marca marca1 = new();
             

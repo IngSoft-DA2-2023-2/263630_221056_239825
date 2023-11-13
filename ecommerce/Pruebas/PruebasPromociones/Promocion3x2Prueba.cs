@@ -3,7 +3,7 @@ using Dominio;
 
 namespace Servicios.Promociones
 {
-    public class Promocion3x2 : IPromocionStrategy
+    public class Promocion3x2Prueba
     {
         public string NombrePromocion { get; set; }
         public int costoTotal { get; set; }

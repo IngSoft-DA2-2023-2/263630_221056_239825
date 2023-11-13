@@ -23,9 +23,6 @@ namespace ServicioFactory
             serviceCollection.AddScoped<IManejadorUsuario, ManejadorUsuario>();
             serviceCollection.AddScoped<IServicioProducto, ServicioProducto>();
             serviceCollection.AddScoped<IServicioCompra, ServicioCompra>();
-            serviceCollection.AddScoped<IPromocionStrategy, PromocionTotalLook>();
-            serviceCollection.AddScoped<IPromocionStrategy, Promocion20Off>();
-            serviceCollection.AddScoped<IPromocionStrategy, Promocion3x2>();
 
             serviceCollection.AddCors(options =>
             {

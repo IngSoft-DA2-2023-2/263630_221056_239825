@@ -11,7 +11,7 @@ namespace Pruebas.PruebasPromociones
     [TestClass]
     public class PruebasPromocionesTotalLook
     {
-        private PromocionTotalLook _promocionTotalLook;
+        private PromocionTotalLookPrueba _promocionTotalLook;
         private Producto? productoColor1;
         private Producto? productoColor2;
         private Producto? productoColor3;
@@ -21,7 +21,7 @@ namespace Pruebas.PruebasPromociones
         [TestInitialize]
         public void InitTest()
         {
-            _promocionTotalLook = new PromocionTotalLook();
+            _promocionTotalLook = new PromocionTotalLookPrueba();
 
             Marca marca1 = new();
             Marca marca2 = new();

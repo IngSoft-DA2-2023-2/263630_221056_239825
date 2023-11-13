@@ -9,11 +9,9 @@ namespace Servicios;
 public class ServicioCompra : IServicioCompra
 {
     private IRepositorioCompra _repositorio;
-    private List<IPromocionStrategy> _promocionesEncontradas;
-
     private string _nombrePromocionAplicada;
     private int _precioCalculado;
-
+    
     public ServicioCompra(IRepositorioCompra repositorio)
     {
         _repositorio = repositorio;
@@ -23,38 +21,36 @@ public class ServicioCompra : IServicioCompra
     public List<Compra> RetornarTodas() => _repositorio.RetornarTodas();
     public List<Compra> RetornarPorId(int id) => _repositorio.RetornarPorId(id);
 
-    public void CargarPromociones()
+    public List<IPromocionStrategy> CargarPromociones()
     {
-        if (!File.Exists("Promociones"))
-        {
-            throw new ArgumentException("The DLL file does not exist at the specified path.");
-        }
-        Assembly loadedAssembly;
-        try
-        {
-            loadedAssembly = Assembly.LoadFrom("Promociones");
-        }
-        catch (Exception ex)
-        {
-            throw new ArgumentException($"Error loading the assembly: {ex.Message}");
-        }
-        
-        Type[] types = loadedAssembly.GetTypes();
+        List<IPromocionStrategy> _promocionesEncontradas = new List<IPromocionStrategy>();
+        string pathApi = Directory.GetCurrentDirectory();
+        string pathRelativo = Path.Combine("..", "Promociones");
+        string pathFinal = Path.GetFullPath(Path.Combine(pathApi, pathRelativo));
 
-        foreach (Type type in types)
+        string[] todosLosPaths = Directory.GetFiles(pathFinal);
+
+        foreach (string pathEncontrado in todosLosPaths)
         {
-            if (type.IsClass && typeof(IPromocionStrategy).IsAssignableFrom(type))
+            if (pathEncontrado.EndsWith(".dll"))
             {
-                object instance = Activator.CreateInstance(type);
-                IPromocionStrategy claseObtenida = (IPromocionStrategy)instance;
-                _promocionesEncontradas.Add(claseObtenida);
-                
+                FileInfo informacionArchivo = new FileInfo(pathEncontrado);
+                Assembly assembly = Assembly.LoadFile(informacionArchivo.FullName);
+
+                foreach (Type type in assembly.GetTypes())
+                {
+                    if (typeof(IPromocionStrategy).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
+                    {
+                        IPromocionStrategy promocion = (IPromocionStrategy)Activator.CreateInstance(type);
+                        if (promocion != null)
+                            _promocionesEncontradas.Add(promocion);
+                    }
+                }
             }
         }
+        return _promocionesEncontradas;
     }
-    
-    
-    
+
     private void CalcularPrecioBase(List<Producto> listaProductos)
     {
         int precio = 0;
@@ -76,7 +72,8 @@ public class ServicioCompra : IServicioCompra
         int cantidadTotalLook = 50;
         CalcularPrecioBase(compra.Productos);
         CargarPromociones();
-        foreach (var clase in _promocionesEncontradas)
+        List<IPromocionStrategy> promocionesEncontradas = CargarPromociones();
+        foreach (var clase in promocionesEncontradas)
         {
             CompararPrecio(clase, compra.Productos);
         }

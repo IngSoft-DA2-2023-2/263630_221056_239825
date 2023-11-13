@@ -12,7 +12,7 @@ namespace Pruebas.PruebasPromociones
     [TestClass]
     public class PruebasPromociones20Off
     {
-        private Promocion20Off _promocion20Off;
+        private Promocion20OffPrueba _promocion20Off;
         private Producto productoColor1;
         private Producto productoCategoria1;
         private List<Producto> carrito;
@@ -20,7 +20,7 @@ namespace Pruebas.PruebasPromociones
         [TestInitialize]
         public void InitTest()
         {
-            _promocion20Off = new Promocion20Off();
+            _promocion20Off = new Promocion20OffPrueba();
 
             Marca marca1 = new();
             
