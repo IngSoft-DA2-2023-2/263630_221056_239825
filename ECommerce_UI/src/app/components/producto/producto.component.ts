@@ -24,23 +24,17 @@ export class ProductoComponent {
   @Output() eliminarProductoClick: EventEmitter<void> = new EventEmitter<void>();
   constructor(
     private activatedRoute: ActivatedRoute,
-    private productsServices: ProductsService,
     private adminService: AdminService,
-    // private productosComponent: ProductosComponent,
+    private productosComponent: ProductosComponent,
     private router: Router, 
     private dialog: MatDialog
   ) {}
-  @Input() producto: Producto = {
-    id: 0,
-    nombre: '',
-    descripcion: '',
-    precio: 0,
-    stock: 0,
-    categoria: '',
-    colores: '',
-    marca: '',
-  };
-  @Input() seMuestraBoton: boolean = true;
+  @Input() producto!: Producto;
+  @Input() seMuestraBoton : boolean = true;
+
+  ngOnInit(){
+    console.log(this.producto)
+  }
 
   getBotones(): { texto: string; accion: string }[] {
     const url = this.activatedRoute.snapshot.url.join('/');
@@ -79,7 +73,7 @@ export class ProductoComponent {
       )
       .subscribe((response: any) => {
         this.openNotification('Producto eliminado exitosamente');
-        // this.productosComponent.ngOnInit();
+        this.productosComponent.ngOnInit();
       });
   }
 

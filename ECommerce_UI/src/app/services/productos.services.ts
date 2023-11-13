@@ -23,14 +23,14 @@ export class ProductsService {
     return this._productosBehavior.asObservable();
   }
 
-  getProducts(): Producto[] {
+  getProducts(params: HttpParams): Producto[] {
     let productos: Producto[] = [];
     const headers: HttpHeaders = new HttpHeaders().set(
       'ngrok-skip-browser-warning',
       'placeHolderValue'
     );
     this.http
-      .get<Producto[]>(this.url, { headers })
+      .get<Producto[]>(this.url, { headers, params })
       .subscribe((response: any) => {
         response.forEach((element: ProductoModelo) => {
           productos.push(this.createSingleProduct(element));
@@ -38,11 +38,6 @@ export class ProductsService {
         productos = response;
       });
     return productos;
-  }
-
-  getProductosPorFiltro(params: HttpParams): Observable<Producto[]> {
-    const headers: HttpHeaders = new HttpHeaders().set('ngrok-skip-browser-warning', 'placeHolderValue');
-    return this.http.get<Producto[]>(this.url, { headers, params });
   }
 
   private createSingleProduct(element: ProductoModelo): Producto {

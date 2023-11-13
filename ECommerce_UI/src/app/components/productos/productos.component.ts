@@ -1,22 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoComponent } from '../producto/producto.component';
-import { NgForOf, NgFor} from '@angular/common';
+import { NgForOf, NgFor } from '@angular/common';
 import { Producto } from 'src/app/dominio/producto.model';
 import { ProductsService } from 'src/app/services/productos.services';
 import { catchError, of, take } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  imports: [NgForOf, ProductoComponent, NgFor, MatInputModule, MatButtonModule, ReactiveFormsModule]
+  imports: [
+    NgForOf,
+    ProductoComponent,
+    NgFor,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+  ],
 })
-export class ProductosComponent implements OnInit{
+export class ProductosComponent implements OnInit {
   filterForm: FormGroup;
   ArrayProductos: Producto[] = [];
 
@@ -27,23 +39,23 @@ export class ProductosComponent implements OnInit{
   porNombre: string | undefined;
   filtroActivo: string | undefined;
 
-toggleFiltro(filtro: string) {
-  this.filtroActivo = this.filtroActivo === filtro ? undefined : filtro;
-  this.aplicarFiltros();
-}
+  toggleFiltro(filtro: string) {
+    this.filtroActivo = this.filtroActivo === filtro ? undefined : filtro;
+    this.aplicarFiltros();
+  }
 
-  constructor(private productsServices : ProductsService){
+  constructor(private productsServices: ProductsService) {
     this.filterForm = new FormBuilder().group({
-      porNombre: [''], 
+      porNombre: [''],
       // porPrecio: [''],
       // porCategoria: [''],
       // porMarca: ['']
     });
-   }
-  
-  ngOnInit(){
-    this.ArrayProductos = this.productsServices.getProducts();
-    this.actualizarProductos();
+  }
+
+  ngOnInit() {
+    const params = new HttpParams();
+    this.ArrayProductos = this.productsServices.getProducts(params);
     // this.ArrayProductos.push(this.producto1, this.producto2);
   }
 
@@ -62,10 +74,7 @@ toggleFiltro(filtro: string) {
       // .set('Categoria', categoria || '')
       // .set('MarcaId', marca || '')
       .set('Nombre', nombre || '');
-    this.productsServices.getProductosPorFiltro(params).subscribe((productos) => {
-      this.ArrayProductos = productos;
-    });
-    // console.log(this.ArrayProductos);
+    this.ArrayProductos = this.productsServices.getProducts(params);
   }
 
   // private producto1: Producto = {
@@ -90,5 +99,3 @@ toggleFiltro(filtro: string) {
   //   colores: "Negro"
   // };
 }
-
-
