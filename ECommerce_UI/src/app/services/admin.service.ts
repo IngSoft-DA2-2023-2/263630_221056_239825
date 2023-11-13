@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../dominio/usuario.model';
 import { Compra } from '../dominio/compra.model';
 import { Observable, catchError } from 'rxjs';
+import { ProductoDTO } from '../dominio/producto-dto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,15 +18,14 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  createProduct(producto: Producto): Producto {
+  createProduct(producto: ProductoDTO): Observable<ProductoDTO> {
     const token: string = sessionStorage.getItem('token')!;
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       Authorization: token,
     });
-    this.http.post(this.urlProductos, producto, { headers });
-    return producto;
+    return this.http.post<ProductoDTO>(this.urlProductos, producto, { headers });
   }
 
   updateProduct(producto: Producto): Producto {
