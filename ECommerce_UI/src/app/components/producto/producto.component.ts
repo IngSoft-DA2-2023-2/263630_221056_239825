@@ -32,10 +32,6 @@ export class ProductoComponent {
   @Input() producto!: Producto;
   @Input() seMuestraBoton : boolean = true;
 
-  ngOnInit(){
-    console.log(this.producto)
-  }
-
   getBotones(): { texto: string; accion: string }[] {
     const url = this.activatedRoute.snapshot.url.join('/');
     if (url === 'admin') {

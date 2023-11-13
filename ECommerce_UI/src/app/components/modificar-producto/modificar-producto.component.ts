@@ -53,7 +53,6 @@ export class ModificarProductoComponent {
   categoria: FormControl = new FormControl('');
   listaColores: ColorDTO[] = [];
   listaFormColores: FormControl = new FormControl('');
-  listaMarcas: MarcaDTO[] = [];
   listaAplicaPromo: AplicaPromo[] = [
     {
       nombre: 'No aplica para promociones',
@@ -65,9 +64,10 @@ export class ModificarProductoComponent {
     },
   ];
   selectedValueAplicaPromo!: boolean;
-  selectedValueCategoria!: string;
-  selectedValueMarca!: string;
   listaCategorias: CategoriaDTO[] = [];
+  selectedValueCategoria!: string;
+  listaMarcas: MarcaDTO[] = [];
+  selectedValueMarca!: string;
   editarProducto: Boolean = false;
 
   constructor(

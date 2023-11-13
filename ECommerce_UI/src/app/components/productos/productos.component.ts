@@ -11,8 +11,13 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { CategoriaDTO } from 'src/app/dominio/categoria-dto.model';
+import { MarcaDTO } from 'src/app/dominio/marca-dto.model';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   standalone: true,
@@ -26,11 +31,18 @@ import {
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule
   ],
 })
 export class ProductosComponent implements OnInit {
   filterForm: FormGroup;
   ArrayProductos: Producto[] = [];
+  listaCategorias: CategoriaDTO[] = [];
+  selectedValueCategoria!: string;
+  listaMarcas: MarcaDTO[] = [];
+  selectedValueMarca!: string;
 
   // precioPorOrden: 'mayor' | 'menor' | undefined;
   porPrecio: number | undefined;
@@ -56,6 +68,14 @@ export class ProductosComponent implements OnInit {
   ngOnInit() {
     const params = new HttpParams();
     this.ArrayProductos = this.productsServices.getProducts(params);
+    this.productsServices
+      .getCategorias()
+      .subscribe((categorias: CategoriaDTO[]) => {
+        this.listaCategorias = categorias;
+      });
+    this.productsServices.getMarcas().subscribe((marcas: MarcaDTO[]) => {
+      this.listaMarcas = marcas;
+    });
     // this.ArrayProductos.push(this.producto1, this.producto2);
   }
 
@@ -70,9 +90,9 @@ export class ProductosComponent implements OnInit {
     const marca = this.filterForm.get('porMarca')?.value;
 
     const params = new HttpParams()
-      // .set('Precio', precio || '')
-      // .set('Categoria', categoria || '')
-      // .set('MarcaId', marca || '')
+      .set('Precio', precio || '')
+      .set('CategoriaId', Number.parseInt(this.selectedValueCategoria) || '')
+      .set('MarcaId', Number.parseInt(this.selectedValueMarca) || '')
       .set('Nombre', nombre || '');
     this.ArrayProductos = this.productsServices.getProducts(params);
   }

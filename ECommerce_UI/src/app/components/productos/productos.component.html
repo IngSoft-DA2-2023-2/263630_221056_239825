@@ -1,26 +1,33 @@
 <section>
-  <form [formGroup]="filterForm" (ngSubmit)="aplicarFiltros()" class="filtros">
+  <form (ngSubmit)="aplicarFiltros()" class="filtros">
 
-    <mat-form-field class="input" color="accent">
+    <mat-form-field [formGroup]="filterForm" class="input" color="accent">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="porNombre">
     </mat-form-field>
 
-    <mat-form-field class="input" color="accent">
+    <mat-form-field [formGroup]="filterForm" class="input" color="accent">
       <mat-label>Precio</mat-label>
       <input matInput formControlName="porPrecio">
     </mat-form-field>
 
-    <mat-form-field class="input" color="accent">
+    <mat-form-field class="inputs" color="accent">
       <mat-label>Categoría</mat-label>
-      <input matInput formControlName="porCategoria">
+      <mat-select [(ngModel)]="selectedValueCategoria" name="Categoria">
+        <mat-option *ngFor="let Categoria of listaCategorias" [value]="Categoria.id">
+          {{Categoria.nombre}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-
-    <mat-form-field class="input" color="accent">
+    <mat-form-field class="inputs" color="accent">
       <mat-label>Marca</mat-label>
-      <input matInput formControlName="porMarca">
+      <mat-select [(ngModel)]="selectedValueMarca" name="Marca">
+        <mat-option *ngFor="let marcas of listaMarcas" [value]="marcas.id">
+          {{marcas.nombre}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
-
+    
     <button mat-raised-button color="primary" type="submit" class="input">Buscar</button>
   </form>
 </section>
