@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoComponent } from '../producto/producto.component';
-import { NgForOf, NgFor, NgIf } from '@angular/common';
+import { NgForOf, NgFor, NgIf, NumberFormatStyle } from '@angular/common';
 import { Producto } from 'src/app/dominio/producto.model';
 import { ProductsService } from 'src/app/services/productos.services';
 import { catchError, of, take } from 'rxjs';
@@ -18,7 +18,7 @@ import { CategoriaDTO } from 'src/app/dominio/categoria-dto.model';
 import { MarcaDTO } from 'src/app/dominio/marca-dto.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-interface AplicaPromo{
+interface AplicaPromo {
   nombre: string;
   valor: boolean;
 }
@@ -34,10 +34,13 @@ interface AplicaPromo{
     NgFor,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule, MatSelectModule, MatFormFieldModule, NgIf,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    NgIf,
     MatFormFieldModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
   ],
 })
 export class ProductosComponent implements OnInit {
@@ -48,15 +51,19 @@ export class ProductosComponent implements OnInit {
   listaMarcas: MarcaDTO[] = [];
   selectedValueMarca!: string;
 
-  precioRango: 'mayor' | 'menor' | undefined;
+  precioMin: number | undefined;
+  precioMax: number | undefined;
   porPrecio: number | undefined;
   porCategoria: string | undefined;
   porMarca: string | undefined;
   porNombre: string | undefined;
   filtroActivo: string | undefined;
-  
+
   promocion = new FormControl('');
-  aplicaPromo: AplicaPromo[] = [{nombre: 'Aplica promocion', valor: true}, {nombre: 'No aplica promocion', valor: false}];
+  aplicaPromo: AplicaPromo[] = [
+    { nombre: 'Aplica promocion', valor: true },
+    { nombre: 'No aplica promocion', valor: false },
+  ];
 
   toggleFiltro(filtro: string) {
     this.filtroActivo = this.filtroActivo === filtro ? undefined : filtro;
@@ -68,8 +75,8 @@ export class ProductosComponent implements OnInit {
       porNombre: [''],
       porPrecio: [''],
       precioRango: [''],
-      // porCategoria: [''],
-      // porMarca: ['']
+      precioMax: [''],
+      precioMin: [''],
     });
   }
 
@@ -98,19 +105,26 @@ export class ProductosComponent implements OnInit {
     // const categoria = this.filterForm.get('porCategoria')?.value;
     // const marca = this.filterForm.get('porMarca')?.value;
     const promo = this.promocion.value;
-   
+
     console.log(promo);
 
     const params = new HttpParams()
-      .set('PrecioEspecifico', precio || '')
-      // .set('Categoria', categoria || '')
-      // .set('MarcaId', marca || '')
-      .set('RangoPrecio', precioRange || '')
+      .set('PrecioEspecifico', this.traerPrecioFijoConRango()[0] || '')
+      .set('RangoPrecio', this.traerPrecioFijoConRango()[1] || '')
       .set('Nombre', nombre || '')
       .set('TienePromocion', promo || '')
       .set('CategoriaId', Number.parseInt(this.selectedValueCategoria) || '')
-      .set('MarcaId', Number.parseInt(this.selectedValueMarca) || '')
+      .set('MarcaId', Number.parseInt(this.selectedValueMarca) || '');
     this.ArrayProductos = this.productsServices.getProducts(params);
+  }
+
+  traerPrecioFijoConRango(): number[] {
+    const minimo = this.filterForm.get('precioMin')?.value;
+    const maximo = this.filterForm.get('precioMax')?.value;
+    const mediana = (minimo + maximo) / 2;
+    const medianaSinDecimales = mediana.toFixed(0);
+    const distancia = (maximo - mediana).toFixed(0);
+    return [Number(medianaSinDecimales), Number(distancia)];
   }
 
   // private producto1: Producto = {
