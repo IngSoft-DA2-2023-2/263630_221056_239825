@@ -21,6 +21,7 @@ import { CategoriaDTO } from 'src/app/dominio/categoria-dto.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgFor, NgIf } from '@angular/common';
+import { ProductoDTO } from 'src/app/dominio/producto-dto.model';
 
 @Component({
   selector: 'app-modificar-producto',
@@ -50,6 +51,14 @@ export class ModificarProductoComponent {
   listaMarcas: MarcaDTO[] = [];
   listaColores: ColorDTO[] = [];
   listaFormColores: FormControl = new FormControl([]);
+  listaAplicaPromo: any = [{
+    nombre: 'No aplica para promociones',
+    valor : false,
+  }, {
+    nombre: 'Aplica para promociones',
+    valor : true,
+  }]
+  selectedValueAplicaPromo!: boolean;
   selectedValueCategoria!: string;
   selectedValueMarca!: string;
   listaCategorias: CategoriaDTO[] = [];
@@ -145,6 +154,19 @@ export class ModificarProductoComponent {
       this.openNotification('Se agregó el producto');
     } else {
       this.openNotification('Debe completar todos los campos');
+    }
+  }
+
+  crearProductoDTO(nombre:string, descripcion:string, precio:number, stock:number, color : number, categoria: number, marca: number, aplicaPromo : boolean): ProductoDTO {
+    return {
+      nombre: nombre,
+      descripcion: descripcion,
+      precio: precio,
+      stock: stock,
+      colorId: color,
+      categoriaId: categoria,
+      marcaId: marca,
+      aplicaParaPromociones: aplicaPromo
     }
   }
 

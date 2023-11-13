@@ -28,6 +28,14 @@
                     <input matInput type="number" placeholder="{{producto.stock}}" [formControl]="stock">
                     <mat-error *ngIf="stock.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
+                <mat-form-field class="inputs" color="accent">
+                    <mat-label>Se le aplica promociones</mat-label>
+                    <mat-select [(ngModel)]="selectedValueCategoria" name="Categoria">
+                        <mat-option *ngFor="let Categoria of listaAplicaPromo" [value]="Categoria.valor">
+                            {{Categoria.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
             </section>
             <section class="selector">
                 <mat-form-field class="inputs" color="accent">
