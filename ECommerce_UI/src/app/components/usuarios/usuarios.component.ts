@@ -47,6 +47,11 @@ export class UsuariosComponent {
     this.usuarios = this.adminService.getUsuarios();
   }
 
+  reloadUsuarios() {
+    this.usuarios = this.adminService.getUsuarios();
+    window.location.reload();
+  }
+
   applyFilter() {
     const correo = this.filterForm
       .get('correoElectronico')

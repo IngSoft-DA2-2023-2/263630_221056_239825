@@ -25,9 +25,13 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
+import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
+
 @NgModule({
-  declarations: [AppComponent, PerfilComponent],
+  declarations: [AppComponent, ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,6 +41,8 @@ import { PaypalComponent } from './components/paypal/paypal.component';
     MatInputModule,
     MatCardModule,
     HttpClientModule,
+    MatStepperModule,
+    ReactiveFormsModule,
     NavbarComponent,
     LoginComponent,
     SignupComponent,
@@ -48,9 +54,11 @@ import { PaypalComponent } from './components/paypal/paypal.component';
     UsuarioComponent,
     UsuariosComponent,
     CarritoComponent,
-    MatStepperModule,
-    ReactiveFormsModule,
     OpcionesPagoComponent,
+    NotificationComponent,
+    ModificarUsuarioComponent,
+    ModificarProductoComponent,
+    PerfilComponent,
     PaypalComponent,
   ],
   providers: [],

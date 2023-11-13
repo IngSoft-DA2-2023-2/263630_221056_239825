@@ -20,7 +20,8 @@ namespace Servicios
 
         public Usuario RegistrarUsuario(Usuario usuario)
         {
-            if (ValidarUsuario(usuario, true)) {
+            if (ValidarUsuario(usuario, true))
+            {
                 string contrasenaHasheada = HashPasword(usuario.Contrasena, Salting(usuario.CorreoElectronico));
                 usuario.Contrasena = contrasenaHasheada;
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
@@ -89,6 +90,10 @@ namespace Servicios
         public void ActualizarUsuario(int id, Usuario usuario)
         {
             Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
+            if (usuario.Contrasena == "")
+            {
+                usuario.Contrasena = usuarioObtenido.Contrasena;
+            }
             if (ValidarUsuario(usuario, false))
             {
                 usuarioObtenido.CorreoElectronico = usuario.CorreoElectronico;
@@ -109,7 +114,7 @@ namespace Servicios
                 repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
         }
-        
+
 
         private bool ValidarCompra(Compra compra)
         {
@@ -135,7 +140,8 @@ namespace Servicios
             try
             {
                 return repositorioUsuario.ObtenerUsuario(u => u.Id == id);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 throw new KeyNotFoundException("No existe el usuario con la id dada");
             }
@@ -156,7 +162,7 @@ namespace Servicios
             try
             {
                 Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico);
-                if(VerifyPassword(contrasena, usuario.Contrasena, Salting(correoElectronico)))
+                if (VerifyPassword(contrasena, usuario.Contrasena, Salting(correoElectronico)))
                 {
                     return usuario;
                 }
@@ -164,7 +170,8 @@ namespace Servicios
                 {
                     throw new KeyNotFoundException();
                 }
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 throw new KeyNotFoundException("Credenciales incorrectas");
             }
