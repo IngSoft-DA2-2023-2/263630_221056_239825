@@ -16,6 +16,8 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProductoComponent } from './components/producto/producto.component';
 import { MatStepperModule } from '@angular/material/stepper';
+import { FormsModule } from '@angular/forms';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -60,6 +62,8 @@ import { PaypalComponent } from './components/paypal/paypal.component';
     ModificarProductoComponent,
     PerfilComponent,
     PaypalComponent,
+    FormsModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

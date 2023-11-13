@@ -1,4 +1,30 @@
-<div class = "listaProductos">
+<section>
+  <form [formGroup]="filterForm" (ngSubmit)="aplicarFiltros()" class="filtros">
+
+    <mat-form-field class="input" color="accent">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="porNombre">
+    </mat-form-field>
+
+    <mat-form-field class="input" color="accent">
+      <mat-label>Precio</mat-label>
+      <input matInput formControlName="porPrecio">
+    </mat-form-field>
+
+    <mat-form-field class="input" color="accent">
+      <mat-label>Categoría</mat-label>
+      <input matInput formControlName="porCategoria">
+    </mat-form-field>
+
+    <mat-form-field class="input" color="accent">
+      <mat-label>Marca</mat-label>
+      <input matInput formControlName="porMarca">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" class="input">Buscar</button>
+  </form>
+</section>
+
+<div class="listaProductos">
   <app-producto *ngFor="let a of ArrayProductos" [producto]="a"></app-producto>
 </div>
-
