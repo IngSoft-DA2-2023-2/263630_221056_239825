@@ -7,26 +7,46 @@ import { catchError, of, take } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
-
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { CategoriaDTO } from 'src/app/dominio/categoria-dto.model';
+import { MarcaDTO } from 'src/app/dominio/marca-dto.model';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 interface AplicaPromo{
   nombre: string;
   valor: boolean;
 }
-
 
 @Component({
   standalone: true,
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  imports: [NgForOf, ProductoComponent, NgFor, MatInputModule, MatButtonModule, ReactiveFormsModule, MatSelectModule, MatFormFieldModule, NgIf]
+  imports: [
+    NgForOf,
+    ProductoComponent,
+    NgFor,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule, MatSelectModule, MatFormFieldModule, NgIf,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule
+  ],
 })
 export class ProductosComponent implements OnInit {
   filterForm: FormGroup;
   ArrayProductos: Producto[] = [];
+  listaCategorias: CategoriaDTO[] = [];
+  selectedValueCategoria!: string;
+  listaMarcas: MarcaDTO[] = [];
+  selectedValueMarca!: string;
 
   precioRango: 'mayor' | 'menor' | undefined;
   porPrecio: number | undefined;
@@ -54,8 +74,16 @@ export class ProductosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ArrayProductos = this.productsServices.getProducts();
-    this.actualizarProductos();
+    const params = new HttpParams();
+    this.ArrayProductos = this.productsServices.getProducts(params);
+    this.productsServices
+      .getCategorias()
+      .subscribe((categorias: CategoriaDTO[]) => {
+        this.listaCategorias = categorias;
+      });
+    this.productsServices.getMarcas().subscribe((marcas: MarcaDTO[]) => {
+      this.listaMarcas = marcas;
+    });
     // this.ArrayProductos.push(this.producto1, this.producto2);
   }
 
@@ -79,10 +107,10 @@ export class ProductosComponent implements OnInit {
       // .set('MarcaId', marca || '')
       .set('RangoPrecio', precioRange || '')
       .set('Nombre', nombre || '')
-      .set('TienePromocion', promo || '');
-    this.productsServices.getProductosPorFiltro(params).subscribe((productos) => {
-      this.ArrayProductos = productos;
-    });
+      .set('TienePromocion', promo || '')
+      .set('CategoriaId', Number.parseInt(this.selectedValueCategoria) || '')
+      .set('MarcaId', Number.parseInt(this.selectedValueMarca) || '')
+    this.ArrayProductos = this.productsServices.getProducts(params);
   }
 
   // private producto1: Producto = {
@@ -107,5 +135,3 @@ export class ProductosComponent implements OnInit {
   //   colores: "Negro"
   // };
 }
-
-

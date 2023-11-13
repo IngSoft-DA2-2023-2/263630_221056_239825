@@ -22,7 +22,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgFor, NgIf } from '@angular/common';
 import { ProductoDTO } from 'src/app/dominio/producto-dto.model';
-
+interface AplicaPromo {
+  nombre: string;
+  valor: boolean;
+}
 @Component({
   selector: 'app-modificar-producto',
   templateUrl: './modificar-producto.component.html',
@@ -33,11 +36,11 @@ import { ProductoDTO } from 'src/app/dominio/producto-dto.model';
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
+    FormsModule,
     NgFor,
     MatFormFieldModule,
     MatSelectModule,
     NgIf,
-    FormsModule,
   ],
 })
 export class ModificarProductoComponent {
@@ -48,20 +51,23 @@ export class ModificarProductoComponent {
   marca: FormControl = new FormControl('');
   colores: FormControl = new FormControl('');
   categoria: FormControl = new FormControl('');
-  listaMarcas: MarcaDTO[] = [];
   listaColores: ColorDTO[] = [];
-  listaFormColores: FormControl = new FormControl([]);
-  listaAplicaPromo: any = [{
-    nombre: 'No aplica para promociones',
-    valor : false,
-  }, {
-    nombre: 'Aplica para promociones',
-    valor : true,
-  }]
+  listaFormColores: FormControl = new FormControl('');
+  listaAplicaPromo: AplicaPromo[] = [
+    {
+      nombre: 'No aplica para promociones',
+      valor: false,
+    },
+    {
+      nombre: 'Aplica para promociones',
+      valor: true,
+    },
+  ];
   selectedValueAplicaPromo!: boolean;
-  selectedValueCategoria!: string;
-  selectedValueMarca!: string;
   listaCategorias: CategoriaDTO[] = [];
+  selectedValueCategoria!: string;
+  listaMarcas: MarcaDTO[] = [];
+  selectedValueMarca!: string;
   editarProducto: Boolean = false;
 
   constructor(
@@ -134,15 +140,24 @@ export class ModificarProductoComponent {
   }
 
   accionAceptar(): void {
-    if(this.editarProducto){
+    if (this.editarProducto) {
       this.modificarProducto();
     } else {
       this.crearProducto();
     }
-  } 
+  }
 
   modificarProducto(): void {
-    if (this.nombre.value || this.descripcion.value || this.precio.value !== null || this.stock.value !== null || this.listaFormColores.value || this.selectedValueCategoria || this.selectedValueMarca) {
+    if (
+      this.nombre.value ||
+      this.descripcion.value ||
+      this.precio.value !== null ||
+      this.stock.value !== null ||
+      this.listaFormColores.value ||
+      this.selectedValueCategoria ||
+      this.selectedValueMarca ||
+      this.selectedValueAplicaPromo !== null
+    ) {
       this.openNotification('Se modificó el producto');
     } else {
       this.openNotification('Debe completar todos los campos');
@@ -150,14 +165,63 @@ export class ModificarProductoComponent {
   }
 
   crearProducto(): void {
-    if (this.nombre.value && this.descripcion.value && this.precio.value !== null && this.stock.value !== null && this.listaFormColores.value && this.selectedValueCategoria && this.selectedValueMarca) {
-      this.openNotification('Se agregó el producto');
+    if (
+      this.nombre.value &&
+      this.descripcion.value &&
+      this.precio.value !== null &&
+      this.stock.value !== null &&
+      this.listaFormColores.value &&
+      this.selectedValueCategoria &&
+      this.selectedValueMarca &&
+      this.selectedValueAplicaPromo !== null
+    ) {
+      this.adminService
+        .createProduct(
+          this.crearProductoDTO(
+            this.nombre.value,
+            this.descripcion.value,
+            this.precio.value,
+            this.stock.value,
+            this.getIdsFromColorNames(this.listaFormColores.value),
+            Number.parseInt(this.selectedValueCategoria),
+            Number.parseInt(this.selectedValueMarca),
+            this.selectedValueAplicaPromo
+          )
+        )
+        .subscribe((producto: ProductoDTO) => {
+          this.openNotification('Se creó el producto');
+        });
     } else {
       this.openNotification('Debe completar todos los campos');
     }
   }
 
-  crearProductoDTO(nombre:string, descripcion:string, precio:number, stock:number, color : number, categoria: number, marca: number, aplicaPromo : boolean): ProductoDTO {
+  getIdsFromColorNames(colorNames: string[]): number {
+    const ids: number[] = [];
+
+    colorNames.forEach((colorName: string) => {
+      const colorDTO = this.listaColores.find(
+        (color: ColorDTO) => color.nombre === colorName
+      );
+
+      if (colorDTO) {
+        ids.push(colorDTO.id);
+      }
+    });
+
+    return ids[0];
+  }
+
+  crearProductoDTO(
+    nombre: string,
+    descripcion: string,
+    precio: number,
+    stock: number,
+    color: number,
+    categoria: number,
+    marca: number,
+    aplicaPromo: boolean
+  ): ProductoDTO {
     return {
       nombre: nombre,
       descripcion: descripcion,
@@ -166,8 +230,8 @@ export class ModificarProductoComponent {
       colorId: color,
       categoriaId: categoria,
       marcaId: marca,
-      aplicaParaPromociones: aplicaPromo
-    }
+      aplicaParaPromociones: aplicaPromo,
+    };
   }
 
   cancelar(): void {

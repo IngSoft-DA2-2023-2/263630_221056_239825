@@ -30,7 +30,7 @@
                 </mat-form-field>
                 <mat-form-field class="inputs" color="accent">
                     <mat-label>Se le aplica promociones</mat-label>
-                    <mat-select [(ngModel)]="selectedValueCategoria" name="Categoria">
+                    <mat-select [(ngModel)]="selectedValueAplicaPromo" name="Categoria">
                         <mat-option *ngFor="let Categoria of listaAplicaPromo" [value]="Categoria.valor">
                             {{Categoria.nombre}}
                         </mat-option>
