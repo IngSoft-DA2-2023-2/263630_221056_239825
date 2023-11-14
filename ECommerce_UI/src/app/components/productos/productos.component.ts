@@ -18,7 +18,7 @@ import { CategoriaDTO } from 'src/app/dominio/categoria-dto.model';
 import { MarcaDTO } from 'src/app/dominio/marca-dto.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-interface AplicaPromo{
+interface AplicaPromo {
   nombre: string;
   valor: boolean;
 }
@@ -54,9 +54,9 @@ export class ProductosComponent implements OnInit {
   porMarca: string | undefined;
   porNombre: string | undefined;
   filtroActivo: string | undefined;
-  
+
   promocion = new FormControl('');
-  aplicaPromo: AplicaPromo[] = [{nombre: 'Aplica promocion', valor: true}, {nombre: 'No aplica promocion', valor: false}];
+  aplicaPromo: AplicaPromo[] = [{ nombre: 'Aplica promocion', valor: true }, { nombre: 'No aplica promocion', valor: false }];
 
   toggleFiltro(filtro: string) {
     this.filtroActivo = this.filtroActivo === filtro ? undefined : filtro;
@@ -97,19 +97,26 @@ export class ProductosComponent implements OnInit {
     const precioRange = this.filterForm.get('precioRango')?.value;
     // const categoria = this.filterForm.get('porCategoria')?.value;
     // const marca = this.filterForm.get('porMarca')?.value;
-    const promo = this.promocion.value;
-   
-    console.log(promo);
+    const promo = this.promocion.value;    
 
-    const params = new HttpParams()
+
+    let params = new HttpParams()
       .set('PrecioEspecifico', precio || '')
       // .set('Categoria', categoria || '')
       // .set('MarcaId', marca || '')
       .set('RangoPrecio', precioRange || '')
       .set('Nombre', nombre || '')
-      .set('TienePromocion', promo || '')
       .set('CategoriaId', Number.parseInt(this.selectedValueCategoria) || '')
       .set('MarcaId', Number.parseInt(this.selectedValueMarca) || '')
+
+      if (promo) {
+        if (promo[0] == 'Aplica promocion' && promo.length < 2) {
+          params = params.append('TienePromociones', true);
+        } else if (promo[0] == 'No aplica promocion' && promo.length < 2){
+          params = params.append('TienePromociones', false);
+        }
+      }
+      console.log(params);
     this.ArrayProductos = this.productsServices.getProducts(params);
   }
 
