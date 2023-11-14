@@ -21,18 +21,13 @@
   <mat-step [stepControl]="haPagado">
     <ng-template matStepLabel>Pago</ng-template>
     <app-opciones-pago>
-      <h2>Seleccione el método de pago:</h2>
-      <button mat-raised-button>Tarjeta de crédito</button>
-      <button mat-raised-button>Débito bancario</button>
-      <button mat-raised-button>Paypal</button>
-      <button mat-raised-button>Paganza</button>
     </app-opciones-pago>
     <div class="botonesMetodoPago">
       <div>
         <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
       </div>
       <div>
-        <button mat-raised-button matStepperNext color="accent">PAGAR</button>
+        <button mat-raised-button matStepperNext color="accent" (click)="pagar()">PAGAR</button>
       </div>
     </div>
   </mat-step>

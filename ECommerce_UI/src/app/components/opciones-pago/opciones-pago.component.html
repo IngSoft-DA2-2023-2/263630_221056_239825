@@ -15,13 +15,11 @@
       {{ cuenta.banco }}: {{ cuenta.numero }}
     </li>
   </ul>
-  <button mat-raised-button color="primary">Ya pagué</button>
 </div>
 
 <div *ngIf="mostrarPaganza">
   <h2>Escanea el siguiente QR para realizar el pago:</h2>
   <img [src]="qrImageUrl" alt="QR Code">
-  <button mat-raised-button color="primary">YA PAGUÉ</button>
 </div>
 
 <app-paypal *ngIf="mostrarPaypal"></app-paypal>

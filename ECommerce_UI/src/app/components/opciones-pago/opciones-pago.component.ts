@@ -10,8 +10,6 @@ import { NgIf, NgFor } from '@angular/common';
     styleUrls: ['./opciones-pago.component.css'],
     standalone: true,
     imports: [MatButtonModule, TarjetaComponent, PaypalComponent, NgIf, NgFor],
-    // declarations: [TarjetaComponent, PaypalComponent],
-
 })
 export class OpcionesPagoComponent {
   mostrarTarjeta: boolean = false;
@@ -25,6 +23,7 @@ export class OpcionesPagoComponent {
     this.mostrarCuentaBancaria = false;
     this.mostrarPaganza = false;
     this.mostrarPaypal = false;
+    sessionStorage.setItem('metodoDePago', 'TarjetaVisa');
   }
 
   cuentasBancarias: { banco: string; numero: string }[] = [
@@ -38,6 +37,7 @@ export class OpcionesPagoComponent {
     this.mostrarTarjeta = false;
     this.mostrarPaganza = false;
     this.mostrarPaypal = false;
+    sessionStorage.setItem('metodoDePago', 'DebitoBancoITAU');
   }
 
   mostrarInfoPaganza() {
@@ -45,6 +45,7 @@ export class OpcionesPagoComponent {
     this.mostrarTarjeta = false;
     this.mostrarCuentaBancaria = false;
     this.mostrarPaypal = false;
+    sessionStorage.setItem('metodoDePago', 'Paganza');
   }
 
   mostrarFormPaypal() {
@@ -52,6 +53,6 @@ export class OpcionesPagoComponent {
     this.mostrarTarjeta = false;
     this.mostrarCuentaBancaria = false;
     this.mostrarPaganza = false;
+    sessionStorage.setItem('metodoDePago', 'Paypal');
   }
-
 }

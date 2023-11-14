@@ -9,6 +9,7 @@
         "contrasena",
         "descripcion",
         "direccion",
-        "Electronico"
+        "Electronico",
+        "metodo"
     ]
 }

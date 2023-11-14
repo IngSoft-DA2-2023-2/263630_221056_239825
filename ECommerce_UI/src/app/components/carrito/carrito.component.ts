@@ -9,13 +9,27 @@ import { OpcionesPagoComponent } from '../opciones-pago/opciones-pago.component'
 import { NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ProductosComponent } from '../productos/productos.component';
+import { TokenUserService } from 'src/app/services/token-user.service';
+import { compraCreateModelo } from 'src/app/dominio/compraCreateModelo.model';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   standalone: true,
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
   styleUrls: ['./carrito.component.css'],
-  imports: [MatButtonModule, MatStepperModule, MatCardModule, ProductoComponent, OpcionesPagoComponent, NgIf, NgFor, CommonModule, ProductosComponent],
+  imports: [
+    MatButtonModule,
+    MatStepperModule,
+    MatCardModule,
+    ProductoComponent,
+    OpcionesPagoComponent,
+    NgIf,
+    NgFor,
+    CommonModule,
+    ProductosComponent,
+  ],
+  providers: [OpcionesPagoComponent],
 })
 export class CarritoComponent implements OnInit {
   hayProductosEnCarrito: boolean = false;
@@ -31,7 +45,11 @@ export class CarritoComponent implements OnInit {
 
   @ViewChild('stepper') stepper!: MatStepperModule;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    private tokenService: TokenUserService,
+    private opcionesPago: OpcionesPagoComponent
+  ) {}
 
   productosEnCarrito: Producto[] = [];
 
@@ -47,7 +65,10 @@ export class CarritoComponent implements OnInit {
   }
 
   sumaPrecios() {
-    this.costoTotal = this.productosEnCarrito.reduce((total, producto) => total + producto.precio, 0);
+    this.costoTotal = this.productosEnCarrito.reduce(
+      (total, producto) => total + producto.precio,
+      0
+    );
   }
 
   borrarCarrito() {
@@ -56,14 +77,44 @@ export class CarritoComponent implements OnInit {
     this.cargarCarrito();
   }
 
+  pagar() {
+    if (this.productosEnCarrito.length > 0) {
+      const idDeProductosDelCarrito: number[] = this.productosEnCarrito.map(
+        (producto) => producto.id
+      );
+      const metodoDePago = sessionStorage.getItem('metodoDePago') || '';
+
+      const compraModel: compraCreateModelo = {
+        idProductos: idDeProductosDelCarrito,
+        metodoDePago: metodoDePago,
+      };
+
+      console.log(compraModel);
+      this.tokenService
+        .postCompraDelUsuario(compraModel)
+        .pipe(
+          catchError((err) => {
+            alert(err.error.message);
+            return throwError(err);
+          })
+        )
+        .subscribe((data) => {
+          console.log(data);
+          this.borrarCarrito();
+          sessionStorage.removeItem('metodoDePago');
+        });
+    }
+  }
+
   eliminarProductoDelCarrito(index: number) {
     this.productosEnCarrito.splice(index, 1);
     localStorage.setItem('carrito', JSON.stringify(this.productosEnCarrito));
   }
 
   calcularTotalCarrito(): number {
-    return this.productosEnCarrito.reduce((total, producto) => total + producto.precio, 0);
+    return this.productosEnCarrito.reduce(
+      (total, producto) => total + producto.precio,
+      0
+    );
   }
 }
-
-
