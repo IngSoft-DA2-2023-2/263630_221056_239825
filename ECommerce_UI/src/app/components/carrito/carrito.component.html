@@ -9,7 +9,7 @@
         (eliminarProductoClick)="eliminarProductoDelCarrito(i)">
       </app-producto>
     </div>
-    
+
     <div *ngIf="productosEnCarrito.length > 0" class="totalCarrito">
       <h2 class="precioTotal">Total del Carrito: {{ calcularTotalCarrito() | currency }}</h2>
     </div>
@@ -27,14 +27,12 @@
       <button mat-raised-button>Paypal</button>
       <button mat-raised-button>Paganza</button>
     </app-opciones-pago>
+    
     <div class="botonesMetodoPago">
-      <div>
-        <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
-      </div>
-      <div>
-        <button mat-raised-button matStepperNext color="accent">PAGAR</button>
-      </div>
+      <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
+      <button mat-raised-button matStepperNext color="accent">PAGAR</button>
     </div>
+    
   </mat-step>
 
   <mat-step>
