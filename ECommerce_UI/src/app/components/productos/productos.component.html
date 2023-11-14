@@ -1,57 +1,61 @@
 <section>
   <form (ngSubmit)="aplicarFiltros()" class="filtros">
+    <div class="filtrosInputs">
+      <mat-form-field [formGroup]="filterForm" class="input" color="accent">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="porNombre">
+      </mat-form-field>
+      <div class="precioMinMax">
+        <mat-form-field [formGroup]="filterForm" class="input" color="accent">
+          <mat-label>Precio min</mat-label>
+          <input matInput type="number" formControlName="precioMin">
+        </mat-form-field>
+        <mat-form-field [formGroup]="filterForm" class="input" color="accent">
+          <mat-label>Precio max</mat-label>
+          <input matInput type="number" formControlName="precioMax">
+        </mat-form-field>
+      </div>
+      <mat-form-field [formGroup]="filterForm" class="input" color="accent">
+        <mat-label>Precio</mat-label>
+        <input matInput formControlName="porPrecio">
+      </mat-form-field>
+    </div>
+    <div class="filtrosSelector">
+      <mat-form-field>
+        <mat-label>Promocion</mat-label>
+        <mat-select [formControl]="promocion" multiple>
+          <mat-select-trigger>
+            {{promocion.value?.[0] || ''}}
+            <span *ngIf="(promocion.value?.length || 0) > 1">
+              (+{{(promocion.value?.length || 0) - 1}} {{promocion.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+          </mat-select-trigger>
+          <mat-option *ngFor="let promocion of aplicaPromo" [value]="promocion.nombre">{{promocion.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="precioMinMax">
+        <mat-form-field class="input" color="accent">
+          <mat-label>Categoría</mat-label>
+          <mat-select [(ngModel)]="selectedValueCategoria" name="Categoria">
+            <mat-option *ngFor="let Categoria of listaCategorias" [value]="Categoria.id">
+              {{Categoria.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="inputs" color="accent">
+          <mat-label>Marca</mat-label>
+          <mat-select [(ngModel)]="selectedValueMarca" name="Marca">
+            <mat-option *ngFor="let marcas of listaMarcas" [value]="marcas.id">
+              {{marcas.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field [formGroup]="filterForm" class="input" color="accent">
-      <mat-label>Nombre</mat-label>
-      <input matInput formControlName="porNombre">
-    </mat-form-field>
-
-    <mat-form-field [formGroup]="filterForm" class="input" color="accent">
-      <mat-label>Precio min</mat-label>
-      <input matInput type="number" formControlName="precioMin">
-    </mat-form-field>
-    <mat-form-field [formGroup]="filterForm" class="input" color="accent">
-      <mat-label>Precio max</mat-label>
-      <input matInput type="number" formControlName="precioMax">
-    </mat-form-field>
-
-    <mat-form-field [formGroup]="filterForm" class="input" color="accent">
-      <mat-label>Precio</mat-label>
-      <input matInput formControlName="porPrecio">
-    </mat-form-field> 
-
-    <mat-form-field class="input" color="accent">
-      <mat-label>Categoría</mat-label>
-      <mat-select [(ngModel)]="selectedValueCategoria" name="Categoria">
-        <mat-option *ngFor="let Categoria of listaCategorias" [value]="Categoria.id">
-          {{Categoria.nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="inputs" color="accent">
-      <mat-label>Marca</mat-label>
-      <mat-select [(ngModel)]="selectedValueMarca" name="Marca">
-        <mat-option *ngFor="let marcas of listaMarcas" [value]="marcas.id">
-          {{marcas.nombre}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Promocion</mat-label>
-      <mat-select [formControl]="promocion" multiple>
-        <mat-select-trigger>
-          {{promocion.value?.[0] || ''}}
-          <span *ngIf="(promocion.value?.length || 0) > 1">
-            (+{{(promocion.value?.length || 0) - 1}} {{promocion.value?.length === 2 ? 'other' : 'others'}})
-          </span>
-        </mat-select-trigger>
-        <mat-option *ngFor="let promocion of aplicaPromo" [value]="promocion.nombre">{{promocion.nombre}}</mat-option>
-      </mat-select>
-    </mat-form-field>
 
 
-    <button mat-raised-button color="primary" type="submit" class="input">Buscar</button>
+      <button mat-raised-button color="primary" type="submit" class="input">Buscar</button>
+    </div>
   </form>
 </section>
 

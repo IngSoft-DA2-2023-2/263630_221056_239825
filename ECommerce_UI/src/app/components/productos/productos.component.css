@@ -9,3 +9,38 @@ h1 {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.filtros {
+  margin-top: 3vh;
+  margin-left: 2vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.filtrosSelector,
+.filtrosInputs {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.precioMinMax {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-right: 2vw;
+  margin-left: 2vw;
+}
+
+@media screen and (max-width: 768px) {
+  .filtrosSelector,
+  .filtrosInputs {
+    justify-content: space-evenly;
+  }
+}
