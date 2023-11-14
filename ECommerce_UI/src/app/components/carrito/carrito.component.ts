@@ -12,6 +12,8 @@ import { ProductosComponent } from '../productos/productos.component';
 import { TokenUserService } from 'src/app/services/token-user.service';
 import { compraCreateModelo } from 'src/app/dominio/compraCreateModelo.model';
 import { catchError, throwError } from 'rxjs';
+import { NotificationComponent } from '../notification/notification.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   standalone: true,
@@ -48,14 +50,16 @@ export class CarritoComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private tokenService: TokenUserService,
-    private opcionesPago: OpcionesPagoComponent
-  ) {}
+    private opcionesPago: OpcionesPagoComponent,
+    public dialog: MatDialog
+  ) { }
 
   productosEnCarrito: Producto[] = [];
 
   ngOnInit() {
     this.cargarCarrito();
     this.sumaPrecios();
+    sessionStorage.removeItem('metodoDePago');
   }
 
   cargarCarrito() {
@@ -78,32 +82,45 @@ export class CarritoComponent implements OnInit {
   }
 
   pagar() {
-    if (this.productosEnCarrito.length > 0) {
-      const idDeProductosDelCarrito: number[] = this.productosEnCarrito.map(
-        (producto) => producto.id
-      );
-      const metodoDePago = sessionStorage.getItem('metodoDePago') || '';
-
+    const metodoDePago = sessionStorage.getItem('metodoDePago') || '';
+    if (this.productosEnCarrito.length === 0) {
+      this.openNotification("No hay productos en el carrito, por favor, agregue productos");
+      return;
+    } else if (metodoDePago === '') {
+      this.openNotification("No se ha seleccionado un método de pago");
+      return;
+    } else {
+      const idDeProductosDelCarrito: number[] = this.productosEnCarrito.map((producto) => producto.id);
       const compraModel: compraCreateModelo = {
         idProductos: idDeProductosDelCarrito,
         metodoDePago: metodoDePago,
       };
 
-      console.log(compraModel);
       this.tokenService
         .postCompraDelUsuario(compraModel)
         .pipe(
           catchError((err) => {
-            alert(err.error.message);
-            return throwError(err);
+            // Error
+            this.openNotification('Error al procesar la compra. Por favor, inténtalo nuevamente.');
+            return [];
           })
         )
         .subscribe((data) => {
-          console.log(data);
+          // Compra exitosa
+          this.openNotification(`¡Compra exitosa!`);
           this.borrarCarrito();
           sessionStorage.removeItem('metodoDePago');
         });
     }
+
+
+  }
+
+  openNotification(mensaje: string): void {
+    const dialogRef = this.dialog.open(NotificationComponent, {
+      data: { mensaje: mensaje },
+    });
+    dialogRef.componentInstance.showExitoso(mensaje);
   }
 
   eliminarProductoDelCarrito(index: number) {
