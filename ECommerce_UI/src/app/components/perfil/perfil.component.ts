@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
   imports: [MatButtonModule, CompraComponent, NgFor, NgIf],
 })
 export class PerfilComponent {
-  constructor(private compraService : TokenUserService, private adminService : AdminService, private router : Router){}
+  constructor(private compraService : TokenUserService, private router : Router){}
 
   usuario?: Usuario; 
   compras?: Compra[] = [];
@@ -30,7 +30,7 @@ export class PerfilComponent {
         if(error.status == 404) {
           console.log('No se encontró el usuario');
         } else {
-          console.log(error.message);
+          console.log(error);
         }
         return [];
       })

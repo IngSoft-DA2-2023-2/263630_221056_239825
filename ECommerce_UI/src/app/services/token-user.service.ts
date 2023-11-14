@@ -15,6 +15,7 @@ export class TokenUserService {
   private urlUsuarios: string = this.urlGeneral + '/usuarios';
 
   constructor(private http : HttpClient) { }
+  
   getCompraDelUsuario() : Observable<Compra[]> {
     const id: string = sessionStorage.getItem('idUsuario')!;
     const token: string = sessionStorage.getItem('token')!;

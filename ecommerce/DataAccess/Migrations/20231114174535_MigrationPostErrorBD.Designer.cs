@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DataAccess.Migrations.ECommerceTesting
+namespace DataAccess.Migrations
 {
-    [DbContext(typeof(ECommerceTestingContext))]
-    [Migration("20231026154740_ProductosConStock")]
-    partial class ProductosConStock
+    [DbContext(typeof(ECommerceContext))]
+    [Migration("20231114174535_MigrationPostErrorBD")]
+    partial class MigrationPostErrorBD
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,6 +83,9 @@ namespace DataAccess.Migrations.ECommerceTesting
 
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MetodoDePago")
+                        .HasColumnType("int");
 
                     b.Property<string>("NombrePromo")
                         .IsRequired()

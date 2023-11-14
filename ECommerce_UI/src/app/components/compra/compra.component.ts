@@ -11,8 +11,12 @@ import { NgFor } from '@angular/common';
   selector: 'app-compra',
   templateUrl: './compra.component.html',
   styleUrls: ['./compra.component.css'],
-  imports: [MatDividerModule, MatCardModule, ProductoComponent, NgFor]
+  imports: [MatDividerModule, MatCardModule, ProductoComponent, NgFor],
 })
 export class CompraComponent {
   @Input() compra?: Compra;
+
+  ngOnInit(): void {
+    console.log(this.compra?.NombrePromo);
+  }
 }

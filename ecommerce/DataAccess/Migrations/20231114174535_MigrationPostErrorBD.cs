@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DataAccess.Migrations.ECommerceTesting
+namespace DataAccess.Migrations
 {
-    public partial class FirstTestMigration : Migration
+    public partial class MigrationPostErrorBD : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -74,7 +74,10 @@ namespace DataAccess.Migrations.ECommerceTesting
                     Precio = table.Column<int>(type: "int", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MarcaId = table.Column<int>(type: "int", nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: false)
+                    ColorId = table.Column<int>(type: "int", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    AplicaParaPromociones = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,6 +86,12 @@ namespace DataAccess.Migrations.ECommerceTesting
                         name: "FK_Productos_Categorias_CategoriaId",
                         column: x => x.CategoriaId,
                         principalTable: "Categorias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Productos_Colores_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "Colores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -102,7 +111,8 @@ namespace DataAccess.Migrations.ECommerceTesting
                     Precio = table.Column<int>(type: "int", nullable: false),
                     NombrePromo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    MetodoDePago = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,30 +121,6 @@ namespace DataAccess.Migrations.ECommerceTesting
                         name: "FK_Compras_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ColorProducto",
-                columns: table => new
-                {
-                    ColoresId = table.Column<int>(type: "int", nullable: false),
-                    ProductosId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ColorProducto", x => new { x.ColoresId, x.ProductosId });
-                    table.ForeignKey(
-                        name: "FK_ColorProducto_Colores_ColoresId",
-                        column: x => x.ColoresId,
-                        principalTable: "Colores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ColorProducto_Productos_ProductosId",
-                        column: x => x.ProductosId,
-                        principalTable: "Productos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -164,11 +150,6 @@ namespace DataAccess.Migrations.ECommerceTesting
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ColorProducto_ProductosId",
-                table: "ColorProducto",
-                column: "ProductosId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CompraProducto_ProductosId",
                 table: "CompraProducto",
                 column: "ProductosId");
@@ -184,6 +165,11 @@ namespace DataAccess.Migrations.ECommerceTesting
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Productos_ColorId",
+                table: "Productos",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Productos_MarcaId",
                 table: "Productos",
                 column: "MarcaId");
@@ -192,13 +178,7 @@ namespace DataAccess.Migrations.ECommerceTesting
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ColorProducto");
-
-            migrationBuilder.DropTable(
                 name: "CompraProducto");
-
-            migrationBuilder.DropTable(
-                name: "Colores");
 
             migrationBuilder.DropTable(
                 name: "Compras");
@@ -211,6 +191,9 @@ namespace DataAccess.Migrations.ECommerceTesting
 
             migrationBuilder.DropTable(
                 name: "Categorias");
+
+            migrationBuilder.DropTable(
+                name: "Colores");
 
             migrationBuilder.DropTable(
                 name: "Marcas");
