@@ -3,14 +3,14 @@ using Dominio;
 
 namespace Servicios.Promociones
 {
-    public class PromocionTotalLook : IPromocionStrategy
+    public class PromocionTotalLookPrueba
     {
         public string NombrePromocion { get; set; }
         public int costoTotal { get; set; }
 
-        public int AplicarPromocion(int cantidadgratis, List<Producto> listaCompra)
+        public int AplicarPromocion(List<Producto> listaCompra)
         {
-            NombrePromocion = $"Promocion de Fidelidad TotalLook ({cantidadgratis}% OFF)";
+            NombrePromocion = $"Promocion de Fidelidad TotalLook";
             costoTotal = 9999999;
             if (listaCompra.Count >= 3)
             {

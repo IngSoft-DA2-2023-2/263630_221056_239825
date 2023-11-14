@@ -34,7 +34,4 @@
   <ItemGroup>
     <None Remove="PruebasPromociones\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PruebasPromociones\" />
-  </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ namespace Pruebas.PruebasPromociones
     [TestClass]
     public class PruebasPromocionesTotalLook
     {
-        private PromocionTotalLook _promocionTotalLook;
+        private PromocionTotalLookPrueba _promocionTotalLook;
         private Producto? productoColor1;
         private Producto? productoColor2;
         private Producto? productoColor3;
@@ -21,7 +21,7 @@ namespace Pruebas.PruebasPromociones
         [TestInitialize]
         public void InitTest()
         {
-            _promocionTotalLook = new PromocionTotalLook();
+            _promocionTotalLook = new PromocionTotalLookPrueba();
 
             Marca marca1 = new();
             Marca marca2 = new();
@@ -46,7 +46,7 @@ namespace Pruebas.PruebasPromociones
             carrito = new List<Producto> {productoColor1, productoColor2, productoColor3};
 
             //Act
-            int costoTotal = _promocionTotalLook.AplicarPromocion(1, carrito);
+            int costoTotal = _promocionTotalLook.AplicarPromocion(carrito);
             
             // Assert
             Assert.AreEqual(450, costoTotal);
@@ -59,7 +59,7 @@ namespace Pruebas.PruebasPromociones
             carrito = new List<Producto> {productoColor1};
 
             //Act
-            int costoTotal = _promocionTotalLook.AplicarPromocion(1, carrito);
+            int costoTotal = _promocionTotalLook.AplicarPromocion(carrito);
             
             // Assert
             Assert.AreEqual(9999999, costoTotal);
@@ -72,7 +72,7 @@ namespace Pruebas.PruebasPromociones
             carrito = new List<Producto> {productoColor1, productoNoAplica, productoNoAplica};
 
             //Act
-            int costoTotal = _promocionTotalLook.AplicarPromocion(1, carrito);
+            int costoTotal = _promocionTotalLook.AplicarPromocion(carrito);
             
             // Assert
             Assert.AreEqual(100, costoTotal);

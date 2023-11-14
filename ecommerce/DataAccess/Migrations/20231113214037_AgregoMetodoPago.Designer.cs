@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20231109043254_AgregoMetodoPago")]
+    [Migration("20231113214037_AgregoMetodoPago")]
     partial class AgregoMetodoPago
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

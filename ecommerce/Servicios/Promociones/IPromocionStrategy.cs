@@ -9,7 +9,7 @@ namespace Servicios.Promociones
 {
     public interface IPromocionStrategy
     {
-        public int AplicarPromocion(int cantidadGratis, List<Producto> listaCompra);
+        public int AplicarPromocion(List<Producto> listaCompra);
         public string NombrePromocion { get;}
     }
 }
