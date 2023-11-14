@@ -25,7 +25,7 @@ export class ProductoComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
-    private productosComponent: ProductosComponent,
+    // private productosComponent: ProductosComponent,
     private router: Router, 
     private dialog: MatDialog
   ) {}
@@ -69,7 +69,7 @@ export class ProductoComponent {
       )
       .subscribe((response: any) => {
         this.openNotification('Producto eliminado exitosamente');
-        this.productosComponent.ngOnInit();
+        // this.productosComponent.ngOnInit();
       });
   }
 
@@ -80,9 +80,16 @@ export class ProductoComponent {
   }
 
   agregarAlCarrito() {
-    const carrito = localStorage.getItem('carrito');
-    let carritoArray: Producto[] = carrito ? JSON.parse(carrito) : [];
-    carritoArray.push(this.producto);
-    localStorage.setItem('carrito', JSON.stringify(carritoArray));
+    if(this.producto.stock !=0){
+      const carrito = localStorage.getItem('carrito');
+      let carritoArray: Producto[] = carrito ? JSON.parse(carrito) : [];
+      carritoArray.push(this.producto);
+      localStorage.setItem('carrito', JSON.stringify(carritoArray));
+      this.openNotification('Producto agregado al carrito');
+      this.producto.stock--;
+    }else{
+      this.openNotification('No hay stock disponible');
+    }
+    
   }
 }
