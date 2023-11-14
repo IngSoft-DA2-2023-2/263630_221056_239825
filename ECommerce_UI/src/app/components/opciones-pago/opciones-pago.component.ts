@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TarjetaComponent } from "../tarjeta/tarjeta.component";
 import { PaypalComponent } from '../paypal/paypal.component';
