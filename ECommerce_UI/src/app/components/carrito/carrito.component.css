@@ -15,10 +15,6 @@ h1 {
   padding: 16px;
 }
 
-.botonAnterior, .botonSiguiente {
-  background-color: lightslategrey;
-}
-
 .boton-rojo {
   background-color: red;
   color: white;
@@ -60,4 +56,12 @@ h1 {
  border: 3px solid #778899; 
  padding: 10px; 
  border-radius: 2px;
+}
+
+.mat-horizontal-stepper, .botonesMetodoPago {
+  margin-top: 20px;
+}
+
+.botonesMetodoPago button {
+  margin-right: 10px;
 }
