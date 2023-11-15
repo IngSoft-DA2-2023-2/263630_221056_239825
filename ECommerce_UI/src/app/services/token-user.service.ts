@@ -26,9 +26,7 @@ export class TokenUserService {
       Authorization: token,
       'Content-Type': 'application/json',
     });
-    const sopa = this.http.get<Compra[]>(newUrl, {headers});
-    console.log(sopa);
-    return sopa;
+    return this.http.get<Compra[]>(newUrl, {headers});
   }
 
   postCompraDelUsuario(compraPorHacer : compraCreateModelo) : Observable<compraCreateModelo> {
