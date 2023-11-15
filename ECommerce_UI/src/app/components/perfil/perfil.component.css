@@ -1,12 +1,11 @@
 .compras {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
   align-content: space-around;
 }
-
 
 .perfilInfo {
   padding: 10px;
@@ -29,4 +28,10 @@
 .titulo{
   text-align: center;
   font-weight: bold;
+}
+
+@media screen and (max-width: 445px) {
+  .botonesPerfil{
+    justify-content: center;
+  }
 }
