@@ -5,8 +5,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { ProductoComponent } from '../producto/producto.component';
 import { NgFor } from '@angular/common';
-import { TokenUserService } from 'src/app/services/token-user.service';
 import { CommonModule } from '@angular/common';
+import { ProductsService } from 'src/app/services/productos.services';
+import { Producto } from 'src/app/dominio/producto.model';
 
 @Component({
   standalone: true,
@@ -17,8 +18,14 @@ import { CommonModule } from '@angular/common';
 })
 export class CompraComponent {
   @Input() compra?: Compra;
+  protected productosDeLaCompra : Producto[] = [];
+  constructor(private productosService : ProductsService) {}
 
   ngOnInit(): void {
-    // console.log('Compra en CompraComponent:', this.compra);
+    this.compra?.productos.forEach(id => {
+      this.productosService.getProduct(id).subscribe((producto) => {
+        this.productosDeLaCompra.push(producto);
+      });
+    });
   }
 }
