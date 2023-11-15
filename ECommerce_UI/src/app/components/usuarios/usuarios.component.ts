@@ -102,4 +102,10 @@ export class UsuariosComponent {
   crearUsuarioAdmin(){
     this.router.navigate(['/admin/signup']);
   }
+
+  borrarFiltros() {
+    this.filterForm.reset();
+    this.filtros.reset();
+    this.usuarios = this.adminService.getUsuarios();
+  }
 }

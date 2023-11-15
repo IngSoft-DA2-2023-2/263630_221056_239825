@@ -3,9 +3,12 @@
     <mat-divider></mat-divider>
     <mat-card-content class="container-productos">
         <p><strong>Precio total:</strong> ${{compra?.precio}}</p>
-        <p><strong>Promocion aplicada:</strong> {{compra?.nombrePromo}}</p>
-        <p *ngFor="let producto of productosDeLaCompra">
-            <strong>Productos:</strong> {{producto.nombre}}
+        <p><strong>Promoción aplicada:</strong> {{compra?.nombrePromo}}</p>
+        <p *ngIf="productosDeLaCompra && productosDeLaCompra.length > 0">
+            <strong>Productos:</strong>
+            <ng-container *ngFor="let producto of productosDeLaCompra; let last = last">
+              {{ producto.nombre }}{{ last ? '' : ', ' }}
+            </ng-container>
         </p>
-    </mat-card-content>
+    </mat-card-content>  
 </mat-card>

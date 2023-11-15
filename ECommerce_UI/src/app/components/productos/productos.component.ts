@@ -130,4 +130,12 @@ export class ProductosComponent implements OnInit {
     const distancia = (maximo - mediana).toFixed(0);
     return [Number(medianaSinDecimales), Number(distancia)];
   }
+
+  borrarFiltros() {
+    this.filterForm.reset(); 
+    this.promocion.reset();
+    this.selectedValueCategoria = '';
+    this.selectedValueMarca = '';
+    this.actualizarProductos();
+  }
 }

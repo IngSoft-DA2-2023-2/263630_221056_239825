@@ -10,7 +10,7 @@ namespace Servicios.Promociones
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
-            NombrePromocion = $"Promocion de Fidelidad 3x2";
+            NombrePromocion = $"Promocion 3x2";
             costoTotal = 9999999;
             List<List<Producto>> listaPorCriterio = SepararEnListas(2, listaCompra);
             int cantidadGratisEspecifica = 1;

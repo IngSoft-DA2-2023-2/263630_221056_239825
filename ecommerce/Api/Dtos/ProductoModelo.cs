@@ -15,6 +15,7 @@ public class ProductoModelo
     public CategoriaModelo Categoria { get; set; }
     
     public ColorModelo Color { get; set; }
+    public bool AplicaParaPromociones { get; set; }
 
     public ProductoModelo(Producto producto)
     {
@@ -26,6 +27,7 @@ public class ProductoModelo
         Marca = new MarcaModelo(producto.Marca);
         Categoria = new CategoriaModelo(producto.Categoria);
         Color = new ColorModelo(producto.Color);
+        AplicaParaPromociones = producto.AplicaParaPromociones;
     }
 
 }

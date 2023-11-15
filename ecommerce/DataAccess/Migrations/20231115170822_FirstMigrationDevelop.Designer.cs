@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20231114174535_MigrationPostErrorBD")]
-    partial class MigrationPostErrorBD
+    [Migration("20231115170822_FirstMigrationDevelop")]
+    partial class FirstMigrationDevelop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,8 +84,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MetodoDePago")
-                        .HasColumnType("int");
+                    b.Property<string>("MetodoDePago")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombrePromo")
                         .IsRequired()
