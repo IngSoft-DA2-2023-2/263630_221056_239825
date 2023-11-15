@@ -41,7 +41,7 @@ export class ProductoComponent {
         { texto: 'Eliminar Producto', accion: 'Eliminar' },
       ];
     } else if (url === 'carrito') {
-      return [{ texto: 'Eliminar del Carrito', accion: 'Eliminar' }];
+      return [{ texto: 'Eliminar del Carrito', accion: 'EliminarCarrito' }];
     } else {
       return [{ texto: 'Agregar al Carrito', accion: 'Agregar' }];
     }
@@ -50,11 +50,22 @@ export class ProductoComponent {
   realizarAccion(accion: string) {
     if (accion === 'Modificar') {
       this.router.navigate(['/admin/editar/producto', this.producto.id]);
+    }else if (accion === 'EliminarCarrito'){
+      this.eliminarDelCarrito()
     } else if (accion === 'Eliminar') {
       this.eliminarProducto();
     } else if (accion === 'Agregar') {
       this.agregarAlCarrito();
     }
+  }
+
+  eliminarDelCarrito(){
+    const carrito = localStorage.getItem('carrito');
+    let carritoArray: Producto[] = carrito ? JSON.parse(carrito) : [];
+    carritoArray = carritoArray.filter((producto) => producto.id != this.producto.id);
+    localStorage.setItem('carrito', JSON.stringify(carritoArray));
+    this.openNotification('Producto eliminado del carrito');
+    window.location.reload();
   }
 
   eliminarProducto(): void {

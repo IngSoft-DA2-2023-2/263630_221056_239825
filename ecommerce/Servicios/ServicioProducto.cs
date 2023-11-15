@@ -37,6 +37,8 @@ public class ServicioProducto : IServicioProducto
         productoViejo.CategoriaId = productoNuevo.CategoriaId;
         productoViejo.MarcaId = productoNuevo.MarcaId;
         productoViejo.ColorId = productoNuevo.ColorId;
+        productoViejo.Stock = productoNuevo.Stock;
+        productoViejo.AplicaParaPromociones = productoNuevo.AplicaParaPromociones;
         
         _repositorioProductos.ModificarProducto(productoViejo);
         GuardarCambios();

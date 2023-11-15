@@ -20,7 +20,7 @@
       <mat-divider></mat-divider>
       <mat-card-actions class="botones">
         <button mat-raised-button *ngFor="let boton of getBotones()" (click)="realizarAccion(boton.accion)"
-          [class.mat-warn]="boton.accion === 'Eliminar'" [class.boton]="boton.accion !== 'Eliminar'">
+          [class.mat-warn]="boton.accion === 'Eliminar'"  [class.boton]="boton.accion !== 'Eliminar'">
           {{ boton.texto }}
         </button>
       </mat-card-actions>
