@@ -44,3 +44,7 @@ h1 {
     justify-content: space-evenly;
   }
 }
+
+.filtrosSelector button {
+  margin-top: -4vh; 
+}
