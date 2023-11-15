@@ -10,7 +10,7 @@ namespace Servicios.Promociones
 
         public int AplicarPromocion(List<Producto> listaCompra)
         {
-            NombrePromocion = $"Promocion de Fidelidad TotalLook";
+            NombrePromocion = $"Promocion TotalLook";
             costoTotal = 9999999;
             if (listaCompra.Count >= 3)
             {
