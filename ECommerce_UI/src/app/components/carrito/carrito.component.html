@@ -1,0 +1,41 @@
+<mat-stepper linear #stepper color="accent">
+  <mat-step [stepControl]="productos">
+    <ng-template matStepLabel>Productos</ng-template>
+    <mat-card-actions>
+      <button mat-raised-button color="warn" (click)="borrarCarrito()" class="botonVaciar">Vaciar Carrito</button>
+    </mat-card-actions>
+    <div *ngIf="productosEnCarrito.length > 0" class="productosDelCarrito">
+      <app-producto *ngFor="let producto of productosEnCarrito; let i = index" class="productos" [producto]="producto"
+        (eliminarProductoClick)="eliminarProductoDelCarrito(i)">
+      </app-producto>
+    </div>
+
+    <div *ngIf="productosEnCarrito.length > 0" class="totalCarrito">
+      <h2 class="precioTotal">Total del Carrito: {{ calcularTotalCarrito() | currency }}</h2>
+    </div>
+    <div>
+      <button mat-raised-button matStepperNext color="accent">Ir al pago</button>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="haPagado">
+    <ng-template matStepLabel>Pago</ng-template>
+    <app-opciones-pago>
+    </app-opciones-pago>
+
+    <div class="botonesMetodoPago">
+      <div>
+        <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
+        <button mat-raised-button matStepperNext color="accent" (click)="pagar()">PAGAR</button>
+      </div>
+    </div>
+
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Confirmación</ng-template>
+    <div>
+      <button mat-raised-button matStepperPrevious color="accent">Anterior</button>
+    </div>
+  </mat-step>
+</mat-stepper>

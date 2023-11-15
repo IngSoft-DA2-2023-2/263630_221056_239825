@@ -7,9 +7,10 @@ namespace DataAccess
 {
     public class ECommerceContext: DbContext
     {
-        public ECommerceContext() : base()
+        public ECommerceContext() 
         {
         }
+        public ECommerceContext(DbContextOptions<ECommerceContext> optionsBuilderOptions) : base(optionsBuilderOptions)
 
         public virtual DbSet<Producto> Productos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }

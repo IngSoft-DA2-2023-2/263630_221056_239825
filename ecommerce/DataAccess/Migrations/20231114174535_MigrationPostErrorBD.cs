@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class PrimeraMigracionDespuesDeBorrarlas : Migration
+    public partial class MigrationPostErrorBD : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -111,7 +111,8 @@ namespace DataAccess.Migrations
                     Precio = table.Column<int>(type: "int", nullable: false),
                     NombrePromo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    MetodoDePago = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

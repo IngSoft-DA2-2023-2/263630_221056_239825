@@ -30,9 +30,6 @@ namespace Api.Controladores
             return Created("", _manejadorUsuario.RegistrarUsuario(nuevoUsuario.ToEntity()));
         }
 
-        [ServiceFilter(typeof(JwtAuthorizationFilter))]
-        // Ver con ALEX
-        [FiltroAutorizacionId]
         [HttpGet("{id}")]
         [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         public IActionResult BuscarPorId(int id)
@@ -49,9 +46,7 @@ namespace Api.Controladores
         }
 
         [ServiceFilter(typeof(JwtAuthorizationFilter))]
-        // Ver con ALEX
-        [FiltroAutorizacionId]
-        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId = true)]
         [HttpPut("{id}")]
         public IActionResult ModificarUsuario(int id, [FromBody] UsuarioCrearModelo usuario)
         {
@@ -80,8 +75,7 @@ namespace Api.Controladores
 
         [ServiceFilter(typeof(JwtAuthorizationFilter))]
         [HttpPost("{id}/compras")]
-        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Cliente, SecondaryRole = CategoriaRol.ClienteAdministrador)]
-        [FiltroAutorizacionId]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Cliente, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId =true)]
         public IActionResult RealizarCompra(int id, [FromBody] CompraCrearModelo compraCrearModelo)
         {
             Compra compra = new Compra()

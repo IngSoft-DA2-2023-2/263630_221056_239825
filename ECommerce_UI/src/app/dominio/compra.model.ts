@@ -1,9 +1,10 @@
 import { Producto } from "./producto.model";
 
 export interface Compra {
-    Id: number,
-    Productos: Producto[],
-    Fecha: Date,
-    Precio: number,
-    NombrePromocion: string,
+    id: number,
+    productos: number[],
+    fechaCompra: Date,
+    precio: number,
+    nombrePromo: string,
+    usuarioId: number
 }

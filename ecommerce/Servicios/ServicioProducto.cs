@@ -64,4 +64,19 @@ public class ServicioProducto : IServicioProducto
 
         return productoEncontrado;
     }
+
+    public List<Categoria> RetornarCategorias()
+    {
+        return _repositorioProductos.RetornarCategorias();
+    }
+
+    public List<Color> RetornarColores()
+    {
+        return _repositorioProductos.RetornarColores();
+    }
+
+    public List<Marca> RetornarMarcas()
+    {
+        return _repositorioProductos.RetornarMarcas();
+    }
 }

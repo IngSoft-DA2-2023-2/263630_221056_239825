@@ -1,0 +1,67 @@
+h1 {
+  text-align: center;
+  margin: 20px;
+  font-weight: bold;
+}
+
+.example-card {
+  max-width: 400px;
+  min-width: 330px;
+  margin: 20px 0;
+  background-color: gainsboro;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.boton-rojo {
+  background-color: red;
+  color: white;
+}
+
+.seMuestraBoton {
+  display: block;
+}
+
+.productosDelCarrito {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+@media (max-width: 520px) {
+  .example-card {
+    min-width: 90vw;
+  }
+}
+
+.carrito-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  justify-content: space-around;
+  max-width: 100%;
+  padding: 20px 40px;
+}
+
+.precioTotal{
+ font-weight: bold;
+ font-size: 14px;
+ text-align: right;
+ position: absolute;
+ top: 140px; 
+ right: 60px; 
+ border: 3px solid #778899; 
+ padding: 10px; 
+ border-radius: 2px;
+}
+
+.mat-horizontal-stepper, .botonesMetodoPago {
+  margin-top: 20px;
+}
+
+.botonesMetodoPago button {
+  margin-right: 10px;
+}

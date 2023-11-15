@@ -1,0 +1,25 @@
+<article class="encabezadoUsuarios">
+    <form [formGroup]="filterForm" (ngSubmit)="applyFilter()" class="filtros">
+        <mat-form-field class="input" color="accent">
+            <mat-label>Nombre de Usuario</mat-label>
+            <input formControlName="correoElectronico" matInput>
+        </mat-form-field>
+        <mat-form-field class="input" color="accent">
+            <mat-label>Filtros</mat-label>
+            <mat-select [formControl]="filtros" multiple>
+                <mat-select-trigger>
+                    {{filtros.value?.[0] || ''}}
+                    <span *ngIf="(filtros.value?.length || 0) > 1" class="example-additional-selection">
+                        (+{{(filtros.value?.length || 0) - 1}} {{filtros.value?.length === 2 ? 'other' : 'others'}})
+                    </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let filtros of listaDeFiltros" [value]="filtros">{{filtros}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" class="input">Filtrar</button>
+    </form>
+    <button (click)="crearUsuarioAdmin()" mat-raised-button color="primary">Agregar Usuario</button>
+</article>
+<article class="listaUsuarios">
+    <app-usuario *ngFor="let usuario of usuarios" [usuario]="usuario"></app-usuario>
+</article>

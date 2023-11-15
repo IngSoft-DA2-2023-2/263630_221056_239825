@@ -1,0 +1,17 @@
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 3vh auto;
+    padding: 0 15px;
+}
+
+.comprasUsuarios{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2vh 2vw;
+}

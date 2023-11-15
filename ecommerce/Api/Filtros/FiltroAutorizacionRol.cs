@@ -10,7 +10,7 @@ namespace Api.Filtros
     {
         public CategoriaRol RoleNeeded { get; set; }
         public CategoriaRol SecondaryRole { get; set; }
-        public int Id { get; set; }
+        public bool importaId { get; set; } = false;
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -19,7 +19,7 @@ namespace Api.Filtros
 
             if (user is null)
             {
-                context.Result = new ObjectResult(new { Message = "Authorization header is missing" })
+                context.Result = new ObjectResult(new { Message = "Header de Autorización no incluido" })
                 {
                     StatusCode = 401
                 };
@@ -28,20 +28,20 @@ namespace Api.Filtros
             {
                 IManejadorUsuario _manejadorUsuario = GetSessionService(context);
                 Usuario usuario = ValidarToken(user!, _manejadorUsuario);
-                if (Id == 0)
+                if (importaId == false)
                 {
                     if (!(RoleNeeded == usuario.Rol))
                     {
                         if (SecondaryRole.Equals(default(CategoriaRol)))
                         {
-                            context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                            context.Result = new ObjectResult(new { Message = "No tenes el Rol necesario" })
                             {
                                 StatusCode = 403
                             };
                         }
                         if (!(SecondaryRole == usuario.Rol))
                         {
-                            context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                            context.Result = new ObjectResult(new { Message = "No tenes el Rol necesario" })
                             {
                                 StatusCode = 403
                             };
@@ -50,9 +50,12 @@ namespace Api.Filtros
                 }
                 else
                 {
-                    if (Id != usuario.Id)
+                    string? stringId = context.RouteData.Values["id"]! as string;
+                    int id = int.Parse(stringId!);
+
+                    if (id != usuario.Id)
                     {
-                        context.Result = new ObjectResult(new { Message = "No se puede ejecutar la acción" })
+                        context.Result = new ObjectResult(new { Message = "No Autorizado" })
                         {
                             StatusCode = 403
                         };
