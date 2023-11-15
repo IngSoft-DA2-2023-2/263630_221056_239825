@@ -136,7 +136,6 @@ export class ProductosComponent implements OnInit {
     this.promocion.reset();
     this.selectedValueCategoria = '';
     this.selectedValueMarca = '';
-
     this.actualizarProductos();
   }
 }
