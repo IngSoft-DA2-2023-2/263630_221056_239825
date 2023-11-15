@@ -38,7 +38,6 @@ export class UsuarioComponent {
 
   ngOnInit() {
     this.comprasDelUsuario = this.usuario.compras.length;
-    console.log(this.usuario.compras);
   }
 
   eliminarUsuario(): void {

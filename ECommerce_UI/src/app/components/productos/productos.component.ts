@@ -103,8 +103,6 @@ export class ProductosComponent implements OnInit {
     const precioRange = this.filterForm.get('precioRango')?.value;
     const promo = this.promocion.value;
 
-    console.log(promo);
-
     let params = new HttpParams()
       .set('PrecioEspecifico', this.traerPrecioFijoConRango()[0] || '')
       .set('RangoPrecio', this.traerPrecioFijoConRango()[1] || '')

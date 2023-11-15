@@ -177,6 +177,7 @@ export class ModificarProductoComponent {
         )
         .subscribe((producto: ProductoDTO) => {
           this.openNotification('Se modificó el producto '+ producto.nombre );
+          this.router.navigate(['/admin']);
         });
     } else {
       this.openNotification('Debe completar todos los campos');

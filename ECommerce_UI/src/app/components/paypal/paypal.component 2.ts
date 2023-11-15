@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 })
 export class PaypalComponent {
   realizarPago() {
-    console.log('Realizando pago con PayPal...');
+    
   }
 }
