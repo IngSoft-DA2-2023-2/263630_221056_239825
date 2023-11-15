@@ -7,5 +7,7 @@
         <app-productos></app-productos>
     </mat-tab>
     <mat-tab label="Usuarios"> <app-usuarios></app-usuarios> </mat-tab>
-    <mat-tab label="Compras"> Compras </mat-tab>
+    <mat-tab label="Compras"> 
+        <app-compra *ngFor="let compra of compras" [compra]="compra"></app-compra>
+    </mat-tab>
 </mat-tab-group>

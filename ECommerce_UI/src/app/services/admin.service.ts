@@ -88,21 +88,13 @@ export class AdminService {
     return this.http.get<Usuario>(this.urlUsuarios + '/' + id, { headers });
   }
 
-  getCompras(): Compra[] {
-    let listaCompras: Compra[] = [];
+  getCompras(): Observable<Compra[]> {
     const token: string = sessionStorage.getItem('token')!;
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       Authorization: token,
     });
-    this.http
-      .get<Usuario[]>(this.urlCompras, { headers })
-      .subscribe((response: any) => {
-        response.forEach((element: Compra) => {
-          listaCompras.push(response);
-        });
-      });
-    return listaCompras;
+    return this.http.get<Compra[]>(this.urlCompras, { headers })
   }
 }
