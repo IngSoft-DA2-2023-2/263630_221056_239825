@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { Compra } from '../dominio/compra.model';
 import { compraCreateModelo } from '../dominio/compraCreateModelo.model';
 import { Usuario } from '../dominio/usuario.model';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { UsuarioDTO } from '../dominio/usuario-dto.model';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,9 @@ export class TokenUserService {
       Authorization: token,
       'Content-Type': 'application/json',
     });
-    return this.http.get<Compra[]>(newUrl, {headers});
+    const sopa = this.http.get<Compra[]>(newUrl, {headers});
+    console.log(sopa);
+    return sopa;
   }
 
   postCompraDelUsuario(compraPorHacer : compraCreateModelo) : Observable<compraCreateModelo> {

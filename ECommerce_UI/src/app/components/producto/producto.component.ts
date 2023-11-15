@@ -27,7 +27,8 @@ export class ProductoComponent {
     private adminService: AdminService,
     // private productosComponent: ProductosComponent,
     private router: Router, 
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    // private productsService: ProductsService
   ) {}
   @Input() producto!: Producto;
   @Input() seMuestraBoton : boolean = true;

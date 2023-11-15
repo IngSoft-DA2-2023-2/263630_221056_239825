@@ -5,6 +5,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { ProductoComponent } from '../producto/producto.component';
 import { NgFor } from '@angular/common';
+import { TokenUserService } from 'src/app/services/token-user.service';
 
 @Component({
   standalone: true,
@@ -17,6 +18,6 @@ export class CompraComponent {
   @Input() compra?: Compra;
 
   ngOnInit(): void {
-    console.log(this.compra?.NombrePromo);
+    // console.log('Compra en CompraComponent:', this.compra);
   }
 }

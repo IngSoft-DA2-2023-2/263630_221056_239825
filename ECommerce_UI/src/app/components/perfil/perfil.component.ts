@@ -18,32 +18,36 @@ import { Router } from '@angular/router';
   imports: [MatButtonModule, CompraComponent, NgFor, NgIf],
 })
 export class PerfilComponent {
-  constructor(private compraService : TokenUserService, private router : Router){}
+  constructor(
+    private compraService: TokenUserService,
+    private router: Router
+  ) { }
 
-  usuario?: Usuario; 
+  usuario?: Usuario;
   compras?: Compra[] = [];
 
   ngOnInit(): void {
     this.usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
     this.compraService.getCompraDelUsuario().pipe(
       catchError((error: HttpErrorResponse) => {
-        if(error.status == 404) {
+        if (error.status == 404) {
           console.log('No se encontró el usuario');
         } else {
           console.log(error);
         }
         return [];
       })
-    ).subscribe((compras : Compra[]) => {
+    ).subscribe((compras: Compra[]) => {
       this.compras = compras;
+      console.log(this.compras);
     });
   }
 
-  editarUsuario(){
+  editarUsuario() {
     this.router.navigate(['/perfil/editar']);
   }
 
-  eliminarUsuario(){
+  eliminarUsuario() {
     this.compraService.deleteUsuario(this.usuario!.id).subscribe(() => {
       sessionStorage.clear();
       this.router.navigate(['/']);

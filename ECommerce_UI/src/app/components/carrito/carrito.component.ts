@@ -100,20 +100,16 @@ export class CarritoComponent implements OnInit {
         .postCompraDelUsuario(compraModel)
         .pipe(
           catchError((err) => {
-            // Error
             this.openNotification('Error al procesar la compra. Por favor, inténtalo nuevamente.');
             return [];
           })
         )
         .subscribe((data) => {
-          // Compra exitosa
           this.openNotification(`¡Compra exitosa!`);
           this.borrarCarrito();
           sessionStorage.removeItem('metodoDePago');
         });
     }
-
-
   }
 
   openNotification(mensaje: string): void {

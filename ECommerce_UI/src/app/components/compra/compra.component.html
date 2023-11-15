@@ -1,11 +1,22 @@
 <mat-card class="card-compra">
-    <mat-card-title>{{compra?.FechaCompra}}</mat-card-title>
+    <mat-card-title>Fecha: {{compra?.fechaCompra}}</mat-card-title>
     <mat-divider></mat-divider>
     <mat-card-content>
-        <mat-card-subtitle>{{compra?.NombrePromo}}</mat-card-subtitle>
-        <p>Precio total: ${{compra?.Precio}}</p>
+        <mat-card-subtitle>{{compra?.nombrePromo}}</mat-card-subtitle>
+        <p>Precio total: ${{compra?.precio}}</p>
+        <div class="container-productos">
+            <app-producto *ngFor="let producto of compra?.productos" [producto]="producto" [seMuestraBoton]="false"></app-producto>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- <mat-card class="card-compra">
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <mat-card-subtitle>Nombre de Promo Fijo</mat-card-subtitle>
+        <p>Precio total: {{compra?.Precio}}</p>
         <div class="container-productos">
             <app-producto *ngFor="let producto of compra?.Productos" [producto]="producto" [seMuestraBoton]="false"></app-producto>
         </div>
     </mat-card-content>
-</mat-card>
+</mat-card> -->
