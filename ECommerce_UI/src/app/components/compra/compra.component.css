@@ -1,11 +1,12 @@
-.card-compra{
-    min-width: 80vw;
+.card-compra {
+    min-width: 30vw;
     background-color: lightblue;
     margin: 10px;
     padding: 10px;
+    align-content: center;
 }
 
-.container-productos{
+.container-productos {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
