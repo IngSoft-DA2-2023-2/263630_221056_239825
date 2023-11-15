@@ -1,21 +1,11 @@
 <mat-card class="card-compra">
-    <!-- <div class="container-productos"> -->
-
     <mat-divider></mat-divider>
     <mat-card-content>
-        <!-- <mat-card-title>Fecha: {{compra?.fechaCompra}}</mat-card-title> -->
-        <!-- <mat-card-subtitle>Id: {{compra?.id}}</mat-card-subtitle> -->
-        <!-- <h3></h3> -->
-        <!-- <mat-card-subtitle><strong>Promocion aplicada:<strong> {{compra?.nombrePromo}}</mat-card-subtitle> -->
-
-        <h2><strong>Fecha:</strong> {{compra?.fechaCompra}}</h2>
+        <h2><strong>Fecha:</strong> {{compra?.fechaCompra | date:'dd/MM/yyyy'}}</h2>
         <p><strong>Precio total:</strong> ${{compra?.precio}}</p>
         <p><strong>Promocion aplicada:</strong> {{compra?.nombrePromo}}</p>
         <p *ngFor="let producto of compra?.productos">
             <strong>Productos:</strong> {{compra?.productos}}
         </p>
-        <!-- <app-producto *ngFor="let producto of compra?.productos" [producto]="producto" [seMuestraBoton]="false"></app-producto> -->
     </mat-card-content>
-    <!-- </div> -->
-
 </mat-card>
