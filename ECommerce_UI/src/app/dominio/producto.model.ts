@@ -7,4 +7,5 @@ export interface Producto {
     marca: string;
     categoria: string;
     colores: string;
+    aplicaParaPromociones: boolean;
 }

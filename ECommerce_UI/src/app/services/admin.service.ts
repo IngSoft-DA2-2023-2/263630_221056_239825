@@ -28,15 +28,14 @@ export class AdminService {
     return this.http.post<ProductoDTO>(this.urlProductos, producto, { headers });
   }
 
-  updateProduct(producto: Producto): Producto {
+  updateProduct(id:number, producto: ProductoDTO): Observable<ProductoDTO> {
     const token: string = sessionStorage.getItem('token')!;
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': 'placeHolderValue',
       'Content-Type': 'application/json',
       Authorization: token,
     });
-    this.http.put(this.urlProductos + '/' + producto.id, producto, { headers });
-    return producto;
+    return this.http.put<ProductoDTO>(this.urlProductos + '/' + id, producto, { headers });
   }
 
   deleteProduct(id: number): Observable<any> {

@@ -50,16 +50,17 @@ export class ProductsService {
       marca: element.marca.nombre,
       categoria: element.categoria.nombre,
       colores: element.color.nombre,
+      aplicaParaPromociones: element.aplicaParaPromociones,
     };
     return producto;
   }
 
-  getProduct(id: number): Observable<Producto>  {
+  getProduct(id: number): Observable<ProductoModelo>  {
     const headers: HttpHeaders = new HttpHeaders().set(
       'ngrok-skip-browser-warning',
       'placeHolderValue'
     );
-    return this.http.get<Producto>(this.url + '/' + id, { headers });
+    return this.http.get<ProductoModelo>(this.url + '/' + id, { headers });
   }
 
   getColores() : Observable<ColorDTO[]>{

@@ -11,4 +11,5 @@ export interface ProductoModelo {
     marca: MarcaModelo;
     categoria: CategoriaModelo;
     color: ColorModelo;
+    aplicaParaPromociones: boolean;
 }

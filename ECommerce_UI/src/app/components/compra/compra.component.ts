@@ -8,6 +8,7 @@ import { NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ProductsService } from 'src/app/services/productos.services';
 import { Producto } from 'src/app/dominio/producto.model';
+import { ProductoModelo } from 'src/app/dominio/productoModelo.model';
 
 @Component({
   standalone: true,
@@ -18,7 +19,7 @@ import { Producto } from 'src/app/dominio/producto.model';
 })
 export class CompraComponent {
   @Input() compra?: Compra;
-  protected productosDeLaCompra : Producto[] = [];
+  protected productosDeLaCompra : ProductoModelo[] = [];
   constructor(private productosService : ProductsService) {}
 
   ngOnInit(): void {

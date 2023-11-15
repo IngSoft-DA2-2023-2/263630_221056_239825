@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { NgFor, NgIf } from '@angular/common';
 import { ProductoDTO } from 'src/app/dominio/producto-dto.model';
+import { ProductoModelo } from 'src/app/dominio/productoModelo.model';
 interface AplicaPromo {
   nombre: string;
   valor: boolean;
@@ -77,15 +78,25 @@ export class ModificarProductoComponent {
     private route: ActivatedRoute
   ) {}
 
-  producto: Producto = {
+  producto: ProductoModelo = {
     id: 0,
-    nombre: 'Un producto',
-    descripcion: 'Una descripción',
+    nombre: '',
+    descripcion: '',
     precio: 0,
     stock: 0,
-    marca: '',
-    colores: '',
-    categoria: '',
+    color: {
+      id: 0,
+      nombre: '',
+    },
+    categoria: {
+      id: 0,
+      nombre: '',
+    },
+    marca: {
+      id: 0,
+      nombre: '',
+    },
+    aplicaParaPromociones: false,
   };
 
   ngOnInit(): void {
@@ -107,7 +118,7 @@ export class ModificarProductoComponent {
                 return [];
               })
             )
-            .subscribe((producto: Producto) => {
+            .subscribe((producto: ProductoModelo) => {
               this.producto = producto;
             });
         }
@@ -151,17 +162,79 @@ export class ModificarProductoComponent {
     if (
       this.nombre.value ||
       this.descripcion.value ||
-      this.precio.value !== null ||
-      this.stock.value !== null ||
+      this.precio.value !== '' ||
+      this.stock.value !== '' ||
       this.listaFormColores.value ||
       this.selectedValueCategoria ||
       this.selectedValueMarca ||
-      this.selectedValueAplicaPromo !== null
+      this.selectedValueAplicaPromo !== undefined
     ) {
-      this.openNotification('Se modificó el producto');
+      const productoModificado: ProductoDTO = this.modificarProductoDTO();
+      this.adminService
+        .updateProduct(
+          this.producto.id,
+          productoModificado
+        )
+        .subscribe((producto: ProductoDTO) => {
+          this.openNotification('Se modificó el producto '+ producto.nombre );
+        });
     } else {
       this.openNotification('Debe completar todos los campos');
     }
+  }
+
+  modificarProductoDTO() : ProductoDTO {
+    let productoModificado: ProductoDTO = {
+      nombre: '',
+      descripcion: '',
+      precio: 0,
+      stock: 0,
+      colorId: 0,
+      categoriaId: 0,
+      marcaId: 0,
+      aplicaParaPromociones: false,
+    }
+    if (this.nombre.value){
+      productoModificado.nombre = this.nombre.value;
+    } else {
+      productoModificado.nombre = this.producto.nombre;
+    }
+    if (this.descripcion.value){
+      productoModificado.descripcion = this.descripcion.value;
+    } else {
+      productoModificado.descripcion = this.producto.descripcion;
+    }
+    if (this.precio.value !== ''){
+      productoModificado.precio = this.precio.value;
+    } else {
+      productoModificado.precio = this.producto.precio;
+    }
+    if (this.stock.value !== ''){
+      productoModificado.stock = this.stock.value;
+    } else {
+      productoModificado.stock = this.producto.stock;
+    }
+    if (this.listaFormColores.value){
+      productoModificado.colorId = this.getIdsFromColorNames(this.listaFormColores.value);
+    } else {
+      productoModificado.colorId = this.producto.color.id;
+    }
+    if (this.selectedValueCategoria){
+      productoModificado.categoriaId = Number.parseInt(this.selectedValueCategoria);
+    } else {
+      productoModificado.categoriaId =this.producto.categoria.id;
+    }
+    if (this.selectedValueMarca){
+      productoModificado.marcaId = Number.parseInt(this.selectedValueMarca);
+    } else {
+      productoModificado.marcaId = this.producto.marca.id;
+    }
+    if (this.selectedValueAplicaPromo !== undefined){
+      productoModificado.aplicaParaPromociones = this.selectedValueAplicaPromo;
+    } else {
+      productoModificado.aplicaParaPromociones = this.producto.aplicaParaPromociones;
+    }
+    return productoModificado;
   }
 
   crearProducto(): void {
