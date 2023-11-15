@@ -91,7 +91,6 @@ export class ProductosComponent implements OnInit {
     this.productsServices.getMarcas().subscribe((marcas: MarcaDTO[]) => {
       this.listaMarcas = marcas;
     });
-    // this.ArrayProductos.push(this.producto1, this.producto2);
   }
 
   aplicarFiltros() {
@@ -131,26 +130,4 @@ export class ProductosComponent implements OnInit {
     const distancia = (maximo - mediana).toFixed(0);
     return [Number(medianaSinDecimales), Number(distancia)];
   }
-
-  // private producto1: Producto = {
-  //   id: 1,
-  //   nombre: 'Cafe',
-  //   descripcion: 'Molido',
-  //   precio: 500,
-  //   stock: 20,
-  //   categoria: 'Bebida',
-  //   marca: "Nescafe",
-  //   colores: "Negro"
-  // };
-
-  // private producto2: Producto = {
-  //   id: 1,
-  //   nombre: 'helado',
-  //   descripcion: 'Molido',
-  //   precio: 5000,
-  //   stock: 20,
-  //   categoria: 'Bebida',
-  //   marca: "Nescafe",
-  //   colores: "Negro"
-  // };
 }
