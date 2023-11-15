@@ -27,6 +27,7 @@ import { Router } from '@angular/router';
 })
 export class UsuarioComponent {
   @Input() usuario!: Usuario;
+  protected comprasDelUsuario! : number;
 
   constructor(
     private tokenUserService: TokenUserService,
@@ -34,6 +35,11 @@ export class UsuarioComponent {
     private router : Router,
     private dialog: MatDialog
   ) {}
+
+  ngOnInit() {
+    this.comprasDelUsuario = this.usuario.compras.length;
+    console.log(this.usuario.compras);
+  }
 
   eliminarUsuario(): void {
     this.tokenUserService

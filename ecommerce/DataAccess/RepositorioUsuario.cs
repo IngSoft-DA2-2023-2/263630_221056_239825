@@ -29,12 +29,12 @@ namespace DataAccess
 
         public Usuario ObtenerUsuario(Expression<Func<Usuario, bool>> criterio)
         {
-            return Contexto.Set<Usuario>().First(criterio);
+            return Contexto.Set<Usuario>().Include(u=> u.Compras).First(criterio);
         }
 
         public List<Usuario> ObtenerUsuarios()
         {
-            return Contexto.Set<Usuario>().ToList();
+            return Contexto.Set<Usuario>().Include(u => u.Compras).ToList();
         }
 
         public void EliminarUsuario(Usuario usuario)
