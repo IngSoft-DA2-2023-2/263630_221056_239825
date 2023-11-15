@@ -1,7 +1,7 @@
 <mat-card class="card-compra">
     <mat-divider></mat-divider>
     <mat-card-content>
-        <h2><strong>Fecha:</strong> {{compra?.fechaCompra | date:'dd/MM/yyyy'}}</h2>
+        <h2><strong>Fecha:</strong> {{compra?.fechaCompra | date:'dd/MM/yyyy HH:mm'}}</h2>
         <p><strong>Precio total:</strong> ${{compra?.precio}}</p>
         <p><strong>Promocion aplicada:</strong> {{compra?.nombrePromo}}</p>
         <p *ngFor="let producto of compra?.productos">
