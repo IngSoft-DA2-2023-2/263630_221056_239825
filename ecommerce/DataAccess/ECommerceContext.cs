@@ -10,8 +10,10 @@ namespace DataAccess
         public ECommerceContext() 
         {
         }
+
         public ECommerceContext(DbContextOptions<ECommerceContext> optionsBuilderOptions) : base(optionsBuilderOptions)
         {
+        }
 
         }
 
