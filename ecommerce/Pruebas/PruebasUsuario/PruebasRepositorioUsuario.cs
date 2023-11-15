@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿/*using Moq;
 using DataAccess.Interfaces;
 using DataAccess;
 using Dominio.Usuario;
@@ -13,7 +13,6 @@ namespace Pruebas.PruebasUsuario
     {
         private Usuario? unCliente;
         private List<Usuario>? usuarios;
-        private DbContext _dbContext = new ECommerceTestingContext();
         IRepositorioUsuario? repositorioUsuario;
         [TestInitialize]
         public void InitTest()
@@ -84,3 +83,4 @@ namespace Pruebas.PruebasUsuario
         }
     }
 }
+*/

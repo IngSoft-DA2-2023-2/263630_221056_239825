@@ -15,6 +15,7 @@ namespace ServicioFactory
         {
             serviceCollection.AddDbContext<DbContext, ECommerceContext>();
 
+
             serviceCollection.AddScoped<IRepositorioProducto, RepositorioProducto>();
             serviceCollection.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             serviceCollection.AddScoped<IRepositorioCompra, RepositorioCompra>();
@@ -35,9 +36,6 @@ namespace ServicioFactory
                 });
             });
           
-            serviceCollection.AddScoped<IPromocionStrategy, PromocionTotalLook>();
-            serviceCollection.AddScoped<IPromocionStrategy, Promocion20Off>();
-            serviceCollection.AddScoped<IPromocionStrategy, Promocion3xModelable>();
         }
     }
 }

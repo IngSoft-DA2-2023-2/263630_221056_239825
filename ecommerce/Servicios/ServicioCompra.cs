@@ -1,4 +1,5 @@
-﻿using DataAccess.Interfaces;
+﻿using System.Reflection;
+using DataAccess.Interfaces;
 using Dominio;
 using Servicios.Interfaces;
 using Servicios.Promociones;
@@ -8,26 +9,48 @@ namespace Servicios;
 public class ServicioCompra : IServicioCompra
 {
     private IRepositorioCompra _repositorio;
-    private Promocion3xModelable _promocion3XModelable;
-    private Promocion20Off _promocion20Off;
-    private PromocionTotalLook _promocionTotalLook;
-
     private string _nombrePromocionAplicada;
     private int _precioCalculado;
-
+    
     public ServicioCompra(IRepositorioCompra repositorio)
     {
         _repositorio = repositorio;
-        _promocion3XModelable = new Promocion3xModelable();
-        _promocion20Off = new Promocion20Off();
-        _promocionTotalLook = new PromocionTotalLook();
+        
     }
 
     public List<Compra> RetornarTodas() => _repositorio.RetornarTodas();
     public List<Compra> RetornarPorId(int id) => _repositorio.RetornarPorId(id);
-    
 
-    
+    public List<IPromocionStrategy> CargarPromociones()
+    {
+        List<IPromocionStrategy> _promocionesEncontradas = new List<IPromocionStrategy>();
+        string pathApi = Directory.GetCurrentDirectory();
+        string pathRelativo = Path.Combine("..", "Promociones");
+        string pathFinal = Path.GetFullPath(Path.Combine(pathApi, pathRelativo));
+
+        string[] todosLosPaths = Directory.GetFiles(pathFinal);
+
+        foreach (string pathEncontrado in todosLosPaths)
+        {
+            if (pathEncontrado.EndsWith(".dll"))
+            {
+                FileInfo informacionArchivo = new FileInfo(pathEncontrado);
+                Assembly assembly = Assembly.LoadFile(informacionArchivo.FullName);
+
+                foreach (Type type in assembly.GetTypes())
+                {
+                    if (typeof(IPromocionStrategy).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
+                    {
+                        IPromocionStrategy promocion = (IPromocionStrategy)Activator.CreateInstance(type);
+                        if (promocion != null)
+                            _promocionesEncontradas.Add(promocion);
+                    }
+                }
+            }
+        }
+        return _promocionesEncontradas;
+    }
+
     private void CalcularPrecioBase(List<Producto> listaProductos)
     {
         int precio = 0;
@@ -48,10 +71,12 @@ public class ServicioCompra : IServicioCompra
         int cantidad20Off = 20;
         int cantidadTotalLook = 50;
         CalcularPrecioBase(compra.Productos);
-        CompararPrecio(_promocion3XModelable, compra.Productos, cantidad3x1);
-        CompararPrecio(_promocion3XModelable, compra.Productos, cantidad3x2);
-        CompararPrecio(_promocion20Off, compra.Productos, cantidad20Off);
-        CompararPrecio(_promocionTotalLook, compra.Productos, cantidadTotalLook);
+        CargarPromociones();
+        List<IPromocionStrategy> promocionesEncontradas = CargarPromociones();
+        foreach (var clase in promocionesEncontradas)
+        {
+            CompararPrecio(clase, compra.Productos);
+        }
         compra.Precio = _precioCalculado;
         compra.NombrePromo = _nombrePromocionAplicada;
         AplicarDescuentoPaganza(compra);
@@ -65,9 +90,9 @@ public class ServicioCompra : IServicioCompra
         }
     }
     
-    private void CompararPrecio(IPromocionStrategy promocionUsada, List<Producto> productos, int cantidadGratis)
+    private void CompararPrecio(IPromocionStrategy promocionUsada, List<Producto> productos)
     {
-        int precioNuevo = promocionUsada.AplicarPromocion(cantidadGratis, productos);
+        int precioNuevo = promocionUsada.AplicarPromocion(productos);
         if (precioNuevo < _precioCalculado)
         {
             _precioCalculado = precioNuevo;
