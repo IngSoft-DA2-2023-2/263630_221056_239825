@@ -32,6 +32,7 @@ import { ModificarUsuarioComponent } from './components/modificar-usuario/modifi
 import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [AppComponent, ],
@@ -67,7 +68,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
     FormsModule,
     MatButtonToggleModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
