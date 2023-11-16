@@ -14,7 +14,7 @@
       <h2 class="precioTotal">Total del Carrito: {{ calcularTotalCarrito() | currency }}</h2>
     </div>
     <div>
-      <button mat-raised-button matStepperNext color="accent">Ir al pago</button>
+      <button mat-raised-button matStepperNext color="accent" (click)="irAMetodoDePago()">Ir al pago</button>
     </div>
   </mat-step>
 
