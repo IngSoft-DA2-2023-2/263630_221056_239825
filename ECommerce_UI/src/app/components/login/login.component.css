@@ -1,0 +1,27 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  max-width: 400px;
+  margin: 20vh;
+  background-color: lightblue;
+  align-items: center;
+}
+
+.inputs{
+  min-width: 300px;
+}
+
+.contenidoCard{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inicio{
+  background-color: lightskyblue;
+}

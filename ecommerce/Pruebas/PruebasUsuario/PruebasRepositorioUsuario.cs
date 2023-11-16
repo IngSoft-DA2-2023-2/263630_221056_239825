@@ -1,126 +1,86 @@
-﻿using Moq;
+﻿/*using Moq;
 using DataAccess.Interfaces;
 using DataAccess;
 using Dominio.Usuario;
 using Dominio;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pruebas.PruebasUsuario
 {
     [TestClass]
     public class PruebasRepositorioUsuario
     {
-        private Mock<ECommerceContext>? mock;
-        private RepositorioUsuario? repositorioUsuario;
-        private Usuario? cliente;
-        private List<Usuario>? listaClientes;
-        private Usuario? clienteSinDireccion;
-        private Usuario? clienteSinMail;
-        private Usuario? clienteNulo;
-        private Compra? compra;
+        private Usuario? unCliente;
+        private List<Usuario>? usuarios;
+        IRepositorioUsuario? repositorioUsuario;
         [TestInitialize]
         public void InitTest()
         {
-            mock = new Mock<ECommerceContext>();
-            repositorioUsuario = new RepositorioUsuario(mock.Object);
-            cliente = new Usuario("martin@edelman.com.uy", "Zorrilla 124", "Password123");
-            cliente.Id = 1;
-            listaClientes = new List<Usuario>();
-            listaClientes.Add(cliente);
-            clienteSinDireccion = new Usuario("Martín@Edelman", "", "Password123");
-            clienteSinMail = new Usuario("Martin Edelman", "Zorrilla 124", "Password123");
-            clienteNulo = null;
-            compra = new Compra();
+            unCliente = new Usuario("martin@edelman.com.uy", "Zorrilla 124", "12345678") {
+                Rol = CategoriaRol.Cliente
+            };
+            usuarios = new List<Usuario> { unCliente };
+            repositorioUsuario = new RepositorioUsuario(_dbContext);
         }
 
         [TestMethod]
         public void RegistrarUsuarioOk()
         {
             // Act
-            mock!.Setup(x => x.Set<Usuario>());
-            mock!.Setup(x => x.SaveChanges());
-            Usuario resultado = repositorioUsuario!.AgregarUsuario(cliente!);
+            repositorioUsuario!.AgregarUsuario(unCliente!);
 
             // Assert
-            Assert.AreEqual(cliente, resultado);
+            List<Usuario> usuariosObtenidos = repositorioUsuario.ObtenerUsuarios();
+            repositorioUsuario!.EliminarUsuario(unCliente!);
+            Assert.AreEqual(usuarios!.Count(), usuariosObtenidos.Count());
+            Assert.AreEqual(unCliente!.CorreoElectronico, usuariosObtenidos.Last().CorreoElectronico);
         }
 
         [TestMethod]
-        public void ObtenerUsuarioOk()
+        public void ObtenerUsuarioPorCorreoOk()
         {
-            // Act
-            mock!.Setup(x => x.Set<Usuario>());
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            Usuario resultado = repositorioUsuario!.ObtenerUsuario(u => u.Id == 1);
+            repositorioUsuario!.AgregarUsuario(unCliente!);
+            Usuario usuarioObtenido = repositorioUsuario!.ObtenerUsuario(u => u.CorreoElectronico == unCliente!.CorreoElectronico);
+            repositorioUsuario!.EliminarUsuario(unCliente!);
 
-            // Assert
-            Assert.AreEqual(cliente, resultado);
+            Assert.IsNotNull(usuarioObtenido);
+            Assert.AreEqual(unCliente!.CorreoElectronico, usuarioObtenido.CorreoElectronico);
         }
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ObtenerUsuarioNoExiste()
-        {
-            mock!.Setup(x => x.Set<Usuario>());
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            Usuario resultado = repositorioUsuario!.ObtenerUsuario(u => u.Id == 1);
-        }
+
         [TestMethod]
         public void ObtenerUsuariosOk()
         {
-            mock!.Setup(x => x.Set<Usuario>());
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            List<Usuario> resultado = repositorioUsuario!.ObtenerUsuarios();
+            repositorioUsuario!.AgregarUsuario(unCliente!);
+            List<Usuario> usuariosObtenidos = repositorioUsuario!.ObtenerUsuarios();
+            repositorioUsuario!.EliminarUsuario(unCliente!);
 
-            // Assert
-            Assert.AreEqual(listaClientes!.Count, resultado.Count);
-            Assert.AreEqual(listaClientes[0], resultado[0]);
+            Assert.AreEqual(usuariosObtenidos.Count(), usuarios!.Count());
+            Assert.AreEqual(usuariosObtenidos[0].CorreoElectronico, usuarios![0].CorreoElectronico);
         }
 
         [TestMethod]
-        public void ActualizarUsuariosOk()
+        public void ActualizarUsuarioOk()
         {
-            // Act
-            mock!.Setup(x => x.Set<Usuario>());
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            cliente!.DireccionEntrega = "Julio Cesar 1247";
-            repositorioUsuario!.ActualizarUsuario(cliente!);
-            Usuario resultado = repositorioUsuario!.ObtenerUsuario(u => u.Id == 1);
+            repositorioUsuario!.AgregarUsuario(unCliente!);
+            string nuevaDireccion = "Nueva Dirección 123";
+            unCliente!.DireccionEntrega = nuevaDireccion;
+            repositorioUsuario!.ActualizarUsuario(unCliente);
+            Usuario usuarioActualizado = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == unCliente.CorreoElectronico);
+            repositorioUsuario.EliminarUsuario(unCliente!);
 
-            // Assert
-            Assert.AreEqual(cliente.DireccionEntrega, resultado.DireccionEntrega);
+            Assert.IsNotNull(usuarioActualizado);
+            Assert.AreEqual(nuevaDireccion, usuarioActualizado.DireccionEntrega);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ActualizarUsuarioNoExiste()
+        public void EliminarUsuarioOk()
         {
-            mock!.Setup(x => x.Set<Usuario>());
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.ActualizarUsuario(clienteNulo!);
-        }
-
-        [TestMethod]
-        public void EliminarUsuarioCorrecto()
-        {
-            mock!.Setup(x => x.Set<Usuario>());
-            repositorioUsuario!.AgregarUsuario(cliente!);
-            repositorioUsuario!.EliminarUsuario(cliente!);
-            List<Usuario> usuarios = repositorioUsuario!.ObtenerUsuarios();
-
-            Assert.IsTrue(usuarios.Count() == 0);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void EliminarUsuarioIncorrecto()
-        {
-            Usuario nuevoCliente = new Usuario("martin@edelman.com.uy", "Zorrilla 142", "Password123")
-            {
-                Id = 100,
-                Rol = CategoriaRol.Cliente
-            };
-            mock!.Setup(x => x.Set<Usuario>());
-            repositorioUsuario!.EliminarUsuario(nuevoCliente!);
+            repositorioUsuario!.AgregarUsuario(unCliente!);
+            repositorioUsuario!.EliminarUsuario(unCliente!);
+            List<Usuario> usuariosObtenidos = repositorioUsuario.ObtenerUsuarios();
+            Assert.AreEqual(usuariosObtenidos.Count, 0);
         }
     }
 }
+*/

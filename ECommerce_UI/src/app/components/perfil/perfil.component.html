@@ -1,0 +1,21 @@
+<div class="perfilInfo">
+    <h1>¡Hola {{usuario!.correoElectronico}}!</h1>
+    <h3>Tu dirección de entrega está configurada como: {{usuario!.direccionEntrega}}</h3>
+    <div class="botonesPerfil">
+        <button mat-raised-button class="botonesIndividual" color="primary" (click)="editarUsuario()">Editar mi
+            perfil</button>
+        <button mat-raised-button class="botonesIndividual" color="warn" (click)="eliminarUsuario()">Eliminar mi
+            perfil</button>
+    </div>
+    <h1 class="titulo">Estas son tus compras</h1>
+</div>
+<ng-container *ngIf="compras !== undefined && compras.length !== 0">
+    <div class="compras">
+        <app-compra *ngFor="let compra of compras; let i = index;" [compra]="compra"></app-compra>
+    </div>
+</ng-container>
+<div class="perfilInfo">
+    <ng-container *ngIf="compras!.length == 0">
+        <h3>No has realizado ninguna compra aún</h3>
+    </ng-container>
+</div>

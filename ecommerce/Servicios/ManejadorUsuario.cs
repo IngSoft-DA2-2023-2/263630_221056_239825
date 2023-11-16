@@ -3,23 +3,46 @@ using Dominio.Usuario;
 using DataAccess.Interfaces;
 using Servicios.Interfaces;
 using Servicios.Promociones;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Servicios
 {
     public class ManejadorUsuario : IManejadorUsuario
     {
         private readonly IRepositorioUsuario repositorioUsuario;
-        public ManejadorUsuario(IRepositorioUsuario repositorioUsuario)
+        private readonly IServicioCompra servicioCompra;
+        public ManejadorUsuario(IRepositorioUsuario repositorioUsuario, IServicioCompra servicioCompra)
         {
             this.repositorioUsuario = repositorioUsuario;
+            this.servicioCompra = servicioCompra;
         }
 
         public Usuario RegistrarUsuario(Usuario usuario)
         {
-            if (ValidarUsuario(usuario, true)) {
+            if (ValidarUsuario(usuario, true))
+            {
+                string contrasenaHasheada = HashPasword(usuario.Contrasena, Salting(usuario.CorreoElectronico));
+                usuario.Contrasena = contrasenaHasheada;
                 usuario = repositorioUsuario.AgregarUsuario(usuario);
             }
             return usuario;
+        }
+
+        private byte[] Salting(string correoElectronico)
+        {
+            return new byte[correoElectronico.Length];
+        }
+
+        private string HashPasword(string password, byte[] salt)
+        {
+            var hash = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password),
+                salt,
+                350000,
+                HashAlgorithmName.SHA512,
+                64);
+            return Convert.ToHexString(hash);
         }
 
         private bool ValidarUsuario(Usuario usuario, bool esNuevo)
@@ -67,6 +90,10 @@ namespace Servicios
         public void ActualizarUsuario(int id, Usuario usuario)
         {
             Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
+            if (usuario.Contrasena == "")
+            {
+                usuario.Contrasena = usuarioObtenido.Contrasena;
+            }
             if (ValidarUsuario(usuario, false))
             {
                 usuarioObtenido.CorreoElectronico = usuario.CorreoElectronico;
@@ -81,45 +108,13 @@ namespace Servicios
         {
             if (ValidarCompra(compra))
             {
-                int precio = PrecioTotal(compra.Productos);
-                string nombrePromo = "";
-                PromocionContext promocionContext = new();
-                List<IPromocionStrategy> promociones = new()
-                {
-                    new Promocion20Off(),
-                    new Promocion3x1(),
-                    new Promocion3x2(),
-                    new PromocionTotalLook()
-                };
-
-                foreach (IPromocionStrategy promo in promociones)
-                {
-                    promocionContext.PromocionStrategy = promo;
-                    int precioConDescuento = promocionContext.AplicarStrategy(compra.Productos);
-                    if (precioConDescuento < precio)
-                    {
-                        precio = precioConDescuento;
-                        nombrePromo = promo.NombrePromocion;
-                    }
-                }
-                compra.Precio = precio;
-                compra.NombrePromo = nombrePromo;
-
+                servicioCompra.DefinirMejorPrecio(compra);
                 Usuario usuarioObtenido = repositorioUsuario.ObtenerUsuario(u => u.Id == id);
                 usuarioObtenido.Compras.Add(compra);
                 repositorioUsuario.ActualizarUsuario(usuarioObtenido);
             }
         }
 
-        private int PrecioTotal(List<Producto> listaProductos)
-        {
-            int precio = 0;
-            foreach (Producto p in listaProductos)
-            {
-                precio += p.Precio;
-            }
-            return precio;
-        }
 
         private bool ValidarCompra(Compra compra)
         {
@@ -145,7 +140,8 @@ namespace Servicios
             try
             {
                 return repositorioUsuario.ObtenerUsuario(u => u.Id == id);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 throw new KeyNotFoundException("No existe el usuario con la id dada");
             }
@@ -165,12 +161,26 @@ namespace Servicios
         {
             try
             {
-                Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico && u.Contrasena == contrasena);
-                return usuario;
-            } catch (Exception)
+                Usuario usuario = repositorioUsuario.ObtenerUsuario(u => u.CorreoElectronico == correoElectronico);
+                if (VerifyPassword(contrasena, usuario.Contrasena, Salting(correoElectronico)))
+                {
+                    return usuario;
+                }
+                else
+                {
+                    throw new KeyNotFoundException();
+                }
+            }
+            catch (Exception)
             {
                 throw new KeyNotFoundException("Credenciales incorrectas");
             }
+        }
+
+        private bool VerifyPassword(string password, string hash, byte[] salt)
+        {
+            var hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, 350000, HashAlgorithmName.SHA512, 64);
+            return CryptographicOperations.FixedTimeEquals(hashToCompare, Convert.FromHexString(hash));
         }
     }
 }

@@ -11,6 +11,5 @@ namespace Servicios.Promociones
     {
         public int AplicarPromocion(List<Producto> listaCompra);
         public string NombrePromocion { get;}
-        bool AplicarPromo(List<Producto> carrito);
     }
 }

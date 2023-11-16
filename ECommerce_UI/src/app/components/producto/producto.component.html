@@ -1,0 +1,29 @@
+<ng-container>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{producto.nombre}}</mat-card-title>
+      <mat-card-subtitle>{{producto.categoria}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <h4><strong>Precio:</strong> ${{producto.precio}}</h4>
+      <p>
+        <strong>Descripción:</strong> {{producto.descripcion}}
+      </p>
+      <p>
+        <strong>Color:</strong> {{producto.colores}}
+      </p>
+      <p>
+        <strong>Marca:</strong> {{producto.marca}}
+      </p>
+    </mat-card-content>
+    <div [hidden]="!seMuestraBoton">
+      <mat-divider></mat-divider>
+      <mat-card-actions class="botones">
+        <button mat-raised-button *ngFor="let boton of getBotones()" (click)="realizarAccion(boton.accion)"
+          [class.mat-warn]="boton.accion === 'Eliminar'"  [class.boton]="boton.accion !== 'Eliminar'">
+          {{ boton.texto }}
+        </button>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</ng-container>

@@ -1,0 +1,32 @@
+.example-card {
+  max-width: 400px;
+  min-width: 330px;
+  margin: 20px 0;
+  background-color: gainsboro;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.boton {
+  background-color: lightblue;
+  margin-right: 10px;
+}
+
+.botones {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.seMuestraBoton {
+  display: block;
+}
+
+@media (max-width: 520px) {
+  .example-card {
+    min-width: 90vw;
+  }
+}

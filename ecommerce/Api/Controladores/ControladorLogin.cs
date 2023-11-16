@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Principal;
+using Newtonsoft.Json;
 
 namespace Api.Controladores
 {
@@ -21,6 +22,7 @@ namespace Api.Controladores
             _manejadorUsuario = manejadorUsuario;
             _configuration = configuration;
         }
+
         [HttpPost]
         public IActionResult RegistrarSesion([FromBody] CredencialesControlador credenciales)
         {
@@ -46,7 +48,15 @@ namespace Api.Controladores
                 expires: DateTime.UtcNow.AddDays(30),
                 signingCredentials: signIn
             );
-            return Created("", new JwtSecurityTokenHandler().WriteToken(token));  
+            string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            UsuarioDTO usuarioDTO = new UsuarioDTO();
+            usuarioDTO.Id = usuario.Id;
+            usuarioDTO.CorreoElectronico = usuario.CorreoElectronico;
+            usuarioDTO.Rol = usuario.Rol;
+            usuarioDTO.DireccionEntrega = usuario.DireccionEntrega;
+            usuarioDTO.Compras = usuario.Compras;
+            usuarioDTO.Token = tokenString;
+            return Created("", usuarioDTO);
         }
     }
 }

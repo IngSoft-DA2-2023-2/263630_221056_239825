@@ -1,4 +1,5 @@
 using Api.Dtos;
+using Api.Filtros;
 using Dominio;
 using Dominio.Usuario;
 using Microsoft.AspNetCore.Mvc;
@@ -31,57 +32,52 @@ namespace Api.Controladores
             return Ok(productos.Select(p => new ProductoModelo(p)));
         }
         
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         [HttpPost]
         public IActionResult AgregarProducto([FromBody] ProductoUpsertModelo productoNuevo)
         {
-            if (!EsAdministrador(HttpContext.User.Identity as ClaimsIdentity))
-            {
-                return Unauthorized();
-            }
             int productoCreadoId = _servicioProducto.AgregarProducto(productoNuevo.AEntidad());
             Producto productoCreado = _servicioProducto.EncontrarPorId(productoCreadoId);
             return CreatedAtRoute(nameof(BuscarPorId), new { id = productoCreadoId }, new ProductoModelo(productoCreado));
         }
         
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         [HttpDelete("{id}")]
         public IActionResult EliminarProducto(int id)
         {
-            if (!EsAdministrador(HttpContext.User.Identity as ClaimsIdentity))
-            {
-                return Unauthorized();
-            }
             Producto productoAEliminar = _servicioProducto.EncontrarPorId(id);
             _servicioProducto.EliminarProducto(productoAEliminar);
             return NoContent();
         }
         
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         [HttpPut("{id}")]
         public IActionResult ModificarProducto(int id, [FromBody] ProductoUpsertModelo productoNuevo)
         {
-            if (!EsAdministrador(HttpContext.User.Identity as ClaimsIdentity))
-            {
-                return Unauthorized();
-            }
             _servicioProducto.ModificarProducto(id, productoNuevo.AEntidad());
             Producto productoActualizado = _servicioProducto.EncontrarPorId(id);
             return Ok(new ProductoModelo(productoActualizado));
         }
-        private bool EsAdministrador(ClaimsIdentity identity)
+
+        [HttpGet("colores")]
+        public IActionResult ObtenerColores()
         {
-            try
-            {
-                string nombreRol = identity!.Claims.FirstOrDefault(x => x.Type == "rol")!.Value;
-                CategoriaRol rolUsuario = Enum.Parse<CategoriaRol>(nombreRol);
-                if (rolUsuario != CategoriaRol.Administrador && rolUsuario != CategoriaRol.ClienteAdministrador)
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            List<Color> colores = _servicioProducto.RetornarColores();
+            return Ok(colores.Select(c => new ColorModelo(c)));
+        }
+
+        [HttpGet("categorias")]
+        public IActionResult ObtenerCategorias()
+        {
+            List<Categoria> categorias = _servicioProducto.RetornarCategorias();
+            return Ok(categorias.Select(c => new CategoriaModelo(c)));
+        }
+
+        [HttpGet("marcas")]
+        public IActionResult ObtenerMarcas()
+        {
+            List<Marca> marcas = _servicioProducto.RetornarMarcas();
+            return Ok(marcas.Select(m => new MarcaModelo(m)));
         }
     }
 }

@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html, body { height: 100%; }
+body { margin: 0; padding: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.colorPrimario{
+  background-color: lightblue;
+}
+
+.colorSecundario{
+  background-color: lightgreen;
+}
+
+/* Estilos para el scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 5px; /* Ancho del scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del thumb (la parte móvil del scrollbar) */
+  border-radius: 10px; /* Bordes redondeados para el thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color de fondo del scrollbar */
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

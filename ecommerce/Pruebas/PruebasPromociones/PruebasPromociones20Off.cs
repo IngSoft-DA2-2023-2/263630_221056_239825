@@ -12,83 +12,55 @@ namespace Pruebas.PruebasPromociones
     [TestClass]
     public class PruebasPromociones20Off
     {
-        private Mock<IPromocionStrategy>? mock;
-        private Promocion20Off? promocion20;
-        private Producto? producto;
-        private Producto? productoVacio;
-        private Producto? producto2;
-        private List<Producto>? carrito;
+        private Promocion20OffPrueba _promocion20Off;
+        private Producto productoColor1;
+        private Producto productoCategoria1;
+        private List<Producto> carrito;
 
         [TestInitialize]
         public void InitTest()
         {
-            mock = new Mock<IPromocionStrategy>();
-            promocion20 = new Promocion20Off();
-            Marca marca = new();
-            Categoria categoria = new();
-            List<Color> color = new();
-            producto = new Producto("Jean", 2000, "Largo y blanco", 1, 1, color) { Marca = marca, Categoria = categoria};
-            productoVacio = null;
-            Marca marca2 = new();
+            _promocion20Off = new Promocion20OffPrueba();
+
+            Marca marca1 = new();
+            
+            Categoria categoria1 = new();
             Categoria categoria2 = new();
-            List<Color> color2 = new();
-            producto2 = new Producto("Blusa", 1890, "Manga larga", 2, 2, color2);
-            carrito = new List<Producto>();
-            carrito.Add(producto);
-            carrito.Add(producto2);
+            
+            Color color1 = new();
+            Color color2 = new();
+            
+            productoColor1 = new Producto("Blusa", 100, "Manga larga", 1, 1, 6, true, 1) { Marca = marca1, Categoria = categoria1, Color = color2};
+
+            productoCategoria1 = new Producto("Remera", 200, "Manga larga", 1, 2, 6, true, 1) { Marca = marca1, Categoria = categoria2, Color = color1};
         }
 
         [TestMethod]
-        public void AplicarPromocionOk()
+        public void AplicarPromocion20OffOk()
         {
+            //Arrange
+            carrito = new List<Producto> {productoCategoria1, productoColor1};
+
             //Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3490);
-            int costoTotal = promocion20!.AplicarPromocion(carrito!);
+            int costoTotal = _promocion20Off.AplicarPromocion(carrito);
+            
             // Assert
-            Assert.AreEqual(3490, costoTotal);
+            Assert.AreEqual(260, costoTotal);
         }
-
+        
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void AplicarPromocionError()
+        public void AplicarPromocionPocos20OffItems()
         {
-            // Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3490);
-            carrito!.Remove(producto2!);
-            int costoTotal = promocion20!.AplicarPromocion(carrito!);
-        }
+            //Arrange
+            carrito = new List<Producto> {productoColor1};
 
-        [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
-        public void AplicarPromocionErrorNulo()
-        {
-            // Act
-            mock!.Setup(x => x.AplicarPromocion(It.IsAny<List<Producto>>())).Returns(3490);
-            carrito!.Remove(producto2!);
-            carrito!.Add(productoVacio!);
-            int costoTotal = promocion20!.AplicarPromocion(carrito!);
-        }
-
-        [TestMethod]
-        public void AplicaPromoErrorNulo()
-        {
             //Act
-            mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
-            bool aplica = promocion20!.AplicarPromo(It.IsAny<List<Producto>>());
-            //Assert
-            Assert.AreEqual(false, aplica);
+            int costoTotal = _promocion20Off.AplicarPromocion(carrito);
+            
+            // Assert
+            Assert.AreEqual(9999999, costoTotal);
         }
 
-        [TestMethod]
-        public void AplicaPromoError()
-        {
-            //Act
-            mock!.Setup(x => x.AplicarPromo(It.IsAny<List<Producto>>())).Returns(false);
-            carrito!.Remove(productoVacio!);
-            bool aplica = promocion20!.AplicarPromo(It.IsAny<List<Producto>>());
-            //Assert
-            Assert.AreEqual(false, aplica);
-        }
     }
-
 }
+

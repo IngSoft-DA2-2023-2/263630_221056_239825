@@ -9,6 +9,9 @@ public interface IServicioProducto
     void ModificarProducto(int id, Producto productoNuevo);
 
     List<Producto> RetornarLista(QueryProducto queryProducto);
+    List<Categoria> RetornarCategorias();
+    List<Color> RetornarColores();
+    List<Marca> RetornarMarcas();
 
     Producto EncontrarPorId(int idProducto);
 }

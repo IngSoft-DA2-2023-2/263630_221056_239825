@@ -1,0 +1,20 @@
+.homePage {
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/030/397/399/small_2x/a-beautiful-model-woman-walking-with-shopping-bags-buying-clothes-in-stores-on-a-city-street-in-france-fashionable-lady-with-high-heels-generative-ai-photo.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 90.2vh;
+    align-items: center;
+    color: white;
+}
+
+.textoGrupo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30vh;
+}
+
+.textoIndividual{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}

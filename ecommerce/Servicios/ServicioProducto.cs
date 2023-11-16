@@ -36,7 +36,9 @@ public class ServicioProducto : IServicioProducto
         productoViejo.Descripcion = productoNuevo.Descripcion;
         productoViejo.CategoriaId = productoNuevo.CategoriaId;
         productoViejo.MarcaId = productoNuevo.MarcaId;
-        productoViejo.Colores = productoNuevo.Colores;
+        productoViejo.ColorId = productoNuevo.ColorId;
+        productoViejo.Stock = productoNuevo.Stock;
+        productoViejo.AplicaParaPromociones = productoNuevo.AplicaParaPromociones;
         
         _repositorioProductos.ModificarProducto(productoViejo);
         GuardarCambios();
@@ -63,5 +65,20 @@ public class ServicioProducto : IServicioProducto
         }
 
         return productoEncontrado;
+    }
+
+    public List<Categoria> RetornarCategorias()
+    {
+        return _repositorioProductos.RetornarCategorias();
+    }
+
+    public List<Color> RetornarColores()
+    {
+        return _repositorioProductos.RetornarColores();
+    }
+
+    public List<Marca> RetornarMarcas()
+    {
+        return _repositorioProductos.RetornarMarcas();
     }
 }

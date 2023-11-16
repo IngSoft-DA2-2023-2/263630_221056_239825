@@ -1,0 +1,20 @@
+.card-compra {
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 200px;
+    background-color: lightblue;
+    margin: 10px;
+    padding: 10px;
+    align-content: center;
+}
+
+.container-productos {
+    padding-top: 10px;
+}
+
+@media screen and (max-width: 400px) {
+    .card-compra {
+        min-width: 80vw;
+        max-width: 80vw;
+    }
+}

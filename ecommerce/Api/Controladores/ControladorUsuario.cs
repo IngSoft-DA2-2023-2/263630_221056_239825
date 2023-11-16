@@ -1,6 +1,8 @@
 ﻿using Api.Dtos;
+using Api.Filtros;
 using Dominio;
 using Dominio.Usuario;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Servicios.Interfaces;
 using System.Security.Claims;
@@ -14,6 +16,7 @@ namespace Api.Controladores
         private IManejadorUsuario _manejadorUsuario;
         private IServicioProducto _manejadorProducto;
         private IServicioCompra _manejadorCompra;
+
         public ControladorUsuario(IManejadorUsuario manejadorUsuario, IServicioProducto manejadorProducto, IServicioCompra manejadorCompra)
         {
             _manejadorUsuario = manejadorUsuario;
@@ -28,78 +31,60 @@ namespace Api.Controladores
         }
 
         [HttpGet("{id}")]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         public IActionResult BuscarPorId(int id)
         {
-            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador || usuario.Id == id)
-            {
-                return Ok(_manejadorUsuario.ObtenerUsuario(id));
-            }
-            return Unauthorized();
+            return Ok(_manejadorUsuario.ObtenerUsuario(id));
         }
 
+        [ServiceFilter(typeof(JwtAuthorizationFilter))]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
         [HttpGet]
         public IActionResult BuscarTodos()
         {
-            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
-            {
-                return Ok(_manejadorUsuario.ObtenerUsuarios());
-            }
-            return Unauthorized();
+            return Ok(_manejadorUsuario.ObtenerUsuarios());
         }
 
+        [ServiceFilter(typeof(JwtAuthorizationFilter))]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId = true)]
         [HttpPut("{id}")]
         public IActionResult ModificarUsuario(int id, [FromBody] UsuarioCrearModelo usuario)
         {
-            Usuario usuarioLogeado = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if (usuarioLogeado.Rol == CategoriaRol.Administrador || usuarioLogeado.Rol == CategoriaRol.ClienteAdministrador || usuarioLogeado.Id==id)
-            {
-                _manejadorUsuario.ActualizarUsuario(id, usuario.ToEntity());
-                return Ok();
-            }
-            return Unauthorized();
+            _manejadorUsuario.ActualizarUsuario(id, usuario.ToEntity());
+            return Ok();
         }
 
+        [ServiceFilter(typeof(JwtAuthorizationFilter))]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId = true)]
         [HttpDelete("{id}")]
         public IActionResult EliminarUsuario(int id)
         {
-            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if (usuario.Rol == CategoriaRol.Administrador || usuario.Rol == CategoriaRol.ClienteAdministrador)
-            {
-                Usuario usuarioAEliminar = _manejadorUsuario.ObtenerUsuario(id);
-                _manejadorUsuario.EliminarUsuario(usuarioAEliminar);
-                return Ok();
-            }
-            return Unauthorized();
+            Usuario usuarioAEliminar = _manejadorUsuario.ObtenerUsuario(id);
+            _manejadorUsuario.EliminarUsuario(usuarioAEliminar);
+            return Ok();
         }
 
+        [ServiceFilter(typeof(JwtAuthorizationFilter))]
+        [FiltroAutorizacionId]
         [HttpGet("{id}/compras")]
         public IActionResult BuscarCompras(int id)
         {
-            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            if (usuario.Id == id)
-            {
-                List<Compra> listaCompras = _manejadorCompra.RetornarPorId(id);
-                return Ok(listaCompras.Select(c => new CompraModelo(c)));
-            }
-            return Unauthorized();
+            List<Compra> listaCompras = _manejadorCompra.RetornarPorId(id);
+            return Ok(listaCompras.Select(c => new CompraModelo(c)));
         }
 
+        [ServiceFilter(typeof(JwtAuthorizationFilter))]
         [HttpPost("{id}/compras")]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Cliente, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId =true, importaIDyRol = true)]
         public IActionResult RealizarCompra(int id, [FromBody] CompraCrearModelo compraCrearModelo)
         {
-            
-            Usuario usuario = ValidarToken(HttpContext.User.Identity as ClaimsIdentity);
-            
-            if (usuario.Id != id) return Unauthorized();
-            
             Compra compra = new Compra()
             {
                 UsuarioId = id,
                 Productos = crearListaProductos(compraCrearModelo),
+                MetodoDePago = Enum.Parse<MetodoDePago>(compraCrearModelo.MetodoDePago)
             };
-            
+
             _manejadorUsuario.AgregarCompraAlUsuario(id, compra);
             return Created("", compraCrearModelo);
         }
@@ -110,23 +95,13 @@ namespace Api.Controladores
             foreach (int id in compraCrear.idProductos)
             {
                 Producto producto = _manejadorProducto.EncontrarPorId(id);
-                resultado.Add(producto);
+                if (producto.Stock > 0)
+                {
+                    resultado.Add(producto);
+                    producto.Stock--;
+                }
             }
             return resultado;
-        }
-
-        private Usuario ValidarToken(ClaimsIdentity identity)
-        {
-            try
-            {
-                if (identity == null) throw new ArgumentNullException(nameof(identity));
-                string id = identity.Claims.FirstOrDefault(x => x.Type == "id")!.Value;
-                Usuario usuario = _manejadorUsuario.ObtenerUsuario(int.Parse(id));
-                return usuario;
-            } catch (Exception)
-            {
-                throw new UnauthorizedAccessException("No Autorizado");
-            }
         }
     }
 }
