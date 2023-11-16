@@ -17,7 +17,7 @@ public class PruebasServicioCompra
     public void Init()
     {
         _repositorio = new Mock<IRepositorioCompra>(MockBehavior.Strict);
-        _servicio = new ServicioCompra(_repositorio.Object);
+        _servicio = new ServicioCompraPruebas(_repositorio.Object);
     }
 
     private List<Producto> GenerarProductosMismaCategoria() => new List<Producto>()
