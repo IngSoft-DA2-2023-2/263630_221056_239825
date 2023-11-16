@@ -60,6 +60,7 @@ export class PerfilComponent {
     this.compraService.deleteUsuario(this.usuario!.id).subscribe(() => {
       sessionStorage.clear();
       this.router.navigate(['/']);
+      window.location.reload();
     });
   }
 }

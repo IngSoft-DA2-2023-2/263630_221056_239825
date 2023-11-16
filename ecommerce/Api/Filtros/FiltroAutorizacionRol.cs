@@ -11,6 +11,7 @@ namespace Api.Filtros
         public CategoriaRol RoleNeeded { get; set; }
         public CategoriaRol SecondaryRole { get; set; }
         public bool importaId { get; set; } = false;
+        public bool importaIDyRol { get; set; } = false;
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
@@ -28,7 +29,7 @@ namespace Api.Filtros
             {
                 IManejadorUsuario _manejadorUsuario = GetSessionService(context);
                 Usuario usuario = ValidarToken(user!, _manejadorUsuario);
-                if (importaId == false)
+                if (importaIDyRol == true)
                 {
                     if (!(RoleNeeded == usuario.Rol))
                     {
@@ -47,18 +48,44 @@ namespace Api.Filtros
                             };
                         }
                     }
-                }
-                else
-                {
                     string? stringId = context.RouteData.Values["id"]! as string;
                     int id = int.Parse(stringId!);
-
                     if (id != usuario.Id)
                     {
                         context.Result = new ObjectResult(new { Message = "No Autorizado" })
                         {
                             StatusCode = 403
                         };
+                    }
+                }
+                else
+                {
+                    if (importaId == true)
+                    {
+                        string? stringId = context.RouteData.Values["id"]! as string;
+                        int id = int.Parse(stringId!);
+
+                        if (id == usuario.Id)
+                        {
+                            return;
+                        }
+                    }
+                    if (!(RoleNeeded == usuario.Rol))
+                    {
+                        if (SecondaryRole.Equals(default(CategoriaRol)))
+                        {
+                            context.Result = new ObjectResult(new { Message = "No tenes el Rol necesario" })
+                            {
+                                StatusCode = 403
+                            };
+                        }
+                        if (!(SecondaryRole == usuario.Rol))
+                        {
+                            context.Result = new ObjectResult(new { Message = "No tenes el Rol necesario" })
+                            {
+                                StatusCode = 403
+                            };
+                        }
                     }
                 }
             }

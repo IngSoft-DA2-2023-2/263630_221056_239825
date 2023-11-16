@@ -55,7 +55,7 @@ namespace Api.Controladores
         }
 
         [ServiceFilter(typeof(JwtAuthorizationFilter))]
-        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador)]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Administrador, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId = true)]
         [HttpDelete("{id}")]
         public IActionResult EliminarUsuario(int id)
         {
@@ -75,7 +75,7 @@ namespace Api.Controladores
 
         [ServiceFilter(typeof(JwtAuthorizationFilter))]
         [HttpPost("{id}/compras")]
-        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Cliente, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId =true)]
+        [FiltroAutorizacionRol(RoleNeeded = CategoriaRol.Cliente, SecondaryRole = CategoriaRol.ClienteAdministrador, importaId =true, importaIDyRol = true)]
         public IActionResult RealizarCompra(int id, [FromBody] CompraCrearModelo compraCrearModelo)
         {
             Compra compra = new Compra()
