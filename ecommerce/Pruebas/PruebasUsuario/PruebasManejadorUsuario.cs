@@ -13,7 +13,9 @@ namespace Pruebas.PruebasUsuario
     public class PruebasManejadorUsuario
     {
         private Mock<IRepositorioUsuario>? mock;
+        private Mock<IRepositorioCompra>? mockRepositorioCompra;
         private ManejadorUsuario? manejadorUsuario;
+        private ServicioCompra servicioCompra;
         private Usuario? cliente;
         private Usuario? clienteHasheado;
         private List<Usuario>? listaClientes;
@@ -26,7 +28,9 @@ namespace Pruebas.PruebasUsuario
         public void InitTest()
         {
             mock = new Mock<IRepositorioUsuario>(MockBehavior.Strict);
-            manejadorUsuario = new ManejadorUsuario(mock.Object);
+            mockRepositorioCompra = new Mock<IRepositorioCompra>(MockBehavior.Strict);
+            servicioCompra = new ServicioCompra(mockRepositorioCompra.Object);
+            manejadorUsuario = new ManejadorUsuario(mock.Object,servicioCompra);
             cliente = new Usuario("martin@edelman.com.uy", "Zorrilla 124", "Password1");
             cliente.Id = 1;
             clienteHasheado = cliente;
