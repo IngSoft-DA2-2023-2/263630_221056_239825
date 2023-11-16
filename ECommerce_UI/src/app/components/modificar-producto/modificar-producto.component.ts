@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgFor, NgIf } from '@angular/common';
 import { ProductoDTO } from 'src/app/dominio/producto-dto.model';
 import { ProductoModelo } from 'src/app/dominio/productoModelo.model';
+import { MatDialog } from '@angular/material/dialog';
 interface AplicaPromo {
   nombre: string;
   valor: boolean;
@@ -75,7 +76,8 @@ export class ModificarProductoComponent {
     private router: Router,
     private adminService: AdminService,
     private productoService: ProductsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   producto: ProductoModelo = {
@@ -137,8 +139,11 @@ export class ModificarProductoComponent {
     });
   }
 
-  openNotification(arg0: string) {
-    alert(arg0);
+  openNotification(mensaje: string): void {
+    const dialogRef = this.dialog.open(NotificationComponent, {
+      data: { mensaje: mensaje },
+    });
+    dialogRef.componentInstance.showExitoso(mensaje);
   }
 
   getErrorMessage(): string {

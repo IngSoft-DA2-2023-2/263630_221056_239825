@@ -11,7 +11,9 @@ import { TarjetaComponent } from './components/tarjeta/tarjeta.component';
 import { OpcionesPagoComponent } from './components/opciones-pago/opciones-pago.component';
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 const routes: Routes = [
+  { path: '', component: HomepageComponent},
   { path: 'login', component: LoginComponent },
   { path: 'productos', component: ProductosComponent },
   { path: 'carrito', component: CarritoComponent },

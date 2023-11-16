@@ -34,5 +34,7 @@ export class NotificationComponent {
     this.dialogRef.close();
   }
 
-  public showFallido(mensaje: string): void {}
+  public showFallido(mensaje: string): void {
+    this.mensaje = mensaje;
+  }
 }

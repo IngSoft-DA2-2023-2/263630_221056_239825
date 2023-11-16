@@ -15,8 +15,6 @@ namespace DataAccess
         {
         }
 
-        }
-
         public virtual DbSet<Producto> Productos { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Marca> Marcas { get; set; }

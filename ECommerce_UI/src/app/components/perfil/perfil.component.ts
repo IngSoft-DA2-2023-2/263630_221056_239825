@@ -9,6 +9,8 @@ import { CompraComponent } from '../compra/compra.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { Router } from '@angular/router';
+import { NotificationComponent } from '../notification/notification.component';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-perfil',
@@ -20,7 +22,8 @@ import { Router } from '@angular/router';
 export class PerfilComponent {
   constructor(
     private compraService: TokenUserService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   usuario?: Usuario;
@@ -31,16 +34,22 @@ export class PerfilComponent {
     this.compraService.getCompraDelUsuario().pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status == 404) {
-          console.log('No se encontró el usuario');
+          this.openNotification('No se encuentra el perfil deseado')
         } else {
-          console.log(error);
+          this.openNotification(error.error.mensaje || 'Error desconocido')
         }
         return [];
       })
     ).subscribe((compras: Compra[]) => {
       this.compras = compras;
-      console.log(this.compras);
     });
+  }
+
+  openNotification(mensaje: string): void {
+    const dialogRef = this.dialog.open(NotificationComponent, {
+      data: { mensaje: mensaje },
+    });
+    dialogRef.componentInstance.showExitoso(mensaje);
   }
 
   editarUsuario() {
@@ -51,6 +60,7 @@ export class PerfilComponent {
     this.compraService.deleteUsuario(this.usuario!.id).subscribe(() => {
       sessionStorage.clear();
       this.router.navigate(['/']);
+      window.location.reload();
     });
   }
 }
