@@ -89,6 +89,9 @@ export class CarritoComponent implements OnInit {
     } else if (metodoDePago === '') {
       this.openNotification("No se ha seleccionado un método de pago");
       return;
+    }else if(sessionStorage.getItem('token') == null){
+      this.openNotification("Inicie sesión para continuar");
+      return;
     } else {
       const idDeProductosDelCarrito: number[] = this.productosEnCarrito.map((producto) => producto.id);
       const compraModel: compraCreateModelo = {
@@ -129,5 +132,16 @@ export class CarritoComponent implements OnInit {
       (total, producto) => total + producto.precio,
       0
     );
+  }
+
+  irAMetodoDePago(): void {
+    if(this.productosEnCarrito.length === 0){
+      this.openNotification("No hay productos en el carrito, por favor, agregue productos");
+      return;
+    }
+    if(sessionStorage.getItem('token') === ''){
+      this.openNotification("Inicie sesión para continuar");
+      return;
+    }
   }
 }

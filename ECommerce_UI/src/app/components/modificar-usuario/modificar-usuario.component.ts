@@ -60,7 +60,7 @@ export class ModificarUsuarioComponent {
     private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private dialog: MatDialog
-  ) {}
+  ) { }
   email: FormControl = new FormControl('', [Validators.email]);
   password: FormControl = new FormControl('', [Validators.minLength(8)]);
   direccion: FormControl = new FormControl('');
@@ -193,6 +193,7 @@ export class ModificarUsuarioComponent {
         )
         .subscribe((response: any) => {
           this.openSnackBar('Usuario modificado con éxito', 'Cerrar');
+
           if (usuarioNuevo.id == Number(sessionStorage.getItem('idUsuario'))) {
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('usuario');
