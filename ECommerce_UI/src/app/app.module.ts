@@ -31,6 +31,7 @@ import { NotificationComponent } from './components/notification/notification.co
 import { ModificarUsuarioComponent } from './components/modificar-usuario/modificar-usuario.component';
 import { ModificarProductoComponent } from './components/modificar-producto/modificar-producto.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
 
 @NgModule({
   declarations: [AppComponent, ],
@@ -46,6 +47,7 @@ import { PaypalComponent } from './components/paypal/paypal.component';
     MatStepperModule,
     ReactiveFormsModule,
     NavbarComponent,
+    HomepageComponent,
     LoginComponent,
     SignupComponent,
     TarjetaComponent,
